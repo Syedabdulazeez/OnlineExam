@@ -1,0 +1,21 @@
+<div class="container">
+  <h1 class="mb-4"><%= @department.department_name %></h1>
+
+  <p>Short summary about no. of past exams, no. of upcoming exams, etc.</p>
+
+  <h2>Subjects</h2>
+
+  <div class="row">
+    <% @department.subjects.each do |subject| %>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="card-title"><%= link_to subject.subject_name, subject_path(subject), class: "text-dark" %></h3>
+            <!-- Display other subject details -->
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+

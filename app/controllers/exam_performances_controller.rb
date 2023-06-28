@@ -1,0 +1,2 @@
+class ExamPerformancesController < ApplicationController
+end

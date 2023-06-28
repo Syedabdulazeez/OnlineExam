@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card mt-5">
+        <div class="card-header">
+          <h3 class="text-center">Magic Link Login</h3>
+        </div>
+        <div class="card-body">
+          <%= form_with url: '/magic_link_authentication', method: :post do |form| %>
+            <div class="form-group">
+              <%= form.email_field :email, class: 'form-control', placeholder: 'Email' %>
+            </div>
+            <div class="text-center">
+              <%= form.submit 'Send Magic Link', class: 'btn btn-primary' %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

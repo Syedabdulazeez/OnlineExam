@@ -1,0 +1,34 @@
+<div class="container">
+    <header class="d-flex justify-content-between align-items-center">
+      <h1 class="text-info">Exams</h1>
+      <div class="actions">
+        <%= link_to "Home", root_path, class: "btn btn-outline-primary" %>
+      </div>
+    </header>
+   
+
+<table class="table table table-hover">
+  <thead class="thead-dark">
+    <tr>
+      <th>Exam Name</th>
+      <th>Start Time</th>
+      <th>Duration</th>
+      <th>Registration</th>
+      <!-- Add more columns as needed -->
+    </tr>
+  </thead>
+  <tbody class="table-hover ">
+    <% @exams.each do |exam| %>
+      <tr>
+        <td> <%= link_to exam.exam_name, exam_path(exam.id) %></td>
+       
+       
+        <td><%= exam.start_time %></td>
+        <td><%= exam.duration %></td>
+        <td><%=link_to "Register",new_registration_path(exam_id: exam.id)%></td>
+      
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+ </div>

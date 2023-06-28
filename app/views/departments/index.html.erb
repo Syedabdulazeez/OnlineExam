@@ -1,0 +1,16 @@
+<div class="container">
+  <h1 class="mb-4">Departments</h1>
+
+  <div class="row">
+    <% @departments.each do |department| %>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100">
+          <div class="card-body">
+            <h3 class="card-title"><%= link_to department.department_name, department_path(department), class: "text-dark" %></h3>
+            <!-- Display other department details -->
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

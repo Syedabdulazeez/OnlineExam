@@ -1,0 +1,20 @@
+<% if flash[:alert] %>
+  <div class="alert alert-danger">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+<div class="container mt-5">
+  
+    <div class="card bg-light shadow mb-3">
+      <div class="card-body">
+        <h3 class="card-title text-primary">Register for Exam: <%= @exam.subject.subject_name %></h3>
+        <% if @disable_links %>
+          <span class="disabled-link">Registrations End</span>
+        <% else %>
+        <%= button_to "Register", exam_registrations_path(exam_id: @exam.id), class: "btn btn-primary btn-lg mr-3" %>
+        <% end %>
+      </div>
+    </div>
+</div>
+

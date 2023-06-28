@@ -1,0 +1,64 @@
+<div class="container mt-5">
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title"><%= @exam.exam_name %></h2>
+      <div class="row">
+        <div class="col-md-6">
+          <h5 class="card-subtitle mb-2 text-muted">Start Time:</h5>
+          <p class="card-text"><%= @exam.start_time%></p>
+        </div>
+        <div class="col-md-6">
+          <h5 class="card-subtitle mb-2 text-muted">Exam Duration:</h5>
+          <p class="card-text"><%= @exam.duration %></p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <h5 class="card-subtitle mb-2 text-muted">Subject:</h5>
+          <p class="card-text"><%= @exam.subject.subject_name %></p>
+        </div>
+        <div class="col-md-6">
+          <h5 class="card-subtitle mb-2 text-muted">Department:</h5>
+          <p class="card-text"><%= link_to @exam.subject.department.department_name, department_path(@exam.subject.department)%></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="professor-profile">
+        <h3>Professor 1</h3>
+        <img src="professor1.jpg" alt="Professor 1 Photo">
+        <p>Two-liner profile summary</p>
+        <a href="linkedin-profile-url" target="_blank">LinkedIn Profile</a>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="professor-profile">
+        <h3>Professor 2</h3>
+        <img src="professor2.jpg" alt="Professor 2 Photo">
+        <p>Two-liner profile summary</p>
+        <a href="linkedin-profile-url" target="_blank">LinkedIn Profile</a>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="professor-profile">
+        <h3>Professor 3</h3>
+        <img src="professor2.jpg" alt="Professor 2 Photo">
+        <p>Two-liner profile summary</p>
+        <a href="linkedin-profile-url" target="_blank">LinkedIn Profile</a>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="professor-profile">
+        <h3>Professor 4</h3>
+        <img src="professor2.jpg" alt="Professor 2 Photo">
+        <p>Two-liner profile summary</p>
+        <a href="linkedin-profile-url" target="_blank">LinkedIn Profile</a>
+      </div>
+    </div>
+  </div>
+</div>

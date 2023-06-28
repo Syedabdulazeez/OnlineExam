@@ -1,0 +1,2 @@
+module MagicLinkAuthenticationHelper
+end

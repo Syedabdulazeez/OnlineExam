@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  subject: one
+  start_time: 2023-06-12 15:09:26
+  duration: 1
+
+two:
+  subject: two
+  start_time: 2023-06-12 15:09:26
+  duration: 1
