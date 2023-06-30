@@ -1,4 +1,5 @@
 class UserMailer < ApplicationMailer
+  
     def magic_link_email(user)
       @user = user
       @magic_link = magic_link_url(user.magic_link_token)

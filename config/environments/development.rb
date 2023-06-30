@@ -1,5 +1,6 @@
 require "active_support/core_ext/integer/time"
 
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -75,13 +76,15 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: 'SMTP_ADDRESS',
+    address: ENV['SMTP_ADDRESS'],
     port: 587,
     domain: 'smtp.google.com',
-    user_name: 'USER_NAME',
-    password: 'GOOGLE_MAIL_PASSWORD',
+    user_name: ENV['USER_NAME'],
+    password: ENV['GOOGLE_MAIL_PASSWORD'],
     authentication: 'plain',
     enable_starttls_auto: true
   }
+
+  
   
 end

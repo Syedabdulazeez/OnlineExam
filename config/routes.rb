@@ -20,9 +20,14 @@ Rails.application.routes.draw do
   resources :exam_performances
   resources :options
   resources :questions
-  resources :exams do
+  resources :exams, only: [:show] do
     resources :registrations, only: [:new, :create]
+    post 'submit_exam', on: :member
+    member do
+      get 'conduct'
+    end
   end
+
   resources :registrations
   resources :subjects
   resources :departments

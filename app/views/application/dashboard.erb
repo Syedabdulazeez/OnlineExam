@@ -9,45 +9,60 @@
   <body>
     <div class="container">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Dashboard</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <%= link_to "Exams", registrations_path, class: "nav-link" %>
-      </li>
-      <li class="nav-item">
-        <%= link_to "Leader Board", leaderboard_path(@user), class: "nav-link" %>
-      </li>
-    </ul>
-    <ul class="navbar-nav">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Profile
-        </a>
-        <div class="dropdown-menu" aria-labelledby="userDropdown">
-          <%= link_to "Profile", user_path(@user), class: "dropdown-item" %>
-          <a href="logout" class="dropdown-item">Log Out</a>
+        <a class="navbar-brand" href="#">Dashboard</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <%= link_to "Exams", registrations_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Leader Board", leaderboard_path(@user), class: "nav-link" %>
+            </li>
+          </ul>
+          <ul class="navbar-nav">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Profile
+              </a>
+              <div class="dropdown-menu" aria-labelledby="userDropdown">
+                <%= link_to "Profile", user_path(@user), class: "dropdown-item" %>
+                <a href="logout" class="dropdown-item">Log Out</a>
+              </div>
+            </li>
+          </ul>
         </div>
-      </li>
-    </ul>
-  </div>
-</nav>
-    <% @exams.each do |exam| %>
-      <div class="exam card bg-light shadow mt-3">
-        <div class="card-body">
-          <strong class="card-title">Exam Name:<%= link_to exam.exam_name, exam_path(exam.id) %></strong>
-          <p class="card-text">Start Time: <%= exam.start_time %></p>
-          <p class="card-text">Duration: <%= exam.duration %> minutes</p>
-        
-          <% if exam.resume_available? %>
-            <a href=" resume_exam_path(exam) " class="btn btn-primary">Resume</a>
-          <% end %>
+      </nav>
+      <% @exams.each do |exam| %>
+        <div class="exam card bg-light shadow mt-3">
+          <div class="card-body">
+            <strong class="card-title">Exam Name: <%= link_to exam.exam_name, exam_path(exam.id) %></strong>
+            <p class="card-text">Start Time: <%= exam.start_time %></p>
+            <p class="card-text">Duration: <%= exam.duration %> minutes</p>
+
+            <div class="row">
+              <div class="col-md-6">
+                <% registration = current_user.registrations.find_by(exam_id: exam.id) %>
+                <% if Time.now < exam.start_time %>
+                  <span class="disabled-link">The exam will start at <%= exam.start_time.strftime('%I:%M %p') %>. Please wait.</span>
+                <% elsif Time.now > (exam.start_time + exam.duration.minutes) %>
+                  <span class="disabled-link">The exam has ended.</span>
+                <% elsif registration %>
+                  <% if current_user.exam_in_progress?(exam) || registration.started? %>
+                    <%= link_to 'Resume Exam', conduct_exam_path(exam.id), class: 'btn btn-primary' %>
+                  <% else %>
+                    <%= link_to 'Start Exam', conduct_exam_path(exam.id), class: 'btn btn-primary' %>
+                  <% end %>
+                <% else %>
+                  <%= link_to 'Start Exam', conduct_exam_path(exam.id), class: 'btn btn-primary' %>
+                <% end %>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    <% end %>
+      <% end %>
+    </div>
   </body>
 </html>
-

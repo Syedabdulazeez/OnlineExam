@@ -1,6 +1,4 @@
 class SessionsController < ApplicationController
-  
-
   def new
     if params[:token].present?
       perform_magic_link_login
@@ -24,6 +22,7 @@ class SessionsController < ApplicationController
     session.delete :user_id
     redirect_to login_path
   end
+  
   def omniauth
     # binding.pry
     user =User.find_or_create_by(uid: request.env['omniauth.auth'][:uid],provider: request.env['omniauth.auth'][:provider]) do |u|
