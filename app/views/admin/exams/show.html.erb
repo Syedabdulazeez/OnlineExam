@@ -1,0 +1,19 @@
+<!-- app/views/admin/exams/show.html.erb -->
+
+<h1 class='container'>Exam Details</h1>
+
+<div class="card">
+  <div class="card-header">
+    <h5 class="card-title"><%= @exam.exam_name %></h5>
+  </div>
+  <div class="card-body">
+    <p class="card-text">Exam Date: <%= @exam.start_time.strftime("%Y-%m-%d") %></p>
+    <p class="card-text">Total Questions: <%= count_questions(@exam) %></p>
+    <p class="card-text">Exam Duration: <%= @exam.duration %></p>
+    <!-- Add more exam details as needed -->
+  </div>
+  <div class="card-footer">
+    <%= link_to 'Edit', edit_admin_exam_path(@exam), class: 'btn btn-secondary' %>
+    <%= link_to 'Delete', admin_exam_path(@exam), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+  </div>
+</div>

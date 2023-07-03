@@ -1,0 +1,60 @@
+<div class="container">
+  <h1>Welcome to the Admin Panel</h1>
+  <% if notice %>
+  <div class="notice">
+    <%= notice %>
+  </div>
+<% end %>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h2>Manage Departments</h2>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Here you can create, edit, and delete departments.</p>
+          <a href="<%= admin_departments_path %>" class="btn btn-primary">Manage Departments</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h2>Manage Subjects</h2>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Here you can create, edit, and delete subjects.</p>
+          <a href="<%= admin_subjects_path %>" class="btn btn-primary">Manage Subjects</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h2>Manage Exams</h2>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Here you can create, edit, and delete exams.</p>
+          <a href="<%= admin_exams_path %>" class="btn btn-primary">Manage Exams</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h2>Manage Questions</h2>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Here you can create, edit, and delete questions.</p>
+          <a href="<%= admin_questions_path %>" class="btn btn-primary">Manage Questions</a>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Add more cards for other admin functionalities -->
+  </div>
+</div>

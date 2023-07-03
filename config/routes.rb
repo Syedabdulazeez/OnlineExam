@@ -27,7 +27,15 @@ Rails.application.routes.draw do
       get 'conduct'
     end
   end
-
+  namespace :admin do
+    root 'admin#index'
+    resources :departments
+    resources :subjects
+    resources :exams
+    resources :questions
+    resources :students
+    
+  end
   resources :registrations
   resources :subjects
   resources :departments

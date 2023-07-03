@@ -1,25 +1,12 @@
 class LeaderboardController < ApplicationController
   def index
-    # Fetch subject and department wise performance data
-    @individual_performance = ExamPerformance.joins(exam: :subject)
-                                            .select('exam_performances.user_id, exams.subject_id, SUM(exam_performances.marks_obtained) as total_marks')
-                                            .group('exam_performances.user_id, exams.subject_id')
-                                            .order(total_marks: :desc)
-                                            
-    @average_performance = ExamPerformance.joins(exam: :subject)
-                                          .select('exams.subject_id, AVG(exam_performances.marks_obtained) as average_marks')
-                                          .group('exams.subject_id')
-                                          .order(average_marks: :desc)
-                                          
-    @highest_performance = ExamPerformance.joins(exam: :subject)
-                                          .select('exams.subject_id, MAX(exam_performances.marks_obtained) as highest_marks')
-                                          .group('exams.subject_id')
-                                          .order(highest_marks: :desc)
-
-    # Additional logic for fetching college-wise and overall ranks
-
-    # Render the leaderboard view
-    render 'index'
+    # Retrieve the user's subject and department wise performance for every exam
+    @user = current_user
+    @subject_performances = ExamPerformance.joins(:exam)
+    .where(user_id: @user.id)
+    .group('exams.subject_id')
+    .average(:marks_obtained)
+    @department_performances = ExamPerformance.joins(exam: :subject).where(user_id: @user.id).group('subjects.department_id').average(:marks_obtained)
   end
 
   def show

@@ -1,0 +1,51 @@
+<h1>Edit Question</h1>
+
+<%= form_with(model: @question, url: admin_question_path(@question), method: :patch, class: 'form') do |form| %>
+  <div class="form-group">
+    <%= form.label :exam_id, 'Exam' %>
+    <%= form.collection_select :exam_id, @exams, :id, :exam_name, { prompt: 'Select an exam' }, class: 'form-control', data: { target: 'slim-select' } %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :question_text %>
+    <%= form.text_area :question_text, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :answer1 %>
+    <%= form.text_field :answer1, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :answer2 %>
+    <%= form.text_field :answer2, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :answer3 %>
+    <%= form.text_field :answer3, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :answer4 %>
+    <%= form.text_field :answer4, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :correct_answer %>
+    <%= form.select :correct_answer, [['Option 1', 1], ['Option 2', 2], ['Option 3', 3], ['Option 4', 4]], { prompt: 'Select a correct answer' }, class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Update Question', class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const slimSelect = new SlimSelect({
+      select: '[data-target="slim-select"]',
+      placeholder: 'Select an exam',
+    });
+  });
+</script>

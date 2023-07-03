@@ -1,0 +1,42 @@
+<h1>Create New Question</h1>
+
+<%= form_with(model: @question, url: admin_questions_path, class: 'form') do |form| %>
+  <div class="form-group">
+    <%= form.label :exam_id, 'Exam' %>
+    <%= form.collection_select :exam_id, @exams, :id, :exam_name, prompt: 'Select an exam', class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :question_text %>
+    <%= form.text_area :question_text, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :answer1 %>
+    <%= form.text_field :answer1, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :answer2 %>
+    <%= form.text_field :answer2, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :answer3 %>
+    <%= form.text_field :answer3, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :answer4 %>
+    <%= form.text_field :answer4, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :correct_answer %>
+    <%= form.select :correct_answer, [['Answer 1', 1], ['Answer 2', 2], ['Answer 3', 3], ['Answer 4', 4]], { prompt: 'Select correct answer' }, class: 'form-control' %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit 'Create Question', class: 'btn btn-primary' %>
+  </div>
+<% end %>

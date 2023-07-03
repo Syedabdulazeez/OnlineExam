@@ -1,0 +1,40 @@
+<h1>Manage Questions</h1>
+<% if notice %>
+  <div class="notice">
+    <%= notice %>
+  </div>
+<% end %>
+
+<%= link_to 'Add New Question', new_admin_question_path, class: 'btn btn-primary' %>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Exam</th>
+      <th>Question Text</th>
+      <th>Answer1</th>
+      <th>Answer2</th>
+      <th>Answer3</th>
+      <th>Answer4</th>
+      <th>Correct Answer</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @questions.each do |question| %>
+      <tr>
+        <td><%= question.exam.exam_name %></td>
+        <td><%= question.question_text %></td>
+        <td><%= question.answer1 %></td>
+        <td><%= question.answer2 %></td>
+        <td><%= question.answer3 %></td>
+        <td><%= question.answer4 %></td>
+        <td><%= question.correct_answer %></td>
+        <td>
+          <%= link_to 'Edit', edit_admin_question_path(question), class: 'btn btn-secondary' %>
+          <%= link_to 'Delete', admin_question_path(question), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

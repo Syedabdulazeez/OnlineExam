@@ -1,0 +1,34 @@
+<div class="container">
+  <h1>Manage Departments</h1>
+  <% if notice %>
+  <div class="notice">
+    <%= notice %>
+  </div>
+<% end %>
+
+  <p><%= link_to 'Create New Department', new_admin_department_path, class: 'btn btn-primary' %></p>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @departments.each do |department| %>
+          <tr>
+            <td><%= department.id %></td>
+            <td><%= department.department_name %></td>
+            <td>
+              <%= link_to 'Edit', edit_admin_department_path(department), class: 'btn btn-secondary' %>
+              <%= link_to 'Delete', admin_department_path(department), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

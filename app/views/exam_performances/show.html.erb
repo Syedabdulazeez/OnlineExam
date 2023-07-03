@@ -5,7 +5,9 @@
 <h2>User: <%= @exam_performance.user.username %></h2>
 <h2>Subject: <%= @exam_performance.exam.subject.subject_name %></h2>
 <h2>Total Marks: <%= @exam_performance.marks_obtained %></h2>
-
+<div class="actions">
+  <%= link_to "Home", root_path, class: "btn btn-outline-primary" %>
+</div>
 <p>
   <!-- Add any additional performance details you want to display -->
 </p>

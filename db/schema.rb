@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_06_29_100256) do
+ActiveRecord::Schema.define(version: 2023_07_03_094327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,7 +38,17 @@ ActiveRecord::Schema.define(version: 2023_06_29_100256) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "exam_name"
+    t.boolean "is_demo"
     t.index ["subject_id"], name: "index_exams_on_subject_id"
+  end
+
+  create_table "options", force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.text "option_text"
+    t.boolean "is_correct_option"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["question_id"], name: "index_options_on_question_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -89,6 +99,7 @@ ActiveRecord::Schema.define(version: 2023_06_29_100256) do
   add_foreign_key "exam_performances", "exams"
   add_foreign_key "exam_performances", "users"
   add_foreign_key "exams", "subjects"
+  add_foreign_key "options", "questions"
   add_foreign_key "questions", "exams"
   add_foreign_key "registrations", "exams"
   add_foreign_key "registrations", "users"
