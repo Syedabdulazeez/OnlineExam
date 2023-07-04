@@ -1,12 +1,16 @@
 <div class="container">
-  <h1>Welcome to the Admin Panel</h1>
+ <nav class="navbar  navbar-light bg-light">
+  <a class="navbar-brand float-left" href="#">Admin Dashboard</a>
+<%= link_to "Log Out", logout_path, class: "btn btn-outline-primary" %></nav>
+
+
   <% if notice %>
   <div class="notice">
     <%= notice %>
   </div>
 <% end %>
 
-  <div class="row">
+  <div class="row mt-5">
     <div class="col-md-6">
       <div class="card mb-4">
         <div class="card-header bg-primary text-white">
@@ -51,6 +55,17 @@
         <div class="card-body">
           <p class="card-text">Here you can create, edit, and delete questions.</p>
           <a href="<%= admin_questions_path %>" class="btn btn-primary">Manage Questions</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h2>Manage users</h2>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Here you can create, edit, and delete admins and see all the users along there registered exams.</p>
+          <a href="<%= admin_users_path %>" class="btn btn-primary">Manage Users</a>
         </div>
       </div>
     </div>

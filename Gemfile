@@ -75,5 +75,3 @@ gem 'whenever', require: false
 
 
 
-
-

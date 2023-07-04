@@ -8,7 +8,10 @@ class Admin::ExamsController < ApplicationController
   def edit
     @exam = Exam.find(params[:id])
     @subjects = Subject.all
+    @exam_type_options = ['Demo Exam', 'Actual Exam']
+    @selected_exam_type = @exam.is_demo? ? 'Demo Exam' : 'Actual Exam'
   end
+  
   def update
     @exam = Exam.find(params[:id])
     if @exam.update(exam_params)
@@ -39,7 +42,8 @@ class Admin::ExamsController < ApplicationController
 
   private
 
-def exam_params
-  params.require(:exam).permit(:exam_name, :start_time, :duration, :subject_id)
-end 
+  def exam_params
+    params.require(:exam).permit(:exam_name, :start_time, :duration, :subject_id, :is_demo)
+  end  
+  
 end

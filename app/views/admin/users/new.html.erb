@@ -1,0 +1,32 @@
+<%= form_with(model: @user, url: admin_users_path, class: 'form') do |form| %>
+  <!-- Username field -->
+  <div class="form-group">
+    <%= form.label :username %>
+    <%= form.text_field :username, class: "form-control", placeholder: "Enter your username" %>
+    <% @user.errors.full_messages_for(:username).each do |message| %>
+      <div class="color-danger"><%= message %></div>
+    <% end %>
+  </div>
+  
+  <!-- Email field -->
+  <div class="form-group">
+    <%= form.label :email %>
+    <%= form.email_field :email, class: "form-control", placeholder: "Enter your email" %>
+    <% @user.errors.full_messages_for(:email).each do |message| %>
+      <%= message %>
+    <% end %>
+  </div>
+  
+  <!-- Password field -->
+  <div class="form-group">
+    <%= form.label :password %>
+    <%= form.password_field :password, class: "form-control", placeholder: "Enter your password" %>
+    <% @user.errors.full_messages_for(:password).each do |message| %>
+      <%= message %>
+    <% end %>
+  </div>
+  
+  <div class="form-group">
+    <%= form.submit 'Create Admin', class: 'btn btn-primary' %>
+  </div>
+<% end %>

@@ -33,7 +33,7 @@ Rails.application.routes.draw do
     resources :subjects
     resources :exams
     resources :questions
-    resources :students
+    resources :users
     
   end
   resources :registrations

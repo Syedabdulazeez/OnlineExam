@@ -1,6 +1,9 @@
 <!-- app/views/admin/subjects/index.html.erb -->
 
-<h1>Manage Subjects</h1>
+<div class='container'>
+<nav class="navbar  navbar-light bg-light">
+  <a class="navbar-brand float-left" href="#">Manage Exams</a>
+<%= link_to "Home", admin_root_path, class: "btn btn-outline-primary" %></nav>
 <% if notice %>
   <div class="notice">
     <%= notice %>
@@ -30,3 +33,4 @@
     <% end %>
   </tbody>
 </table>
+</div>
