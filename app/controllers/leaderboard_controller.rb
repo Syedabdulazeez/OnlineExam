@@ -1,13 +1,37 @@
 class LeaderboardController < ApplicationController
-  def index
-    # Retrieve the user's subject and department wise performance for every exam
-    @user = current_user
-    @subject_performances = ExamPerformance.joins(:exam)
-    .where(user_id: @user.id)
-    .group('exams.subject_id')
-    .average(:marks_obtained)
-    @department_performances = ExamPerformance.joins(exam: :subject).where(user_id: @user.id).group('subjects.department_id').average(:marks_obtained)
+ def index
+  @user = current_user
+  @subject_performances = ExamPerformance.joins(:exam)
+  .where(user_id: @user.id)
+  .group('exams.subject_id')
+  .average(:marks_obtained)
+
+  @department_performances = ExamPerformance.joins(exam: :subject)
+  .where(user_id: @user.id)
+  .group('subjects.department_id')
+  .average(:marks_obtained)
+
+  @overall_rank = ExamPerformance.where(exam_id: @user.exam_performances.select(:exam_id))
+  .group(:user_id)
+  .order('SUM(marks_obtained) DESC')
+  .pluck(:user_id)
+  .index(@user.id)
+           
+
+  if @user.college.present?
+    @college_rank = ExamPerformance.joins(user: { registrations: :exam })
+    .joins(exam: { subject: :department })
+    .where(users: { college: @user.college })
+    .group(:user_id)
+    .order('SUM(marks_obtained) DESC')
+    .pluck(:user_id)
+    .index(@user.id)
+  else
+    @college_rank = nil
   end
+end
+
+  
   
 
   def show

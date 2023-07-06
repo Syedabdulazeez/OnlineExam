@@ -1,23 +1,49 @@
 <div class="container">
   <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand float-left" href="#">Leader board</a>
+    <a class="navbar-brand float-left" href="#">Leaderboard</a>
     <%= link_to "Home", root_path, class: "btn btn-outline-primary" %>
   </nav>
-<h1>Leaderboard</h1>
-  <div class="row">
+  <div class="row mt-4  ">
+    <div class="col-md-6">
+      <div class="card bg-light">
+        <div class="card-body">
+          <h2 class="card-title">Your Rank</h2>
+          <div class="row">
+            <div class="col">
+              <% if @user.college.present? %>
+                <% if @college_rank %>
+                  <p class="card-text">College Rank: <%= @college_rank + 1 %></p>
+                <% else %>
+                  <p class="card-text">Update your profile to get college-wise rank</p>
+                <% end %>
+              <% end %>
+            </div>
+            <div class="col">
+               <% if @overall_rank %>
+                <p class="card-text">Overall Rank: <%= @overall_rank + 1 %></p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-5">
     <div class="col-md-6">
       <h2>Your Subject-wise Performance</h2>
       <table class="table table-striped">
         <thead>
           <tr>
+            <th>Performance ID</th>
             <th>Subject</th>
             <th>Average Score</th>
           </tr>
         </thead>
         <tbody>
-          <% @subject_performances.each do |subject_id, average_score| %>
+          <% @subject_performances.each do |performance_id, average_score| %>
             <tr>
-              <% subject = Subject.find_by(id: subject_id) %>
+              <td><%= performance_id %></td>
+              <% subject = Subject.find_by(id: performance_id) %>
               <td><%= subject ? subject.subject_name : 'Subject not found' %></td>
               <td><%= average_score %></td>
             </tr>
@@ -32,20 +58,22 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row mt-5">
     <div class="col-md-6">
       <h2>Your Department-wise Performance</h2>
       <table class="table table-striped">
         <thead>
           <tr>
+            <th>Performance ID</th>
             <th>Department</th>
             <th>Average Score</th>
           </tr>
         </thead>
         <tbody>
-          <% @department_performances.each do |department_id, average_score| %>
+          <% @department_performances.each do |performance_id, average_score| %>
             <tr>
-              <% department = Department.find_by(id: department_id) %>
+              <td><%= performance_id %></td>
+              <% department = Department.find_by(id: performance_id) %>
               <td><%= department ? department.department_name : 'Department not found' %></td>
               <td><%= average_score %></td>
             </tr>
