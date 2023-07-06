@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  has_many :exam_performances
   has_many :registrations
   has_many :exams, through: :registrations
   validates :username,:password,:email, presence: true

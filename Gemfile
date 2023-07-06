@@ -72,6 +72,7 @@ gem 'omniauth-facebook'
 
 gem 'whenever', require: false
 
-
+gem 'groupdate'
+gem "chartkick"
 
 

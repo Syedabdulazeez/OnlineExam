@@ -9,7 +9,6 @@ class LeaderboardController < ApplicationController
     @department_performances = ExamPerformance.joins(exam: :subject).where(user_id: @user.id).group('subjects.department_id').average(:marks_obtained)
   end
   
-  
 
   def show
     @performance = ExamPerformance.find_by(user_id: params[:id])
