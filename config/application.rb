@@ -13,6 +13,8 @@ module Login
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
+    config.elasticsearch = YAML.load_file(Rails.root.join('config', 'elasticsearch.yml'))[Rails.env].symbolize_keys
+
 
     # Configuration for the application, engines, and railties goes here.
     #

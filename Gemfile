@@ -30,7 +30,11 @@ gem 'omniauth-rails_csrf_protection'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
+gem 'elasticsearch-model', '~> 7.2', '>= 7.2.1'
+gem 'elasticsearch-rails', '~> 7.2', '>= 7.2.1'
+
 # Reduces boot times through caching; required in config/boot.rb
+
 gem 'bootsnap', '>= 1.4.4', require: false
 
 group :development, :test do
@@ -69,10 +73,10 @@ gem 'bootstrap', '~> 4.6.0'
 gem 'jquery-rails', '~> 4.4'
 
 gem 'omniauth-facebook'
-
+# background job 
 gem 'whenever', require: false
-
+# grapg gems
 gem 'groupdate'
 gem "chartkick"
-
-
+# pdf gem
+gem "prawn", "~> 2.4"

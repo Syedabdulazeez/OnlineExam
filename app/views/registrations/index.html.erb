@@ -1,34 +1,51 @@
 <div class="container">
-    <header class="d-flex justify-content-between align-items-center">
-      <h1 class="text-info">Exams</h1>
-      <div class="actions">
-        <%= link_to "Home", root_path, class: "btn btn-outline-primary" %>
-      </div>
-    </header>
-   
+  <header class="d-flex justify-content-between align-items-center">
+    <h1 class="text-info">Exams</h1>
+    <div class="actions">
+      <%= link_to "Home", root_path, class: "btn btn-outline-primary" %>
+    </div>
+  </header>
 
-<table class="table table table-hover">
-  <thead class="thead-dark">
-    <tr>
-      <th>Exam Name</th>
-      <th>Start Time</th>
-      <th>Duration</th>
-      <th>Registration</th>
-      <!-- Add more columns as needed -->
-    </tr>
-  </thead>
-  <tbody class="table-hover ">
-    <% @exams.each do |exam| %>
-      <tr>
-        <td> <%= link_to exam.exam_name, exam_path(exam.id) %></td>
-       
-       
-        <td><%= exam.start_time %></td>
-        <td><%= exam.duration %></td>
-        <td><%=link_to "Register",new_registration_path(exam_id: exam.id)%></td>
-      
-      </tr>
+  <div class="actions">
+    <%= form_tag registrations_path, method: :get, class: "form-inline" do %>
+      <%= text_field_tag :search, params[:search], class: "form-control mr-2", placeholder: "Search exams..." %>
+      <%= submit_tag "Search", class: "btn btn-outline-primary" %>
     <% end %>
-  </tbody>
-</table>
- </div>
+  </div>
+
+<div class="filters">
+  <%= form_tag registrations_path, method: :get, class: "form-inline" do %>
+    <div class="form-group">
+      <%= label_tag "department", "Department:" %>
+      <%= select_tag :department, options_from_collection_for_select(@department_options, :id, :department_name, params[:department]), include_blank: "All Departments", class: "form-control mr-2" %>
+    </div>
+    <div class="form-group">
+      <%= label_tag "subject", "Subject:" %>
+      <%= select_tag :subject, options_from_collection_for_select(@subject_options, :id, :subject_name, params[:subject]), include_blank: "All Subjects", class: "form-control mr-2" %>
+    </div>
+    <%= submit_tag "Filter", class: "btn btn-outline-primary" %>
+  <% end %>
+</div>
+
+  <table class="table table table-hover">
+    <thead class="thead-dark">
+      <tr>
+        <th><%= link_to "Exam Name", registrations_path(sort: "name", order: params[:sort] == "name" && params[:order] == "asc" ? "desc" : "asc") %></th>
+        <th><%= link_to "Start Time", registrations_path(sort: "start_time", order: params[:sort] == "start_time" && params[:order] == "asc" ? "desc" : "asc") %></th>
+        <th><%= link_to "Duration", registrations_path(sort: "duration", order: params[:sort] == "duration" && params[:order] == "asc" ? "desc" : "asc") %></th>
+        <th>Registration</th>
+        <!-- Add more columns as needed -->
+      </tr>
+    </thead>
+    <tbody class="table-hover">
+      <% @exams.each do |exam| %>
+        <tr>
+          <td><%= link_to exam.exam_name, exam_path(exam.id) %></td>
+          <td><%= exam.start_time %></td>
+          <td><%= exam.duration %></td>
+          <td><%= link_to "Register", new_registration_path(exam_id: exam.id) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

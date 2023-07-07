@@ -41,6 +41,8 @@ Rails.application.routes.draw do
   resources :departments
   resources :users
   # resources :sessions
+  get '/exam_performances/:id/generate_report', to: 'exam_performances#generate_report', as: 'generate_report'
+  # get 'leaderboard/generate_report', to: 'leaderboard#generate_report', as: 'generate_report'
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

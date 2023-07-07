@@ -1,13 +1,38 @@
 # app/controllers/registrations_controller.rb
 class RegistrationsController < ApplicationController
-    def index
-      if logged_in?
-        @exams = Exam.all
-        
+   def index
+    if logged_in?
+      if params[:search].present?
+        @exams = Exam.search_by_exam_name(params[:search])
+      elsif params[:department].present? && params[:subject].present?
+        @exams = Exam.includes(subject: :department).where(departments: { id: params[:department] }, subjects: { id: params[:subject] })
+      elsif params[:department].present?
+        @exams = Exam.includes(subject: :department).where(departments: { id: params[:department] })
+      elsif params[:subject].present?
+        @exams = Exam.includes(subject: :department).where(subjects: { id: params[:subject] })
       else
-        redirect_to root_path
+        @exams = Exam.all
       end
+      
+      @exams = case params[:sort]
+      when "start_time"
+        @exams.sort { |a, b| a.start_time <=> b.start_time }
+      when "duration"
+        @exams.sort { |a, b| a.duration <=> b.duration }
+      when "name"
+        @exams.sort { |a, b| a.exam_name <=> b.exam_name }
+      else
+        @exams
+      end
+      
+      @exams = @exams.reverse if params[:order] == "desc"
+
+      @department_options = Department.all
+      @subject_options = Subject.all
+    else
+      redirect_to root_path
     end
+  end
 
     def new
       @exam = Exam.find(params[:exam_id])
