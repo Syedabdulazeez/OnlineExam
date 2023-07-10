@@ -25,7 +25,11 @@ class UsersController < ApplicationController
 
     def dashboard
         @exams = current_user.upcoming_exams
-    end
+        @exams.each do |exam|
+          exam.registration = current_user.registrations.find_by(exam_id: exam.id)
+          exam.already_taken = exam.registration&.completed?
+        end
+      end
 
     def edit
         @user= User.find(params[:id])

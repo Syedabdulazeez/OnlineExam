@@ -20,7 +20,7 @@ class RegistrationsController < ApplicationController
       when "duration"
         @exams.sort { |a, b| a.duration <=> b.duration }
       when "name"
-        @exams.sort { |a, b| a.exam_name <=> b.exam_name }
+        @exams.sort { |a, b| a.exam_name.downcase  <=> b.exam_name.downcase  }
       else
         @exams
       end
@@ -58,7 +58,6 @@ class RegistrationsController < ApplicationController
         render :new
       end
     end
-    
   
     private
   
@@ -67,6 +66,7 @@ class RegistrationsController < ApplicationController
     end
     def exam_params
       params.required(:Exam).permit(:username, :email, :password ,:college, :department)
-  end
+    end
+ 
   end
   

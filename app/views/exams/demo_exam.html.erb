@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <h1 class="text-center mb-4">Demo Exam</h1>
+      <div class="card mt-4 border border-secondary">
+        <div class="card-body">
+          <!-- Display all the questions -->
+          <% @demo_exam.questions.each do |question| %>
+            <div class="mb-4">
+              <h5 class="card-title"><%= question.question_text %></h5>
+
+              <div class="form-check">
+                <%= radio_button_tag "user_answers", 1, false, id: "answer_1_#{question.id}", class: "form-check-input visually-hidden" %>
+                <%= label_tag "answer_1_#{question.id}", question.answer1, class: "form-check-label" %>
+              </div>
+
+              <div class="form-check">
+                <%= radio_button_tag "user_answers", 2, false, id: "answer_2_#{question.id}", class: "form-check-input visually-hidden" %>
+                <%= label_tag "answer_2_#{question.id}", question.answer2, class: "form-check-label" %>
+              </div>
+
+              <div class="form-check">
+                <%= radio_button_tag "user_answers", 3, false, id: "answer_3_#{question.id}", class: "form-check-input visually-hidden" %>
+                <%= label_tag "answer_3_#{question.id}", question.answer3, class: "form-check-label" %>
+              </div>
+
+              <div class="form-check">
+                <%= radio_button_tag "user_answers", 4, false, id: "answer_4_#{question.id}", class: "form-check-input visually-hidden" %>
+                <%= label_tag "answer_4_#{question.id}", question.answer4, class: "form-check-label" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="text-center mt-4">
+        <%= link_to 'Submit', root_path, class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+</div>

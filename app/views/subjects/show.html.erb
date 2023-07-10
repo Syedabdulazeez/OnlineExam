@@ -16,7 +16,12 @@
             <p class="card-text text-success">You are registered for this exam.</p>
           <% else %>
             <p class="card-text text-danger">You are not registered for this exam.</p>
-            <%= button_to "Register", registrations_path(exam_id: exam.id), method: :post, class: "btn btn-primary" %>
+            
+            <%if exam.start_time-24.hours <= Time.now %>
+              <p class="card-text text-danger">Registration has closed.</p>
+            <% else %>
+              <%= button_to "Register", registrations_path(exam_id: exam.id), method: :post, class: "btn btn-primary" %>
+            <% end %>
           <% end %>
           
           <!-- Display other exam details -->

@@ -11,7 +11,10 @@ class ExamsController < ApplicationController
         current_user.mark_exam_in_progress(@exam)
         @questions = @exam.questions.to_a.shuffle
       end
-  
+      def demo_exam
+        @actual_exam = Exam.find(params[:id])
+        @demo_exam = Exam.find_by(subject_id: @actual_exam.subject_id, is_demo: true)
+      end 
       def submit_exam
         exam = Exam.find(params[:id])
         user_answers = params[:user_answers]

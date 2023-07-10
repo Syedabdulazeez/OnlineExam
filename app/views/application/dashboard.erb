@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-  </head>
-  <body>
+<body>
     <div class="container">
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Dashboard</a>
@@ -16,7 +8,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <%= link_to "Exams", registrations_path, class: "nav-link" %>
+              <%= link_to "Registrations", registrations_path, class: "nav-link" %>
             </li>
             <li class="nav-item">
               <%= link_to "Leader Board", leaderboard_index_path(@user), class: "nav-link" %>
@@ -36,33 +28,48 @@
         </div>
       </nav>
       <% @exams.each do |exam| %>
-        <div class="exam card bg-light shadow mt-3">
-          <div class="card-body">
-            <strong class="card-title">Exam Name: <%= link_to exam.exam_name, exam_path(exam.id) %></strong>
-            <p class="card-text">Start Time: <%= exam.start_time %></p>
-            <p class="card-text">Duration: <%= exam.duration %> minutes</p>
+      <div class="exam card bg-light shadow mt-3">
+        <div class="card-body">
+          <strong class="card-title">Exam Name: <%= link_to exam.exam_name, exam_path(exam.id) %></strong>
+          <p class="card-text">Start Time: <%= exam.start_time %></p>
+          <p class="card-text">Duration: <%= exam.duration %> minutes</p>
 
-            <div class="row">
-              <div class="col-md-6">
-                <% registration = current_user.registrations.find_by(exam_id: exam.id) %>
-                <% if Time.now < exam.start_time %>
-                  <span class="disabled-link">The exam will start at <%= exam.start_time.strftime('%I:%M %p') %>. Please wait.</span>
-                <% elsif Time.now > (exam.start_time + exam.duration.minutes) %>
-                  <span class="disabled-link">The exam has ended.</span>
-                <% elsif registration %>
-                  <% if current_user.exam_in_progress?(exam) || registration.started? %>
-                    <%= link_to 'Resume Exam', conduct_exam_path(exam.id), class: 'btn btn-primary' %>
+          <div class="row">
+            <div class="col-md-6">
+              <% registration = current_user.registrations.find_by(exam_id: exam.id) %>
+              <% if Time.now < exam.start_time %>
+                <span class="disabled-link">The exam will start at <%= exam.start_time.strftime('%I:%M %p') %>. Please wait.</span>
+              <% elsif Time.now > (exam.start_time + exam.duration.minutes) %>
+                <span class="disabled-link">The exam has ended.</span>
+              <% elsif registration %>
+                <% if current_user.exam_in_progress?(exam) || registration.started? %>
+                  <% if registration.completed? %>
+                    <span class="disabled-link">You have already submitted this exam.</span>
                   <% else %>
-                    <%= link_to 'Start Exam', conduct_exam_path(exam.id), class: 'btn btn-primary' %>
+                    <%= link_to 'Resume Exam', conduct_exam_path(exam.id), class: 'btn btn-primary' %>
                   <% end %>
-                <% else %>
+                <% elsif !registration.completed? %>
                   <%= link_to 'Start Exam', conduct_exam_path(exam.id), class: 'btn btn-primary' %>
+                <% else %>
+                  <span class="disabled-link">You have already submitted this exam.</span>
                 <% end %>
-              </div>
+              <% elsif !registration.completed? %>
+                <%= link_to 'Start Exam', conduct_exam_path(exam.id), class: 'btn btn-primary' %>
+              <% end %>
+
+              <% if exam.subject.exams.exists?(is_demo: true) && exam.start_time - 30.minutes > Time.now %>
+              <%= link_to 'Demo Exam', demo_exam_exam_path(exam.subject.exams.find_by(is_demo: true)), class: 'btn btn-primary' %>
+              <% elsif exam.subject.exams.exists?(is_demo: true) %>
+                <span class="disabled-link">Demo Exam not available Now</span>
+              <% else %>
+                <span class="disabled-link">This subject doesn't have a demo for now</span>
+              <% end %>
             </div>
           </div>
         </div>
-      <% end %>
+      </div>
+    <% end %>
+
     </div>
-  </body>
-</html>
+</body>
+

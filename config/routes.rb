@@ -15,18 +15,23 @@ Rails.application.routes.draw do
   get '/login/magic_link', to: 'sessions#magic_link_login', as: :magic_link_login
   get 'dashboard', to: 'dashboard#index'
   get '/exams/:exam_id/registrations/new', to: 'registrations#new', as: 'new_exam_registration'
+ 
 
   resources :leaderboard
   resources :exam_performances
   resources :options
   resources :questions
   resources :exams, only: [:show] do
+    get 'demo_exam', on: :member
     resources :registrations, only: [:new, :create]
     post 'submit_exam', on: :member
+  
     member do
       get 'conduct'
+     
     end
   end
+  
   namespace :admin do
     root 'admin#index'
     resources :departments
