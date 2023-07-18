@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# This is a sample class representing an gem file
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -6,7 +9,7 @@ ruby '3.1.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.7', '>= 6.1.7.3'
 # Use postgresql as the database for Active Record
-gem 'pg', '~> 1.1'
+gem 'pg', '1.2.3'
 # Use Puma as the app server
 gem 'puma', '~> 5.0'
 # Use SCSS for stylesheets
@@ -40,8 +43,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   gem 'pry'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
 end
 
 group :development do
@@ -64,7 +66,7 @@ group :test do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'bootstrap', '~> 4.6.0'
 
@@ -73,10 +75,18 @@ gem 'bootstrap', '~> 4.6.0'
 gem 'jquery-rails', '~> 4.4'
 
 gem 'omniauth-facebook'
-# background job 
+# background job
 gem 'whenever', require: false
 # grapg gems
+gem 'chartkick'
 gem 'groupdate'
-gem "chartkick"
+
 # pdf gem
-gem "prawn", "~> 2.4"
+gem 'prawn', '~> 2.4'
+
+gem 'rubocop'
+
+gem 'kaminari'
+
+gem 'factory_bot_rails', '~>6.0'
+gem 'rspec-rails', '~>4.0'

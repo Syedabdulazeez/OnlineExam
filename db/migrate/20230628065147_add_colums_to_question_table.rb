@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# This modify qutions
 class AddColumsToQuestionTable < ActiveRecord::Migration[6.1]
   def change
     add_column :questions, :answer1, :string

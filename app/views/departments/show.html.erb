@@ -1,17 +1,18 @@
 <div class="container">
   <h1><%= @department.department_name %></h1>
 
-  <p class="mb-4">No. of past exams: <%= @department.exams.select { |exam| exam.start_time < DateTime.now }.count %></p>
-  <p class="mb-4">No. of upcoming exams: <%= @department.exams.select { |exam| exam.start_time > DateTime.now }.count %></p>
+  <p class="mb-4">No. of past exams: <%= @department.exams.select { |exam| exam.start_time < DateTime.now && !exam.is_demo }.count %></p>
+  <p class="mb-4">No. of upcoming exams: <%= @department.exams.select { |exam| exam.start_time > DateTime.now  && !exam.is_demo }.count %></p>
 
   <h2>Subjects</h2>
   <ul class="list-group">
     <% @subjects.each do |subject| %>
       <li class="list-group-item">
         <%= link_to subject.subject_name, subject_path(subject) %>
-        <p class="mb-2">No. of past exams: <%= subject.exams.select { |exam| exam.start_time < DateTime.now }.count %></p>
-        <p class="mb-2">No. of upcoming exams: <%= subject.exams.select { |exam| exam.start_time > DateTime.now }.count %></p>
+        <p class="mb-2">No. of past exams: <%= subject.exams.select { |exam| exam.start_time < DateTime.now && !exam.is_demo }.count %></p>
+        <p class="mb-2">No. of upcoming exams: <%= subject.exams.select { |exam| exam.start_time > DateTime.now && !exam.is_demo }.count %></p>
       </li>
     <% end %>
   </ul>
 </div>
+

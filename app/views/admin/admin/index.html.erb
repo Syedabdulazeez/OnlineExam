@@ -1,14 +1,14 @@
 <div class="container">
- <nav class="navbar  navbar-light bg-light">
-  <a class="navbar-brand float-left" href="#">Admin Dashboard</a>
-<%= link_to "Log Out", logout_path, class: "btn btn-outline-primary" %></nav>
-
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand float-left" href="#">Admin Dashboard</a>
+    <%= link_to "Log Out", logout_path, class: "btn btn-outline-primary" %>
+  </nav>
 
   <% if notice %>
-  <div class="notice">
-    <%= notice %>
-  </div>
-<% end %>
+    <div class="notice">
+      <%= notice %>
+    </div>
+  <% end %>
 
   <div class="row mt-5">
     <div class="col-md-6">
@@ -22,7 +22,6 @@
         </div>
       </div>
     </div>
-    
     <div class="col-md-6">
       <div class="card mb-4">
         <div class="card-header bg-primary text-white">
@@ -34,7 +33,6 @@
         </div>
       </div>
     </div>
-    
     <div class="col-md-6">
       <div class="card mb-4">
         <div class="card-header bg-primary text-white">
@@ -46,7 +44,6 @@
         </div>
       </div>
     </div>
-    
     <div class="col-md-6">
       <div class="card mb-4">
         <div class="card-header bg-primary text-white">
@@ -64,12 +61,21 @@
           <h2>Manage users</h2>
         </div>
         <div class="card-body">
-          <p class="card-text">Here you can create, edit, and delete admins and see all the users along there registered exams.</p>
+          <p class="card-text">Here you can create, edit, and delete admins and see all the users along their registered exams.</p>
           <a href="<%= admin_users_path %>" class="btn btn-primary">Manage Users</a>
         </div>
       </div>
     </div>
-    
-    <!-- Add more cards for other admin functionalities -->
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+          <h2>Manage professors</h2>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Here you can create, edit, and delete admins and see all the users along their registered exams.</p>
+          <a href="<%= admin_professors_path %>" class="btn btn-primary">Manage Users</a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

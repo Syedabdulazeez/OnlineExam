@@ -1,13 +1,14 @@
 <div class='container'>
-<nav class="navbar  navbar-light bg-light">
-  <a class="navbar-brand float-left" href="#">Manage Departments</a>
-  <%= link_to "Home", admin_root_path, class: "btn btn-outline-primary" %>
-</nav>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand float-left" href="#">Manage Departments</a>
+    <%= link_to "Home", admin_root_path, class: "btn btn-outline-primary" %>
+  </nav>
+
   <% if notice %>
-  <div class="notice">
-    <%= notice %>
-  </div>
-<% end %>
+    <div class="notice">
+      <%= notice %>
+    </div>
+  <% end %>
 
   <p><%= link_to 'Create New Department', new_admin_department_path, class: 'btn btn-primary' %></p>
 
@@ -33,5 +34,33 @@
         <% end %>
       </tbody>
     </table>
+    <ul class="pagination justify-content-center">
+      <% if @departments.current_page > 1 %>
+        <li class="page-item">
+          <%= link_to '&laquo; Previous'.html_safe, { page: @departments.current_page - 1 }, class: 'page-link' %>
+        </li>
+      <% end %>
+
+      <% (1..@departments.total_pages).each do |page| %>
+        <% if page == @departments.current_page %>
+          <li class="page-item active">
+            <span class="page-link">
+              <%= page %>
+              <span class="visually-hidden">(current)</span>
+            </span>
+          </li>
+        <% else %>
+          <li class="page-item">
+            <%= link_to page, { page: page }, class: 'page-link' %>
+          </li>
+        <% end %>
+      <% end %>
+
+      <% if @departments.current_page < @departments.total_pages %>
+        <li class="page-item">
+          <%= link_to 'Next &raquo;'.html_safe, { page: @departments.current_page + 1 }, class: 'page-link' %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </div>

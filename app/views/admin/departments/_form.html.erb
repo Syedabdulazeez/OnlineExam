@@ -1,0 +1,12 @@
+<%= form_for([:admin, @department]) do |f| %>
+  <div class="form-group">
+    <%= f.label :department_name %>
+    <%= f.text_field :department_name, class: 'form-control' %>
+    <% if @department.errors.has_key?(:department_name) %>
+      <span class="error">
+        <%= @department.errors[:department_name].first %>
+      </span>
+    <% end %>
+  </div>
+  <%= f.submit 'Create Department', class: 'btn btn-primary' %>
+<% end %>

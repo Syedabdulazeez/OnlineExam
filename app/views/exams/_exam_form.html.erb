@@ -1,0 +1,40 @@
+<%= form_tag(submit_exam_exam_path(exam), method: :post, class: "exam-form") do %>
+  <% questions.shuffle.each_with_index do |question, index| %>
+    <div class="card mt-4">
+      <div class="card-body">
+        <h5 class="card-title">Question <%= index + 1 %>:</h5>
+        <p class="card-text lead"><%= question.question_text %></p>
+      
+        <div class="form-check form-check-lg mb-3">
+          <%= radio_button_tag "user_answers[#{index}]", 1, false, id: "answer_#{index}_1", class: "form-check-input visually-hidden" %>
+          <%= label_tag "answer_#{index}_1", question.answer1, class: "form-check-label option-label d-block fs-5" %>
+        </div>
+      
+        <div class="form-check form-check-lg mb-3">
+          <%= radio_button_tag "user_answers[#{index}]", 2, false, id: "answer_#{index}_2", class: "form-check-input visually-hidden" %>
+          <%= label_tag "answer_#{index}_2", question.answer2, class: "form-check-label option-label d-block fs-5" %>
+        </div>
+      
+        <div class="form-check form-check-lg mb-3">
+          <%= radio_button_tag "user_answers[#{index}]", 3, false, id: "answer_#{index}_3", class: "form-check-input visually-hidden" %>
+          <%= label_tag "answer_#{index}_3", question.answer3, class: "form-check-label option-label d-block fs-5" %>
+        </div>
+      
+        <div class="form-check form-check-lg mb-3">
+          <%= radio_button_tag "user_answers[#{index}]", 4, false, id: "answer_#{index}_4", class: "form-check-input visually-hidden" %>
+          <%= label_tag "answer_#{index}_4", question.answer4, class: "form-check-label option-label d-block fs-5" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  
+  <% if exam.is_demo %>
+    <div class="text-center mt-4">
+      <%= link_to 'Submit', root_path, class: 'btn btn-primary' %>
+    </div>
+  <% else %>
+    <div class="text-center mt-4">
+      <%= submit_tag "Submit", class: "btn btn-primary btn-lg" %>
+    </div>
+  <% end %>
+<% end %>

@@ -1,57 +1,34 @@
+# frozen_string_literal: true
+
+# This is a sample class representing an controller
 class LeaderboardController < ApplicationController
- def index
-  @user = current_user
-  @subject_performances = ExamPerformance.joins(:exam)
-  .where(user_id: @user.id)
-  .group('exams.subject_id')
-  .average(:marks_obtained)
-
-  @department_performances = ExamPerformance.joins(exam: :subject)
-  .where(user_id: @user.id)
-  .group('subjects.department_id')
-  .average(:marks_obtained)
-
-  @overall_rank = ExamPerformance.where(exam_id: @user.exam_performances.select(:exam_id))
-  .group(:user_id)
-  .order('SUM(marks_obtained) DESC')
-  .pluck(:user_id)
-  .index(@user.id)
-           
-
-  if @user.college.present?
-    @college_rank = ExamPerformance.joins(user: { registrations: :exam })
-    .joins(exam: { subject: :department })
-    .where(users: { college: @user.college })
-    .group(:user_id)
-    .order('SUM(marks_obtained) DESC')
-    .pluck(:user_id)
-    .index(@user.id)
-  else
-    @college_rank = nil
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def index
+    @user = current_user
+    @exam_ids_attended = ExamPerformance.exam_ids_attended(@user)
+    @exam_averages = ExamPerformance.exam_averages(@exam_ids_attended)
+    @highest_marks = ExamPerformance.highest_marks(@exam_ids_attended)
+    @exam_performances = ExamPerformance.where(exam_id: @exam_ids_attended)
+    @subject_performances = ExamPerformance.subject_performances(@user)
+    @subject_performance_hash = ExamPerformance.subject_performance_hash(@subject_performances)
+    @department_performances = ExamPerformance.department_performances(@user)
+    @department_performance_hash = ExamPerformance.department_performance_hash(@department_performances)
+    @overall_rank = ExamPerformance.overall_rank(@user)
+    @college_rank = @user.college.present? ? ExamPerformance.college_rank(@user) : nil
   end
-end
-
-  
-  
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def show
     @performance = ExamPerformance.find_by(user_id: params[:id])
     @subject = @performance.exam.subject
-
-    # Add any additional performance details you want to fetch and assign to variables
-
     render 'show'
   end
 
   def generate_report
     exam = Exam.find(params[:exam_id])
-    # Generate the PDF report using a library like Prawn or WickedPDF
     pdf = ExamReportGenerator.generate_report(exam)
-
-    # Send the PDF report via email to the current user
-    UserMailer.send_report(current_user, exam, pdf).deliver_now
-
-    flash[:success] = "Performance report generated and sent successfully!"
+    UserMailer.send_report(current_user, exam, pdf).deliver_later
+    flash[:notice] = 'Performance report generated and sent successfully!'
     redirect_to leaderboard_path
   end
 end

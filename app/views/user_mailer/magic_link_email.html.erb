@@ -1,3 +1,6 @@
-<h1>Magic Link Login</h1>
-<p>Click the link below to log in:</p>
-<p><%= link_to 'Log in with Magic Link', @magic_link %></p>
+ <div class="container">
+  <h1 class="mt-4">Magic Link Login</h1>
+  <p>Click the link below to log in:</p>
+  <p><a class="btn btn-primary" href="<%= @magic_link %>">Log in with Magic Link</a></p>
+  <p class="text-muted">Please note that this magic link will expire in 5 minutes for security purposes.</p>
+</div>

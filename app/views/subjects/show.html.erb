@@ -1,32 +1,27 @@
 <div class="container">
   <div class="subject-details">
     <h1 class="mb-4"><%= @subject.subject_name %></h1>
-
-    <!-- Display subject details -->
-
     <h2 class="mt-5 mb-3">Exams</h2>
     <% @exams.each do |exam| %>
-      <div class="card mb-3">
-        <div class="card-body">
-          <h3 class="card-title mb-3"><%= exam.exam_name %></h3>
-          
-          <p class="card-text"><strong>Exam Time:</strong> <%= exam.start_time %></p>
-          
-          <% if current_user && exam.registrations.exists?(user_id: current_user.id) %>
-            <p class="card-text text-success">You are registered for this exam.</p>
-          <% else %>
-            <p class="card-text text-danger">You are not registered for this exam.</p>
-            
-            <%if exam.start_time-24.hours <= Time.now %>
-              <p class="card-text text-danger">Registration has closed.</p>
+      <% if !exam.is_demo %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h3 class="card-title mb-3"><%= exam.exam_name %></h3>
+            <p class="card-text"><strong>Exam Time:</strong> <%= (exam.start_time + 5.hours + 30.minutes).strftime('%d/%m/%Y %I:%M %p') %></p>
+            <% if current_user && exam.registrations.exists?(user_id: current_user.id) %>
+              <p class="card-text text-success">You are registered for this exam.</p>
             <% else %>
-              <%= button_to "Register", registrations_path(exam_id: exam.id), method: :post, class: "btn btn-primary" %>
+              <p class="card-text text-danger">You are not registered for this exam.</p>
+              <% if exam.start_time - 24.hours <= Time.now %>
+                <p class="card-text text-danger">Registration has closed.</p>
+              <% else %>
+                <%= button_to "Register", registrations_path(exam_id: exam.id), method: :post, class: "btn btn-primary" %>
+              <% end %>
             <% end %>
-          <% end %>
-          
-          <!-- Display other exam details -->
+          </div>
         </div>
-      </div>
+      <% end %>
     <% end %>
   </div>
 </div>
+

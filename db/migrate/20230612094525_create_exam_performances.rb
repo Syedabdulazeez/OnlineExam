@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# This create Exam performance
 class CreateExamPerformances < ActiveRecord::Migration[6.1]
   def change
     create_table :exam_performances do |t|

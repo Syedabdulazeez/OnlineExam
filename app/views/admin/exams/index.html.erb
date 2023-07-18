@@ -1,17 +1,20 @@
-<!-- app/views/admin/exams/index.html.erb -->
-
 <div class='container'>
-<nav class="navbar  navbar-light bg-light">
-  <a class="navbar-brand float-left" href="#">Manage Exams</a>
-  <%= link_to "Home", admin_root_path, class: "btn btn-outline-primary" %>
-</nav>
-<% if notice %>
-  <div class="notice">
-    <%= notice %>
-  </div>
-<% end %>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand float-left" href="#">Manage Exams</a>
+    <%= link_to "Home", admin_root_path, class: "btn btn-outline-primary" %>
+  </nav>
 
-<div class="container">
+  <% if notice %>
+    <div class="notice">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <div class="text-center mt-3">
+    <%= link_to 'Add Exam', new_admin_exam_path, class: 'btn btn-primary' %>
+  </div>
+
+
   <div class="row">
     <% @exams.each do |exam| %>
       <div class="col-md-4 mt-5">
@@ -23,26 +26,47 @@
             <% else %>
               <span class="badge badge-secondary float-right">Actual</span>
             <% end %>
-            <p class="card-text">Exam Date: <%= exam.start_time.to_date %></p>
+            <p class="card-text">Exam Date: <%= (exam.start_time + 5.hours + 30.minutes).strftime('%m/%d/%Y') %></p>
             <p class="card-text">Exam Duration: <%= exam.duration %></p>
             <p class="card-text">Total Questions: <%= count_questions(exam) %></p>
-            <!-- Add more exam details as needed -->
           </div>
           <div class="card-footer">
             <a href="<%= admin_exam_path(exam) %>" class="btn btn-primary">View Details</a>
             <a href="<%= edit_admin_exam_path(exam) %>" class="btn btn-secondary">Edit</a>
             <a href="<%= admin_exam_path(exam) %>" class="btn btn-danger" data-confirm="Are you sure?" data-method="delete" rel="nofollow">Delete</a>
-
           </div>
         </div>
       </div>
     <% end %>
   </div>
-</div>
 
 
-  <div class="text-center mt-3">
-  <%= link_to 'Add Exam', new_admin_exam_path, class: 'btn btn-primary' %>
-</div>
-</div>
+  <ul class="pagination justify-content-center mt-4">
+    <% if @exams.current_page > 1 %>
+      <li class="page-item">
+        <%= link_to '&laquo; Previous'.html_safe, { page: @exams.current_page - 1 }, class: 'page-link' %>
+      </li>
+    <% end %>
 
+    <% (1..@exams.total_pages).each do |page| %>
+      <% if page == @exams.current_page %>
+        <li class="page-item active">
+          <span class="page-link">
+            <%= page %>
+            <span class="visually-hidden">(current)</span>
+          </span>
+        </li>
+      <% else %>
+        <li class="page-item">
+          <%= link_to page, { page: page }, class: 'page-link' %>
+        </li>
+      <% end %>
+    <% end %>
+
+    <% if @exams.current_page < @exams.total_pages %>
+      <li class="page-item">
+        <%= link_to 'Next &raquo;'.html_safe, { page: @exams.current_page + 1 }, class: 'page-link' %>
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -1,34 +1,5 @@
-<!-- app/views/admin/exams/edit.html.erb -->
-
-<h1>Edit Exam</h1>
-
-<%= form_with(model: @exam, url: admin_exam_path(@exam), class: 'form', method: 'patch') do |form| %>
-  <div class="form-group">
-    <%= form.label :exam_name %>
-    <%= form.text_field :exam_name, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :subject_id, 'Subject' %>
-    <%= form.collection_select :subject_id, @subjects, :id, :subject_name, prompt: 'Select a subject', class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :start_time, 'Exam Date and Time' %>
-    <%= form.datetime_local_field :start_time, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :duration %>
-    <%= form.number_field :duration, class: 'form-control' %>
-  </div>
- <div class="form-group">
-  <%= form.label :is_demo, 'Exam Type' %>
-  <%= form.select :is_demo, options_for_select([['Demo Exam', true], ['Actual Exam', false]], @exam.is_demo?), {}, class: 'form-control' %>
+<div class='container'>
+  <h1>Edit Exam</h1>
+  <%= render 'form', url: admin_exam_path(@exam), method: 'patch', submit_button_text: 'Update Exam' %>
+  <p><%= link_to 'Back to Exams', admin_exams_path %></p>
 </div>
-
-
-  <div class="actions">
-    <%= form.submit 'Update Exam', class: 'btn btn-primary' %>
-  </div>
-<% end %>

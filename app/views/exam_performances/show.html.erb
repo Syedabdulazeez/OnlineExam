@@ -1,14 +1,14 @@
-<!-- app/views/leaderboard/show.html.erb -->
+<div class="container mt-5">
+  <h1 class="text-center">Performance Details</h1>
 
-<h1>Performance Details</h1>
-
-<h2>User: <%= @exam_performance.user.username %></h2>
-<h2>Subject: <%= @exam_performance.exam.subject.subject_name %></h2>
-<h2>Total Marks: <%= @exam_performance.marks_obtained %></h2>
-<div class="actions">
-  <%= link_to "Home", root_path, class: "btn btn-outline-primary" %>
+  <div class="card mt-4">
+    <div class="card-body">
+      <h2 class="card-title">User: <%= @exam_performance.user.username %></h2>
+      <h2 class="card-title">Subject: <%= @exam_performance.exam.subject.subject_name %></h2>
+      <h2 class="card-title">Your score: <%= @exam_performance.marks_obtained %></h2>
+      <div class="text-center mt-4">
+        <%= link_to "Home", root_path, class: "btn btn-outline-primary" %>
+      </div>
+    </div>
+  </div>
 </div>
-<p>
-  <!-- Add any additional performance details you want to display -->
-</p>
-

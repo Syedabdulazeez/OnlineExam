@@ -1,36 +1,66 @@
-<!-- app/views/admin/subjects/index.html.erb -->
-
 <div class='container'>
-<nav class="navbar  navbar-light bg-light">
-  <a class="navbar-brand float-left" href="#">Manage Exams</a>
-<%= link_to "Home", admin_root_path, class: "btn btn-outline-primary" %></nav>
-<% if notice %>
-  <div class="notice">
-    <%= notice %>
-  </div>
-<% end %>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand float-left" href="#">Manage Exams</a>
+    <%= link_to "Home", admin_root_path, class: "btn btn-outline-primary" %>
+  </nav>
 
-<p><%= link_to 'Create New Subject', new_admin_subject_path, class: 'btn btn-primary' %></p>
+  <% if notice %>
+    <div class="notice">
+      <%= notice %>
+    </div>
+  <% end %>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Name</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @subjects.each do |subject| %>
+  <p><%= link_to 'Create New Subject', new_admin_subject_path, class: 'btn btn-primary' %></p>
+
+  <table class="table table-striped">
+    <thead>
       <tr>
-        <td><%= subject.id %></td>
-        <td><%= subject.subject_name %></td>
-        <td>
-          <%= link_to 'Edit', edit_admin_subject_path(subject), class: 'btn btn-secondary' %>
-          <%= link_to 'Delete', admin_subject_path(subject), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-        </td>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Actions</th>
       </tr>
+    </thead>
+    <tbody>
+      <% @subjects.each do |subject| %>
+        <tr>
+          <td><%= subject.id %></td>
+          <td><%= subject.subject_name %></td>
+          <td>
+            <%= link_to 'Edit', edit_admin_subject_path(subject), class: 'btn btn-secondary' %>
+            <%= link_to 'Delete', admin_subject_path(subject), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <ul class="pagination justify-content-center">
+    <% if @subjects.current_page > 1 %>
+      <li class="page-item">
+        <%= link_to '&laquo; Previous'.html_safe, { page: @subjects.current_page - 1 }, class: 'page-link' %>
+      </li>
     <% end %>
-  </tbody>
-</table>
+
+    <% (1..@subjects.total_pages).each do |page| %>
+      <% if page == @subjects.current_page %>
+        <li class="page-item active">
+          <span class="page-link">
+            <%= page %>
+            <span class="visually-hidden">(current)</span>
+          </span>
+        </li>
+      <% else %>
+        <li class="page-item">
+          <%= link_to page, { page: page }, class: 'page-link' %>
+        </li>
+      <% end %>
+    <% end %>
+
+    <% if @subjects.current_page < @subjects.total_pages %>
+      <li class="page-item">
+        <%= link_to 'Next &raquo;'.html_safe, { page: @subjects.current_page + 1 }, class: 'page-link' %>
+      </li>
+    <% end %>
+  </ul>
+
 </div>

@@ -1,45 +1,74 @@
-
 <div class='container'>
-<nav class="navbar  navbar-light bg-light">
-  <a class="navbar-brand float-left" href="#">Manage Questions</a>
-<%= link_to "Home", admin_root_path, class: "btn btn-outline-primary" %></nav>
-<% if notice %>
-  <div class="notice">
-    <%= notice %>
-  </div>
-<% end %>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand float-left" href="#">Manage Questions</a>
+    <%= link_to "Home", admin_root_path, class: "btn btn-outline-primary" %>
+  </nav>
+  <% if notice %>
+    <div class="notice">
+      <%= notice %>
+    </div>
+  <% end %>
 
-<%= link_to 'Add New Question', new_admin_question_path, class: 'btn btn-primary' %>
-<table class="table">
-  <thead>
-    <tr>
-      <th>Exam</th>
-      <th>Question Text</th>
-      <th>Answer1</th>
-      <th>Answer2</th>
-      <th>Answer3</th>
-      <th>Answer4</th>
-      <th>Correct Answer</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @questions.each do |question| %>
+  <%= link_to 'Add New Question', new_admin_question_path, class: 'btn btn-primary' %>
+
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= question.exam.exam_name %></td>
-        <td><%= question.question_text %></td>
-        <td><%= question.answer1 %></td>
-        <td><%= question.answer2 %></td>
-        <td><%= question.answer3 %></td>
-        <td><%= question.answer4 %></td>
-        <td><%= question.correct_answer %></td>
-        <td>
-          <%= link_to 'Edit', edit_admin_question_path(question), class: 'btn btn-secondary' %>
-          <%= link_to 'Delete', admin_question_path(question), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-        </td>
+        <th>Exam</th>
+        <th>Question Text</th>
+        <th>Answer1</th>
+        <th>Answer2</th>
+        <th>Answer3</th>
+        <th>Answer4</th>
+        <th>Correct Answer</th>
+        <th>Actions</th>
       </tr>
+    </thead>
+    <tbody>
+      <% @questions.each do |question| %>
+        <tr>
+          <td><%= question.exam.exam_name %></td>
+          <td><%= question.question_text %></td>
+          <td><%= question.answer1 %></td>
+          <td><%= question.answer2 %></td>
+          <td><%= question.answer3 %></td>
+          <td><%= question.answer4 %></td>
+          <td><%= question.correct_answer %></td>
+          <td>
+            <%= link_to 'Edit', edit_admin_question_path(question), class: 'btn btn-secondary' %>
+            <%= link_to 'Delete', admin_question_path(question), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  
+  <ul class="pagination justify-content-center">
+    <% if @questions.current_page > 1 %>
+      <li class="page-item">
+        <%= link_to '&laquo; Previous'.html_safe, { page: @questions.current_page - 1 }, class: 'page-link' %>
+      </li>
     <% end %>
-  </tbody>
-</table>
-</div>
 
+    <% (1..@questions.total_pages).each do |page| %>
+      <% if page == @questions.current_page %>
+        <li class="page-item active">
+          <span class="page-link">
+            <%= page %>
+            <span class="visually-hidden">(current)</span>
+          </span>
+        </li>
+      <% else %>
+        <li class="page-item">
+          <%= link_to page, { page: page }, class: 'page-link' %>
+        </li>
+      <% end %>
+    <% end %>
+
+    <% if @questions.current_page < @questions.total_pages %>
+      <li class="page-item">
+        <%= link_to 'Next &raquo;'.html_safe, { page: @questions.current_page + 1 }, class: 'page-link' %>
+      </li>
+    <% end %>
+  </ul>
+</div>

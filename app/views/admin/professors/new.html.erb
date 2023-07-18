@@ -1,0 +1,5 @@
+<div class='container'>
+  <h1>Add New Professor</h1>
+  <%= render 'form', professor: @professor, url: admin_professors_path, method: :post, submit_button_text: 'Add Professor' %>
+  <p><%= link_to 'Back to professors', admin_professors_path %></p>
+</div>

@@ -1,16 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-  <style>
-    /* Add your custom email styling here */
-  </style>
-</head>
-<body>
+ <div class="container">
   <h2>Exam Reminder</h2>
   <p>Hello <%= @user.username %>,</p>
   
-  <p>This is a friendly reminder that you have an exam scheduled for <%= @exam.subject.subject_name %> in <%= @time_before %>.</p>
+  <p>This is a friendly reminder that you have an exam scheduled for <%= @exam.exam_name %> in <%= @time_before %>.</p>
 
   <p>Please make sure to prepare yourself and be ready for the exam.</p>
 
@@ -22,5 +14,4 @@
 
   <p>Regards,</p>
   <p>Your Application Team</p>
-</body>
-</html>
+</div>

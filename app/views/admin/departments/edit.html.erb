@@ -1,12 +1,7 @@
-<!-- app/views/admin/departments/edit.html.erb -->
-
-<h1>Edit Department</h1>
-
-<%= form_for(@department, url: admin_department_path(@department), method: :patch) do |f| %>
-  <div class="form-group">
-    <%= f.label :department_name %>
-    <%= f.text_field :department_name, class: 'form-control' %>
-  </div>
-
-  <%= f.submit 'Update', class: 'btn btn-primary' %>
-<% end %>
+<div class='container'>
+  <h1>Edit Department</h1>
+  <%= form_for(@department, url: admin_department_path(@department), method: :patch) do |f| %>
+    <%= render 'form', f: f %>
+  <% end %>
+  <p><%= link_to 'Back to Departments', admin_departments_path %></p>
+</div>

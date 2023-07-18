@@ -1,0 +1,35 @@
+<div class="container">
+  <%= form_with(model: professor, url: url, method: method, local: true) do |form| %>
+    <div class="form-group">
+      <%= form.label :name %>
+      <%= form.text_field :name, class: "form-control" %>
+      <% if form.object.errors.has_key?(:name) %>
+        <span class="error">
+          <%= form.object.errors[:name].first %>
+        </span>
+      <% end %>
+    </div>
+    <div class="form-group">
+      <%= form.label :department_id, "Department" %>
+      <%= form.collection_select :department_id, Department.all, :id, :department_name, { include_blank: true }, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= form.label :summary %>
+      <%= form.text_area :summary, class: "form-control" %>
+      <% if form.object.errors.has_key?(:summary) %>
+        <span class="error">
+          <%= form.object.errors[:summary].first %>
+        </span>
+      <% end %>
+    </div>
+    <div class="form-group">
+      <%= form.label :linkedin_link, "LinkedIn Profile" %>
+      <%= form.text_field :linkedin_link, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= form.label :profile_picture, "Profile Picture" %>
+      <%= form.file_field :profile_picture, class: "form-control" %>
+    </div>
+    <%= form.submit submit_button_text, class: "btn btn-primary" %>
+  <% end %>
+</div>

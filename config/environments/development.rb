@@ -1,6 +1,8 @@
-require "active_support/core_ext/integer/time"
+# rubocop:disable all
+# frozen_string_literal: true
 
-
+# This is development file
+require 'active_support/core_ext/integer/time'
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -84,7 +86,4 @@ Rails.application.configure do
     authentication: 'plain',
     enable_starttls_auto: true
   }
-
-  
-  
 end

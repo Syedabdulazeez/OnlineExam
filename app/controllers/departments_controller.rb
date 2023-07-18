@@ -1,10 +1,9 @@
+# frozen_string_literal: true
+
+# This is a sample class representing an controller
 class DepartmentsController < ApplicationController
-    def index
-      @departments = Department.all
-    end
-  
-    def show
-      @department = Department.find(params[:id])
-      @subjects = @department.subjects
-    end
+  def show
+    @department = Department.find(params[:id])
+    @subjects = @department.subjects
   end
+end

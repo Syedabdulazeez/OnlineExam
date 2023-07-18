@@ -1,68 +1,99 @@
-<!-- app/views/admin/students/index.html.erb -->
 <div class='container'>
-<nav class="navbar  navbar-light bg-light">
-  <a class="navbar-brand float-left" href="#">Manage Users</a>
-<%= link_to "Home", admin_root_path, class: "btn btn-outline-primary" %></nav>
+  <nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand float-left" href="#">Manage Users</a>
+    <%= link_to "Home", admin_root_path, class: "btn btn-outline-primary" %>
+  </nav>
 
-<h1>Manage admins</h1>
-<% if notice %>
-  <div class="notice">
-    <%= notice %>
+  <h1>Manage admins</h1>
+
+  <% if notice %>
+    <div class="notice">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |student| %>
+        <% if student.admin && student != current_user %>
+          <tr>
+            <td><%= student.username %></td>
+            <td><%= student.email %></td>
+            <td>
+              <%= link_to 'Edit', edit_admin_user_path(student), class: 'btn btn-secondary' %>
+              <%= link_to 'Delete', admin_user_path(student), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+
+  <div class="mb-3">
+    <%= link_to 'Add New Admin', new_admin_user_path, class: 'btn btn-primary' %>
   </div>
-<% end %>
-<table class="table table-bordered table-striped">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |student| %>
-      <% if student.admin %>
-        <tr>
-          <td><%= student.username %></td>
-          <td><%= student.email %></td>
-          <td>
-            <%= link_to 'Edit', edit_admin_user_path(student), class: 'btn btn-secondary' %>
-            <%= link_to 'Delete', admin_user_path(student), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-          </td>
-        </tr>
+
+
+  <h1>Manage Students</h1>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Registered Exams</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |student| %>
+        <% unless student.admin %>
+          <tr>
+            <td><%= student.username %></td>
+            <td><%= student.email %></td>
+            <td>
+              <% student.registrations.each do |registration| %>
+                <span class="badge badge-primary"><%= registration.exam.exam_name %></span><br>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+  <ul class="pagination justify-content-center">
+    <% if @users.current_page > 1 %>
+      <li class="page-item">
+        <%= link_to '&laquo; Previous'.html_safe, { page: @users.current_page - 1 }, class: 'page-link' %>
+      </li>
+    <% end %>
+
+    <% (1..@users.total_pages).each do |page| %>
+      <% if page == @users.current_page %>
+        <li class="page-item active">
+          <span class="page-link">
+            <%= page %>
+            <span class="visually-hidden">(current)</span>
+          </span>
+        </li>
+      <% else %>
+        <li class="page-item">
+          <%= link_to page, { page: page }, class: 'page-link' %>
+        </li>
       <% end %>
     <% end %>
-  </tbody>
-</table>
 
-<div class="mb-3">
-  <%= link_to 'Add New Admin', new_admin_user_path, class: 'btn btn-primary' %>
-</div>
-
-
-<h1>Manage Students</h1>
-
-<table class="table table-bordered table-striped">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Registered Exams</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |student| %>
-      <% unless student.admin %>
-        <tr>
-          <td><%= student.username %></td>
-          <td><%= student.email %></td>
-          <td>
-            <% student.registrations.each do |registration| %>
-              <span class="badge badge-primary"><%= registration.exam.exam_name %></span><br>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
+    <% if @users.current_page < @users.total_pages %>
+      <li class="page-item">
+        <%= link_to 'Next &raquo;'.html_safe, { page: @users.current_page + 1 }, class: 'page-link' %>
+      </li>
     <% end %>
-  </tbody>
-</table>
+  </ul>
+
 </div>

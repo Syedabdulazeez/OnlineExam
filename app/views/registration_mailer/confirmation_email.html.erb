@@ -8,11 +8,10 @@
   <div class="container">
     <h1>Exam Registration Confirmation</h1>
     <p class="lead">Congratulations!🥳️</p>
-    <p>Your registration for the exam in <%= @registration.exam.subject.subject_name%> has been confirmed.</p>
+    <p>Your registration for the exam in <%= @registration.exam.exam_name%> has been confirmed.</p>
     <p>You can now access your dashboard by clicking the button below:</p>
     <a href="http://localhost:3000/" class="btn btn-primary">Go to Dashboard</a>
     <p class="mt-4">Best of luck for your exam!</p>
-    <!-- Include other email content as needed -->
   </div>
 </body>
 </html>
