@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
     if params[:token].present?
       perform_magic_link_login
     elsif logged_in?
-      redirect_to root_path
+      redirect_to root_path, notice: 'login successful'
     end
   end
 
@@ -16,15 +16,16 @@ class SessionsController < ApplicationController
     user = User.find_by(username: params[:username])
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to user&.admin? ? admin_root_path : root_path
+      redirect_to user&.admin? ? admin_root_path : root_path,
+                  notice: user&.admin? ? 'admin login success' : 'login success'
     else
-      render :new
+      redirect_to login_path, alert: 'Incorrect username or password.'
     end
   end
 
   def destroy
     session.delete :user_id
-    redirect_to login_path
+    redirect_to login_path, alert: 'Logout successful!'
   end
 
   def omniauth
@@ -32,7 +33,7 @@ class SessionsController < ApplicationController
     if user
       log_in_user(user)
     else
-      redirect_to login_path
+      redirect_to login_path, alert: 'something went wrong'
     end
   end
 
@@ -40,7 +41,7 @@ class SessionsController < ApplicationController
     token = params[:token]
     user = User.find_by(magic_link_token: token)
 
-    if user && user.updated_at >= 1.minutes.ago
+    if user && user.updated_at >= 5.minutes.ago
       session[:user_id] = user.id
       redirect_to root_path, notice: 'Magic link login successful!'
     else

@@ -14,23 +14,15 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      redirect_to root_path
+      redirect_to root_path notice: 'signup successful'
     else
-      render :new
+      render :new, alert: 'Incorrect username or password.'
 
     end
   end
 
   def show
     @user = User.find(params[:id])
-  end
-
-  def dashboard
-    @exams = current_user.upcoming_exams
-    @exams.each do |exam|
-      exam.registration = current_user.registrations.find_by(exam_id: exam.id)
-      exam.already_taken = exam.registration&.completed?
-    end
   end
 
   def edit
