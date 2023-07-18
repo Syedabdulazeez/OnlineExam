@@ -78,11 +78,11 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: ENV['SMTP_ADDRESS'],
+    address: Rails.application.credentials.smtp_address,
     port: 587,
     domain: 'smtp.google.com',
-    user_name: ENV['USER_NAME'],
-    password: ENV['GOOGLE_MAIL_PASSWORD'],
+    user_name: Rails.application.credentials.user_name,
+    password: Rails.application.credentials.google_mail_password,
     authentication: 'plain',
     enable_starttls_auto: true
   }
