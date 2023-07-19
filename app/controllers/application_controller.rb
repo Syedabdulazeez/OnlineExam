@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   def dashboard
     if !logged_in?
-      redirect_to login_path, alert: 'Incorrect username or password.'
+      redirect_to login_path
     elsif current_user.admin
       redirect_to admin_root_path
     else
