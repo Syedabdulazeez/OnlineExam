@@ -12,6 +12,8 @@ module Admin
 
     def show
       @exam = Exam.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to admin_root_path, notice: 'Sorry recard not found !'
     end
 
     def edit
@@ -19,6 +21,8 @@ module Admin
       @subjects = Subject.all
       @exam_type_options = ['Demo Exam', 'Actual Exam']
       @selected_exam_type = @exam.is_demo? ? 'Demo Exam' : 'Actual Exam'
+    rescue ActiveRecord::RecordNotFound
+      redirect_to admin_root_path, notice: 'Sorry recard not found !'
     end
 
     def update

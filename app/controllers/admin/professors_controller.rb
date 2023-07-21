@@ -16,6 +16,8 @@ module Admin
 
     def edit
       @professor = Professor.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to admin_root_path, notice: 'Sorry recard not found !'
     end
 
     def update

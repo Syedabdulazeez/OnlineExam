@@ -6,6 +6,8 @@ class ExamsController < ApplicationController
     @exam = Exam.find(params[:id])
     @questions = @exam.shuffled_questions
     @department = @exam.subject.department
+  rescue ActiveRecord::RecordNotFound
+    redirect_to registrations_path, notice: 'Sorry recard not found !'
   end
 
   def conduct

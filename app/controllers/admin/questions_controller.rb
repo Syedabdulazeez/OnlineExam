@@ -27,6 +27,8 @@ module Admin
     def edit
       @question = Question.find(params[:id])
       @exams = Exam.all
+    rescue ActiveRecord::RecordNotFound
+      redirect_to admin_root_path, notice: 'Sorry recard not found !'
     end
 
     def update
