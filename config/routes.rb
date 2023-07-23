@@ -10,25 +10,17 @@ Rails.application.routes.draw do
   get '/magic', to: 'sessions#magic'
   get '/login/magic_link', to: 'sessions#magic_link_login', as: :magic_link_login
   get 'auth/:provider/callback', to: 'sessions#omniauth'
-  resources :magic_link_authentications
-  resources :dashboards
-  resources :leaderboard
-  resources :exam_performances
-  resources :options
-  resources :questions
-  resources :registrations
-  resources :subjects
-  resources :departments
-  resources :users
+  resources :leaderboard, only: %i[show index]
+  resources :exam_performances, only: [:show]
+  resources :registrations, only: %i[show index new]
+  resources :subjects, only: [:show]
+  resources :departments, only: [:show]
+  resources :users, except: %i[index destroy]
 
   resources :magic_link_authentication do
     member do
       post 'create', to: 'magic_link_authentication#create'
     end
-  end
-
-  resources :exams do
-    resources :registrations
   end
 
   resources :exams, only: [:show] do
@@ -47,12 +39,12 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root 'admin#index'
-    resources :departments
-    resources :subjects
+    resources :departments, except: [:show]
+    resources :subjects, except: [:show]
     resources :exams
-    resources :questions
-    resources :users
-    resources :professors
+    resources :questions, except: [:show]
+    resources :users, except: [:show]
+    resources :professors, except: [:show]
   end
 end
 # rubocop:enable Metrics/BlockLength
