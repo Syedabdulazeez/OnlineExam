@@ -4,6 +4,8 @@
 class ExamPerformancesController < ApplicationController
   def show
     @exam_performance = ExamPerformance.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path, notice: 'Sorry recard not found !'
   end
 
   def generate_report

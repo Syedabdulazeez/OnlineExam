@@ -1,0 +1,114 @@
+[33mcommit 5085cbf6d6e1e1771c18ef5c1d8022a60e7e97f6[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Author: syedabdulazeez <syed.abdulazeez@kreeti.com>
+Date:   Sun Jul 23 15:34:01 2023 +0530
+
+    routes are modifyied
+
+[33mcommit 2b5aacc0b6e5b748df9e3cb07a1dd4cf24a9a64b[m[33m ([m[1;31morigin/master[m[33m)[m
+Author: syedabdulazeez <syed.abdulazeez@kreeti.com>
+Date:   Fri Jul 21 13:00:37 2023 +0530
+
+    safe login added
+
+[33mcommit 9dbe9c624e03fb6c4814f0e45a2e33647c6c0050[m
+Author: syedabdulazeez <syed.abdulazeez@kreeti.com>
+Date:   Fri Jul 21 12:50:27 2023 +0530
+
+    app crashes fixed
+
+[33mcommit 8c212fec9a72d07bad58553ddd0b43fd9262831e[m
+Author: syedabdulazeez <syed.abdulazeez@kreeti.com>
+Date:   Wed Jul 19 15:06:10 2023 +0530
+
+    alert messages modifyied
+
+[33mcommit b66ba68d43c0b679115f323fb7482c9f5e560f33[m
+Author: syedabdulazeez <syed.abdulazeez@kreeti.com>
+Date:   Tue Jul 18 18:26:30 2023 +0530
+
+    alertmessges added
+
+[33mcommit 26c095c3e1fa6edc0ba0c83f3ced94ae15f268df[m
+Author: syedabdulazeez <syed.abdulazeez@kreeti.com>
+Date:   Tue Jul 18 11:40:44 2023 +0530
+
+    master-key-added
+
+[33mcommit ee875859462c01bd81fca72b7316992341bd9521[m
+Merge: 15f75ac eff0d14
+Author: syedabdulazeez <syed.abdulazeez@kreeti.com>
+Date:   Tue Jul 18 11:22:07 2023 +0530
+
+    Merge branch 'master' of github.com-kreeti:Syedabdulazeez/rails_project
+
+[33mcommit 15f75acdff8228ee56b99819fb4cec44114032ea[m
+Author: syedabdulazeez <syed.abdulazeez@kreeti.com>
+Date:   Tue Jul 18 11:16:35 2023 +0530
+
+    ENV file removed
+
+[33mcommit eff0d14f8f56849ca37f145f672a849684e1905a[m
+Author: Syedabdulazeez <128378948+Syedabdulazeez@users.noreply.github.com>
+Date:   Tue Jul 18 10:17:32 2023 +0530
+
+    Update README.md
+
+[33mcommit ff11a2b93076fadb2333c4487c907143407508e8[m
+Author: syedabdulazeez <syed.abdulazeez@kreeti.com>
+Date:   Tue Jul 18 10:11:06 2023 +0530
+
+    all requirement completed
+
+[33mcommit d6af5285d40e78ab8b8a139cc14a8d6c9796ba0a[m
+Author: syedabdulazeez <syed.abdulazeez@kreeti.com>
+Date:   Mon Jul 10 14:03:28 2023 +0530
+
+    upadated some ui
+
+[33mcommit 09edf0d1397eeafe7ec27ae813a2966ebedb62f8[m
+Author: syedabdulazeez <syed.abdulazeez@kreeti.com>
+Date:   Fri Jul 7 16:31:03 2023 +0530
+
+    elastic search
+
+[33mcommit 9515905ec7b684233756939a0cb8ce88a615ffb0[m
+Author: syedabdulazeez <syed.abdulazeez@kreeti.com>
+Date:   Thu Jul 6 15:15:29 2023 +0530
+
+    ranking completed in leader board
+
+[33mcommit d3302d33c15d3c9319c151c8134e69a699fb2ae4[m
+Author: syedabdulazeez <syed.abdulazeez@kreeti.com>
+Date:   Thu Jul 6 10:41:11 2023 +0530
+
+    leader board graph completed
+
+[33mcommit 26ad7c1742d33b1b0a095111256723957cb767ff[m
+Author: syedabdulazeez <syed.abdulazeez@kreeti.com>
+Date:   Tue Jul 4 15:04:06 2023 +0530
+
+    admin p-2 completed
+
+[33mcommit c8096b9e3541d3f63ea952164457c8c2eade9924[m
+Author: syedabdulazeez <syed.abdulazeez@kreeti.com>
+Date:   Mon Jul 3 20:01:50 2023 +0530
+
+    admin pannel crud-1
+
+[33mcommit 6adc73ef1fcfd3b24a800cb31cb659eb1b6e6a4e[m
+Author: syedabdulazeez <syed.abdulazeez@kreeti.com>
+Date:   Mon Jul 3 19:41:44 2023 +0530
+
+    admin crud-1
+
+[33mcommit d28d093268676f9d5d368c366c9b0cf3bfd6bb89[m
+Author: syedabdulazeez <syed.abdulazeez@kreeti.com>
+Date:   Fri Jun 30 10:54:48 2023 +0530
+
+    exam cuduction module
+
+[33mcommit 955b829fe84adb64a6c7a7df49786102f2cf4653[m
+Author: syedabdulazeez <syed.abdulazeez@kreeti.com>
+Date:   Wed Jun 28 10:53:55 2023 +0530
+
+    initial commit
