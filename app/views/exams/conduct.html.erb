@@ -2,6 +2,11 @@
   <div class="row">
     <div class="col-md-8 offset-md-2">
       <h1 class="text-center mb-4">Conduct Exam</h1>
+      <% if flash[:error] %>
+        <div class="error-message text-danger">
+          <%= flash[:error] %>
+        </div>
+      <% end %>
       <%= render 'exam_form', exam: @exam, questions: @questions %>
     </div>
   </div>

@@ -42,6 +42,6 @@ class ExamsController < ApplicationController
 
   def handle_no_user_answers(exam)
     flash[:error] = 'Please select answers for all questions.'
-    redirect_to exam_path(exam_id: exam.id)
+    redirect_to conduct_exam_path(exam_id: exam.id)
   end
 end
