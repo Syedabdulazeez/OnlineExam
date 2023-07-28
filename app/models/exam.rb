@@ -1,15 +1,24 @@
 # frozen_string_literal: true
 
-# This is a sample class representing an model
+# This is a class representing an model
 class Exam < ApplicationRecord
   belongs_to :subject
-  has_many :registrations
+  has_many :registrations, dependent: :destroy
   has_many :users, through: :registrations
-  has_many :questions
-  has_many :exam_performances
+  has_many :questions, dependent: :destroy
+  has_many :exam_performances, dependent: :destroy
 
   validates :exam_name, presence: true, length: { minimum: 3, message: 'must contain at least 3 letters' }
-  validates :start_time, presence: true
+  validates :subject_id, presence: { message: 'Please select subject' }
+  validate :start_time_must_be_future
+  validates :start_time, presence: { message: 'Time cannot be blank' }
+  validates :duration, presence: true, numericality: { greater_than: 0, message: 'must be greater than zero' }
+
+  def start_time_must_be_future
+    return unless start_time.present? && start_time <= DateTime.now
+
+    errors.add(:start_time, 'must be in the future')
+  end
 
   def shuffled_questions
     questions.to_a.shuffle
@@ -38,11 +47,9 @@ class Exam < ApplicationRecord
 
   settings do
     mappings dynamic: 'false' do
-      # Define the mappings for your Exam model attributes
       indexes :exam_name, type: 'text'
       indexes :start_time, type: 'date'
       indexes :duration, type: 'integer'
-      # Add more mappings as needed
     end
   end
 
@@ -87,7 +94,4 @@ class Exam < ApplicationRecord
     }
     __elasticsearch__.search(search_definition).records
   end
-
-  after_commit -> { __elasticsearch__.index_document }, on: %i[create update]
-  after_commit -> { __elasticsearch__.delete_document }, on: :destroy
 end

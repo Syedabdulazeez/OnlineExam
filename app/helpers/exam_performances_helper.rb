@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# This is a sample class representing an helper
+# This is a class representing an helper
 module ExamPerformancesHelper
   def font_styles(pdf)
     pdf.font_size 18

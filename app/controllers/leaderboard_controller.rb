@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# This is a sample class representing an controller
+# This is a class representing an controller
 class LeaderboardController < ApplicationController
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def index
@@ -21,7 +21,6 @@ class LeaderboardController < ApplicationController
   def show
     @performance = ExamPerformance.find_by(user_id: params[:id])
     @subject = @performance.exam.subject
-    render 'show'
   end
 
   def generate_report

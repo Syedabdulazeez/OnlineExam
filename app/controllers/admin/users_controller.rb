@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
-# This is a sample class representing an Application controller
 module Admin
   # class Admin::Admin::DepartmentsController
   class UsersController < ApplicationController
     before_action :authenticate_admin
+    before_action :find_user, only: %i[edit update destroy]
+
     def index
       @users = User.includes(:registrations).page(params[:page]).per(20)
     end
@@ -24,14 +25,9 @@ module Admin
       end
     end
 
-    def edit
-      @user = User.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to admin_root_path, notice: 'Sorry recard not found !'
-    end
+    def edit; end
 
     def update
-      @user = User.find(params[:id])
       if @user.update(user_params)
         redirect_to admin_users_path, notice: 'Admin was successfully updated.'
       else
@@ -40,12 +36,17 @@ module Admin
     end
 
     def destroy
-      @user = User.find(params[:id])
       @user.destroy
       redirect_to admin_users_path, notice: 'Admin was successfully destroyed.'
     end
 
     private
+
+    def find_user
+      @user = User.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to admin_root_path, notice: 'Sorry record not found!'
+    end
 
     def user_params
       params.require(:user).permit(:username, :email, :password)

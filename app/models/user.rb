@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-# This is a sample class representing an model
+# This is a class representing an model
 class User < ApplicationRecord
   has_secure_password
   has_many :exam_performances
   has_many :registrations
   has_many :exams, through: :registrations
 
-  validates :username, presence: true, length: { minimum: 3 }
+  validates :username, presence: true, length: { minimum: 3 }, uniqueness: true
   validates :email, presence: true, uniqueness: true,
                     format: { with: /\A[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]+\z/, message: 'must be a valid email address' }
 

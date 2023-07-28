@@ -1,24 +1,23 @@
-<!-- _user_form_fields.html.erb -->
 <div class="form-group">
-  <%= form.label :username %>
+  <%= form.label :username, class:'required' %>
   <%= form.text_field :username, class: "form-control", placeholder: "Enter your username" %>
   <% if @user.errors[:username].any? %>
-    <div class="color-danger"><%= @user.errors[:username].first %></div>
+    <div class="text-danger"><%= @user.errors[:username].first %></div>
   <% end %>
 </div>
 
 <div class="form-group">
-  <%= form.label :email %>
+  <%= form.label :email, class:'required' %>
   <%= form.email_field :email, class: "form-control", placeholder: "Enter your email" %>
   <% if @user.errors[:email].any? %>
-    <div class="color-danger"><%= @user.errors[:email].first %></div>
+    <div class="text-danger"><%= @user.errors[:email].first %></div>
   <% end %>
 </div>
 
 <div class="form-group">
-  <%= form.label :password %>
+  <%= form.label :password, class:'required' %>
   <%= form.password_field :password, class: "form-control", placeholder: "Enter your password" %>
   <% if @user.errors[:password].any? %>
-    <div class="color-danger"><%= @user.errors[:password].first %></div>
+    <div class="text-danger"><%= @user.errors[:password].first %></div>
   <% end %>
 </div>

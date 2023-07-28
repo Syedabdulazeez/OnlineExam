@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# This is a sample class representing an mailer
+# This is a class representing an mailer
 class PerformanceReportMailer < ApplicationMailer
   def send_report(exam_performance, pdf)
     @exam_performance = exam_performance

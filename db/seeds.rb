@@ -33,13 +33,13 @@ Subject.all.each do |subject|
     @start = if i == 1
                Time.current + 25.hours # Start time for demo exam (current time + 25 hours)
              else
-               Time.current - 25.hours # Start time for actual exams (current time - 25 hours)
+               Time.current + 1.second # Start time for actual exams (current time +1 second)
              end
 
     Exam.create!(
       subject_id: subject.id,
       start_time: @start,
-      duration: 120, # Assuming each exam has a duration of 2 hours (in minutes)
+      duration: 60, # Assuming each exam has a duration of 1 hours (in minutes)
       created_at: Time.current,
       updated_at: Time.current,
       exam_name: "#{subject.subject_name} Exam #{i + 1}",
@@ -60,7 +60,7 @@ Exam.all.each do |exam|
       answer2: 'Answer 2',
       answer3: 'Answer 3',
       answer4: 'Answer 4',
-      correct_answer: rand(1..4) # Randomly assign correct answer between 1 and 4
+      correct_answer: rand(1..4) # Randomly assign correct answer between 1 to 4
     )
   end
 end
@@ -69,7 +69,7 @@ User.create!(
   username: 'user1',
   email: 'normal_user@example.com',
   password: '1234',
-  password_confirmation: '1234', # Corrected password confirmation
+  password_confirmation: '1234',
   created_at: Time.current,
   updated_at: Time.current,
   college: 'Example College',
@@ -81,7 +81,7 @@ User.create!(
   username: 'admin',
   email: 'admin_user@example.com',
   password: '1234',
-  password_confirmation: '1234', # Corrected password confirmation
+  password_confirmation: '1234', 
   created_at: Time.current,
   updated_at: Time.current,
   college: 'Example College',
@@ -120,8 +120,6 @@ user.registrations.each do |registration|
     updated_at: Time.current
   )
 end
-
-# db/seeds.rb
 
 # Professor data
 professors_data = [

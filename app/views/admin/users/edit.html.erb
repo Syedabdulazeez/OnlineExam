@@ -1,8 +1,10 @@
+<div class='container'>
 <h1>Edit User</h1>
 <%= form_with(model: @user, url: admin_user_path(@user), method: 'patch') do |form| %>
   <%= render 'user_form_fields', form: form %>
 
   <div class="form-group">
-    <%= form.submit 'Update User', class: 'btn btn-primary' %>
+    <%= form.submit 'Update Admin', class: 'btn btn-primary' %>
   </div>
 <% end %>
+</div>

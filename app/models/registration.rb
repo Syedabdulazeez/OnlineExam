@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# This is a sample class representing an model
+# This is a class representing an model
 class Registration < ApplicationRecord
   belongs_to :user
   belongs_to :exam

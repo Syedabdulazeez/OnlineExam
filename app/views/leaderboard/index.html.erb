@@ -18,7 +18,7 @@
             Profile
           </a>
           <div class="dropdown-menu" aria-labelledby="userDropdown">
-            <%= link_to "Profile", user_path(current_user), class: "dropdown-item" %>
+            <%= link_to "Profile", user_path(@current_user), class: "dropdown-item" %>
             <%= link_to "Log Out", logout_path, class: "dropdown-item" %>
           </div>
         </li>
@@ -75,9 +75,9 @@
           <% end %>
           <% @exam_averages.each do |exam_id, average_marks| %>
             <% exam = Exam.find_by(id: exam_id) %>
-            <% performance = @exam_performances.find_by(exam_id: exam_id, user_id: current_user) %>
+            <% performance = @exam_performances.find_by(exam_id: exam_id, user_id: @current_user) %>
             <% highest_marks = @highest_marks[exam_id] %>
-            <% user_performance = @exam_performances.find_by(exam_id: exam_id, user_id: current_user.id) %>
+            <% user_performance = @exam_performances.find_by(exam_id: exam_id, user_id: @current_user.id) %>
             <tr>
               <td><%= exam ? exam.exam_name : 'Exam not found' %></td>
               <td><%= user_performance ? user_performance.marks_obtained : 'N/A' %></td>

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# This is a sample class representing an  controller
+# This is a class representing an  controller
 class UsersController < ApplicationController
   def new
     if !logged_in?
@@ -17,7 +17,6 @@ class UsersController < ApplicationController
       redirect_to root_path notice: 'signup successful'
     else
       render :new, alert: 'Incorrect username or password.'
-
     end
   end
 

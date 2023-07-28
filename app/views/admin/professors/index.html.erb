@@ -5,7 +5,7 @@
   </nav>
 
   <% if notice %>
-    <div class="notice">
+    <div class="notice text-info">
       <%= notice %>
     </div>
   <% end %>
@@ -30,7 +30,6 @@
             <% if professor.profile_picture.attached? %>
               <%= image_tag professor.profile_picture, class: "profile-picture rounded-circle", style: "width: 50px; height: 50px;" %>
             <% else %>
-              <!-- Placeholder image or default image -->
               <%= image_tag "default_img", class: "profile-picture rounded-circle", style: "width: 50px; height: 50px;" %>
             <% end %>
           </td>

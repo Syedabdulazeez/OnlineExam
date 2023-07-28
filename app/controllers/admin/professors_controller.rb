@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-# This is a sample class representing an Application controller
 module Admin
   # class Admin::Admin::professorsController
   class ProfessorsController < ApplicationController
     before_action :authenticate_admin
+    before_action :find_professor, only: %i[edit update destroy]
 
     def new
       @professor = Professor.new
@@ -14,15 +14,9 @@ module Admin
       @professors = Professor.page(params[:page]).per(15)
     end
 
-    def edit
-      @professor = Professor.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to admin_root_path, notice: 'Sorry recard not found !'
-    end
+    def edit; end
 
     def update
-      @professor = Professor.find(params[:id])
-
       if @professor.update(professor_params)
         redirect_to admin_professors_path, notice: 'Professor updated successfully.'
       else
@@ -40,22 +34,20 @@ module Admin
     end
 
     def destroy
-      @professor = Professor.find(params[:id])
       @professor.destroy
-
       redirect_to admin_professors_path, notice: 'Professor deleted successfully.'
     end
 
     private
 
-    def professor_params
-      params.require(:professor).permit(:name, :department_id, :summary, :linkedin_link, :profile_picture)
+    def find_professor
+      @professor = Professor.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to admin_root_path, notice: 'Sorry record not found!'
     end
 
-    def authenticate_admin
-      return if current_user&.admin?
-
-      redirect_to root_path, alert: 'You are not authorized to perform this action.'
+    def professor_params
+      params.require(:professor).permit(:name, :department_id, :summary, :linkedin_link, :profile_picture)
     end
   end
 end

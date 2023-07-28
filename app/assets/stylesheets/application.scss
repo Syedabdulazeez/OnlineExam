@@ -16,3 +16,9 @@
  
 @import 'bootstrap';
 
+.required::after{
+  content: " * ";
+  color: red;
+  font-weight: 100;
+}
+

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# class Admin::AdminController
 module Admin
   # class Admin::AdminController
   class AdminController < ApplicationController

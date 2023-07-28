@@ -1,17 +1,18 @@
 # frozen_string_literal: true
 
-# This is a sample class representing an Application controller
 module Admin
   # class Admin::Admin::DepartmentsController
   class SubjectsController < ApplicationController
     before_action :authenticate_admin
+    before_action :find_subject, only: %i[edit update destroy]
+    before_action :load_departments, only: %i[new create edit update]
+
     def index
       @subjects = Subject.page(params[:page]).per(12)
     end
 
     def new
       @subject = Subject.new
-      @departments = Department.all
     end
 
     def create
@@ -19,44 +20,39 @@ module Admin
       if @subject.save
         redirect_to admin_subjects_path, notice: 'Subject was successfully created.'
       else
-        @departments = Department.all
         render :new
       end
     end
 
-    def edit
-      @subject = Subject.find(params[:id])
-      @departments = Department.all
-    rescue ActiveRecord::RecordNotFound
-      redirect_to admin_root_path, notice: 'Sorry recard not found !'
-    end
+    def edit; end
 
     def update
-      @subject = Subject.find(params[:id])
       if @subject.update(subject_params)
         redirect_to admin_subjects_path, notice: 'Subject was successfully updated.'
       else
-        @departments = Department.all
         render :edit
       end
     end
 
     def destroy
-      @subject = Subject.find(params[:id])
       @subject.destroy
       redirect_to admin_subjects_path, notice: 'Subject was successfully destroyed.'
     end
 
     private
 
+    def find_subject
+      @subject = Subject.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to admin_root_path, notice: 'Sorry record not found!'
+    end
+
     def subject_params
       params.require(:subject).permit(:subject_name, :department_id)
     end
 
-    def authenticate_admin
-      return if current_user&.admin?
-
-      redirect_to root_path, alert: 'You are not authorized to perform this action.'
+    def load_departments
+      @departments = Department.all
     end
   end
 end

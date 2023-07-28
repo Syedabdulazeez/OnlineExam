@@ -7,7 +7,7 @@
   <h1>Manage admins</h1>
 
   <% if notice %>
-    <div class="notice">
+    <div class="notice text-info">
       <%= notice %>
     </div>
   <% end %>
@@ -22,7 +22,7 @@
     </thead>
     <tbody>
       <% @users.each do |student| %>
-        <% if student.admin && student != current_user %>
+        <% if student.admin && student != @current_user %>
           <tr>
             <td><%= student.username %></td>
             <td><%= student.email %></td>

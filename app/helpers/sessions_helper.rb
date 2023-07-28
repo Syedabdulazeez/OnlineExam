@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# This is a sample class representing an controller
+# This is a class representing an controller
 module SessionsHelper
   def find_or_create_user_from_omniauth(auth)
     User.find_or_create_by(uid: auth[:uid], provider: auth[:provider]) do |u|

@@ -1,17 +1,22 @@
 <%= form_with(model: subject, url: url, method: method, class: 'form') do |form| %>
   <div class="form-group">
-    <%= form.label :subject_name %>
+    <%= form.label :subject_name, class:'required' %>
     <%= form.text_field :subject_name, class: 'form-control' %>
     <% if form.object.errors.has_key?(:subject_name) %>
-      <span class="error">
+      <span class="error text-danger">
         <%= form.object.errors[:subject_name].first %>
       </span>
     <% end %>
   </div>
 
   <div class="form-group">
-    <%= form.label :department_id, 'Department' %>
+    <%= form.label :department_id, 'Department', class:'required' %>
     <%= form.collection_select :department_id, departments, :id, :department_name, prompt: 'Select a department', class: 'form-control' %>
+    <% if form.object.errors.has_key?(:department_id) %>
+    <span class="error text-danger">
+      <%= form.object.errors[:department_id].first %>
+    </span>
+  <% end %>
   </div>
 
   <div class="actions">

@@ -20,7 +20,7 @@
               Profile
             </a>
             <div class="dropdown-menu" aria-labelledby="userDropdown">
-              <%= link_to "Profile", user_path(current_user), class: "dropdown-item" %>
+              <%= link_to "Profile", user_path(@current_user), class: "dropdown-item" %>
               <a href="logout" class="dropdown-item">Log Out</a>
             </div>
           </li>

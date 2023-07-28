@@ -1,9 +1,23 @@
 # frozen_string_literal: true
 
-# This is a sample class representing an controller
+# This is a representing an controller
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
   include ApplicationHelper
+
+  def authenticate_admin
+    return if current_user&.admin?
+
+    redirect_to root_path, alert: 'You are not authorized to perform this action.'
+  end
+
+  def current_user
+    @current_user ||= User.find_by(id: session[:user_id])
+  end
+
+  def logged_in?
+    current_user
+  end
 
   def dashboard
     if !logged_in?
@@ -12,7 +26,7 @@ class ApplicationController < ActionController::Base
       redirect_to admin_root_path
     else
       @user = current_user
-      @exams = upcoming_exams(current_user, 10)
+      @exams = upcoming_exams(current_user, 15)
     end
   end
 end

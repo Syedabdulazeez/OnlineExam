@@ -41,13 +41,13 @@
         <p class="card-text">Duration: <%= exam.duration %> minutes</p>
         <div class="row">
           <div class="col-md-6">
-            <% registration = current_user.registrations.find_by(exam_id: exam.id) %>
+            <% registration = @current_user.registrations.find_by(exam_id: exam.id) %>
             <% if Time.now < exam.start_time %>
               <span class="disabled-link">The exam will start at <%= (exam.start_time + 5.hours + 30.minutes).strftime('%I:%M %p') %>. Please wait.</span>
             <% elsif Time.now > (exam.start_time + exam.duration.minutes) %>
               <span class="disabled-link">The exam has ended.</span>
             <% elsif registration %>
-              <% if current_user.exam_in_progress?(exam) || registration.started? %>
+              <% if @current_user.exam_in_progress?(exam) || registration.started? %>
                 <% if registration.completed? %>
                   <span class="disabled-link">You have already submitted this exam.</span>
                 <% else %>

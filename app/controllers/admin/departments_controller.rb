@@ -4,6 +4,7 @@ module Admin
   # class Admin::Admin::DepartmentsController
   class DepartmentsController < Admin::AdminController
     before_action :authenticate_admin
+    before_action :find_department, only: %i[edit update destroy]
 
     def index
       @departments = Department.page(params[:page]).per(12)
@@ -23,19 +24,14 @@ module Admin
     end
 
     def destroy
-      @department = Department.find(params[:id])
-      @department.destroy
+      return unless @department.destroy
+
       redirect_to admin_departments_path, notice: 'Department was successfully destroyed.'
     end
 
-    def edit
-      @department = Department.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      redirect_to admin_root_path, notice: 'Sorry recard not found !'
-    end
+    def edit; end
 
     def update
-      @department = Department.find(params[:id])
       if @department.update(department_params)
         redirect_to admin_departments_path, notice: 'Department was successfully updated.'
       else
@@ -49,10 +45,10 @@ module Admin
       params.require(:department).permit(:department_name)
     end
 
-    def authenticate_admin
-      return if current_user&.admin?
-
-      redirect_to root_path, alert: 'You are not authorized to perform this action.'
+    def find_department
+      @department = Department.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to admin_root_path, notice: 'Sorry record not found!'
     end
   end
 end

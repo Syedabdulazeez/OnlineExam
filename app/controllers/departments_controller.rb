@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# This is a sample class representing an controller
+# This is a class representing an controller
 class DepartmentsController < ApplicationController
   def show
     @department = Department.find_by(id: params[:id])
