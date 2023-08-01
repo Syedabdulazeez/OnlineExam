@@ -9,7 +9,8 @@ class RegistrationsController < ApplicationController
       @search_term = params[:search]
       @department_options = Department.all
       @subject_options = subject_options(params[:department])
-      @exams = filter_and_sort_exams(Exam.all, params)
+      exams = filter_and_sort_exams(Exam.all, params)
+      @exams = exams.page(params[:page]).per(20)
     else
       redirect_to root_path
     end

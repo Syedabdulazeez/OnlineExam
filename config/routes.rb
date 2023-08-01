@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#new', as: 'login'
   post '/login', to: 'sessions#create'
   get '/logout', to: 'sessions#destroy'
+  get '/users', to: 'users#new', as: 'signup'
   post '/magic', to: 'sessions#magic'
   get '/magic', to: 'sessions#magic'
   get '/login/magic_link', to: 'sessions#magic_link_login', as: :magic_link_login

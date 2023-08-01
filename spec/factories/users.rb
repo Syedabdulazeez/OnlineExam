@@ -1,10 +1,15 @@
 # frozen_string_literal: true
 
-# spec/factories/users.rb
 FactoryBot.define do
+  sequence :email do |n|
+    "john.doe#{n}@example.com"
+  end
+
   factory :user do
-    username { 'JohnDoe' }
-    email { 'john.doe@example.com' }
+    sequence :username do |n|
+      "JohnDoe#{n}"
+    end
+    email { generate(:email) }
     password { 'password' }
   end
 end

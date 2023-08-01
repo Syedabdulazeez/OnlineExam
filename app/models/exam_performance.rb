@@ -35,49 +35,6 @@ class ExamPerformance < ApplicationRecord
     add_footer(pdf)
   end
 
-  def self.exam_ids_attended(user)
-    where(user:).pluck(:exam_id)
-  end
-
-  def self.exam_averages(exam_ids_attended)
-    where(exam_id: exam_ids_attended).group(:exam_id).average(:marks_obtained)
-  end
-
-  def self.highest_marks(exam_ids_attended)
-    where(exam_id: exam_ids_attended).group(:exam_id).maximum(:marks_obtained)
-  end
-
-  def self.subject_performances(user)
-    joins(exam: :subject).where(user_id: user.id).group('exams.subject_id').average(:marks_obtained)
-  end
-
-  def self.department_performances(user)
-    joins(exam: { subject: :department })
-      .where(user_id: user.id)
-      .group('subjects.department_id')
-      .average(:marks_obtained)
-  end
-
-  def self.department_performance_hash(department_performances)
-    department_performance_hash = {}
-    department_performances.each do |performance_id, average_score|
-      department = Department.find_by(id: performance_id)
-      department_name = department ? department.department_name : 'Department not found'
-      department_performance_hash[department_name] = average_score
-    end
-    department_performance_hash
-  end
-
-  def self.subject_performance_hash(subject_performances)
-    subject_performance_hash = {}
-    subject_performances.each do |performance_id, average_score|
-      subject = Subject.find_by(id: performance_id)
-      subject_name = subject ? subject.subject_name : 'Subject not found'
-      subject_performance_hash[subject_name] = average_score
-    end
-    subject_performance_hash
-  end
-
   def self.overall_rank(user)
     where(exam_id: Exam.all.pluck(:id))
       .group(:user_id)
@@ -94,5 +51,59 @@ class ExamPerformance < ApplicationRecord
       .order('AVG(marks_obtained) DESC')
       .pluck(:user_id)
       .index(user.id)
+  end
+
+  def self.performances_summary(user)
+    {
+      exam_ids_attended: get_exam_ids_attended(user),
+      exam_averages: get_exam_averages(get_exam_ids_attended(user)),
+      highest_marks: get_highest_marks(get_exam_ids_attended(user)),
+      exam_performances: get_exam_performances(get_exam_ids_attended(user)),
+      department_performance: get_department_performances(user),
+      subject_performance: get_subject_performances(user)
+    }
+  end
+
+  def self.get_exam_ids_attended(user)
+    where(user:).pluck(:exam_id)
+  end
+
+  def self.get_exam_averages(exam_ids_attended)
+    where(exam_id: exam_ids_attended).group(:exam_id).average(:marks_obtained)
+  end
+
+  def self.get_highest_marks(exam_ids_attended)
+    where(exam_id: exam_ids_attended).group(:exam_id).maximum(:marks_obtained)
+  end
+
+  def self.get_exam_performances(exam_ids_attended)
+    where(exam_id: exam_ids_attended)
+  end
+
+  def self.get_department_performances(user)
+    department_performances = joins(exam: { subject: :department })
+                              .where(user_id: user.id)
+                              .group('subjects.department_id')
+                              .average(:marks_obtained)
+
+    department_performance_hash = {}
+    department_performances.each do |performance_id, average_score|
+      department = Department.find_by(id: performance_id)
+      department_performance_hash[department.department_name] = average_score
+    end
+
+    department_performance_hash
+  end
+
+  def self.get_subject_performances(user)
+    subject_performances = joins(exam: :subject)
+                           .where(user_id: user.id)
+                           .group('exams.subject_id')
+                           .average(:marks_obtained)
+
+    subject_performances.transform_keys do |performance_id|
+      subject = Subject.find_by(id: performance_id)
+      subject ? subject.subject_name : 'Subject not found'
+    end
   end
 end

@@ -4,7 +4,7 @@ FactoryBot.define do
   FactoryBot.define do
     factory :subject do
       department
-      sequence(:subject_name) { |n| "Subject #{n}" }
+      sequence(:subject_name) { |_n| 'Subject' }
     end
   end
 end

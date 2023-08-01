@@ -56,9 +56,9 @@ class Exam < ApplicationRecord
   # rubocop:disable Metrics/MethodLength
   def self.search_by_exam_name(search_term)
     search_definition = {
-      size: 100,
+      size: 20,
       query: {
-        match_phrase: {
+        match_phrase_prefix: {
           exam_name: {
             query: search_term.downcase
           }

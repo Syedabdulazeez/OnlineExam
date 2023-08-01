@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :exam do
     exam_name { 'Sample Exam' }
-    start_time { Time.now }
+    start_time { Time.now + 1.hour }
     duration { 60 }
     association :subject
 

@@ -3,7 +3,7 @@
     <%= form.label :username, class:'required' %>
     <%= form.text_field :username, class: "form-control", placeholder: "Enter your username" %>
     <% @user.errors.full_messages_for(:username).each do |message| %>
-     <div class="text-danger"> <%= message %></div>
+     <div id="notice" class="text-danger"> <%= message %></div>
     <% end %>
   </div>
   
@@ -11,7 +11,7 @@
     <%= form.label :email, class:'required' %>
     <%= form.email_field :email, class: "form-control", placeholder: "Enter your email" %>
     <% @user.errors.full_messages_for(:email).each do |message| %>
-      <span class="text-danger">
+      <span id="notice" class="text-danger">
         <%= message %>
       </span>
     <% end %>
@@ -21,7 +21,7 @@
     <%= form.label :password, class: 'required' %>
     <%= form.password_field :password, class: "form-control", placeholder: "Enter your password" %>
     <% @user.errors.full_messages_for(:password).each do |message| %>
-      <span class="text-danger">
+      <span id="notice" class="text-danger">
         <%= message %>
       </span>
     <% end %>

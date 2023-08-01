@@ -19,13 +19,13 @@ class SessionsController < ApplicationController
       redirect_to user&.admin? ? admin_root_path : root_path,
                   notice: user&.admin? ? 'admin login success' : 'login success'
     else
-      redirect_to login_path, alert: 'Incorrect username or password.'
+      redirect_to login_path, notice: 'Incorrect username or password.'
     end
   end
 
   def destroy
     session.delete :user_id
-    redirect_to login_path, alert: 'Logout successful!'
+    redirect_to login_path
   end
 
   def omniauth
@@ -33,7 +33,7 @@ class SessionsController < ApplicationController
     if user
       log_in_user(user)
     else
-      redirect_to login_path, alert: 'something went wrong'
+      redirect_to login_path, notice: 'something went wrong'
     end
   end
 
@@ -45,7 +45,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       redirect_to root_path, notice: 'Magic link login successful!'
     else
-      redirect_to root_path, alert: 'Invalid or expired magic link!'
+      redirect_to root_path, notice: 'Invalid or expired magic link!'
     end
   end
 end

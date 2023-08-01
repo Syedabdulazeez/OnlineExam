@@ -18,9 +18,9 @@
         <div class="card bg-glass">
           <div class="card-body px-4 py-5 px-md-5">
             <h1 class="text-center">Login here:</h1>
-            <% if alert %>
-              <div class="alert text-danger">
-                <%= alert %>
+            <% if notice %>
+              <div id="notice" class="notice text-danger">
+                <%= notice %>
               </div>
             <% end %>
             <%= form_with url: login_path, class: "login-form" do |f| %>
@@ -35,7 +35,7 @@
               <div class="form-group">
                 <%= f.submit "Login", class: "btn btn-primary btn-block" %>
               </div>
-              <%= link_to 'New user', new_user_path, class: "signup-link" %>
+              <%= link_to 'New user', signup_path, class: "signup-link" %>
             <% end %>
             <h3 class="text-center">Login with</h3>
             <%= button_to 'Google', '/auth/google_oauth2', class: "btn btn-google btn-block btn-outline-primary" %>

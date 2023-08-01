@@ -1,11 +1,12 @@
+<%= javascript_pack_tag 'flash_message'%>
 <div class="container">
   <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand float-left" href="#">Admin Dashboard</a>
-    <%= link_to "Log Out", logout_path, class: "btn btn-outline-primary" %>
+    <%= link_to "Log Out", logout_path, class: "btn btn-primary" %>
   </nav>
 
   <% if notice %>
-    <div class="notice text-success">
+    <div id="notice" class="notice text-success">
       <%= notice %>
     </div>
   <% end %>

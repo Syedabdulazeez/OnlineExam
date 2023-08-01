@@ -1,4 +1,17 @@
 <div class="container">
+ <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-toggler h4 text-dark" href="#"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+      </ul>
+      <ul class="navbar-nav">
+        <%= link_to '<-Back ',department_path(@subject.department) , class: "nav-link"  %>
+      </ul>
+    </div>
+  </nav>
   <div class="subject-details">
     <h1 class="mb-4"><%= @subject.subject_name %></h1>
     <h2 class="mt-5 mb-3">Exams</h2>
@@ -8,7 +21,7 @@
           <div class="card-body">
             <h3 class="card-title mb-3"><%= exam.exam_name %></h3>
             <p class="card-text"><strong>Exam Time:</strong> <%= (exam.start_time + 5.hours + 30.minutes).strftime('%d/%m/%Y %I:%M %p') %></p>
-            <% if current_user && exam.registrations.exists?(user_id: current_user.id) %>
+            <% if @current_user && exam.registrations.exists?(user_id: current_user.id) %>
               <p class="card-text text-success">You are registered for this exam.</p>
             <% else %>
               <p class="card-text text-danger">You are not registered for this exam.</p>

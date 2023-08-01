@@ -31,14 +31,23 @@ RSpec.describe Subject, type: :model do
   end
 
   describe 'associations' do
+    let(:department) { FactoryBot.create(:department) }
+
     it 'belongs to a department' do
-      association = described_class.reflect_on_association(:department)
-      expect(association.macro).to eq(:belongs_to)
+      subject = FactoryBot.create(:subject, department:)
+      expect(subject.department).to eq(department)
     end
 
-    it 'has many exams' do
-      association = described_class.reflect_on_association(:exams)
-      expect(association.macro).to eq(:has_many)
+    it 'has many exams with dependent destroy' do
+      subject = FactoryBot.create(:subject, department:)
+      exam1 = FactoryBot.create(:exam, subject:)
+      exam2 = FactoryBot.create(:exam, subject:)
+
+      expect(subject.exams).to include(exam1, exam2)
+
+      subject.destroy
+      expect(Exam.where(id: exam1.id)).not_to exist
+      expect(Exam.where(id: exam2.id)).not_to exist
     end
   end
 end

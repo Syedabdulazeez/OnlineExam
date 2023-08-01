@@ -5,6 +5,5 @@ FactoryBot.define do
     association :department
     name { 'John Doe' }
     summary { 'Lorem ipsum dolor sit amet' }
-    # Add any other attributes as needed
   end
 end

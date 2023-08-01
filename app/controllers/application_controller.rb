@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   def authenticate_admin
     return if current_user&.admin?
 
-    redirect_to root_path, alert: 'You are not authorized to perform this action.'
+    redirect_to root_path, notice: 'You are not authorized to perform this action.'
   end
 
   def current_user
@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     elsif current_user.admin
       redirect_to admin_root_path
     else
-      @user = current_user
+      @user ||= current_user
       @exams = upcoming_exams(current_user, 15)
     end
   end

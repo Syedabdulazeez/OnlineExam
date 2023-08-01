@@ -1,4 +1,17 @@
 <div class="container">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-toggler h4 text-dark" href="#"></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto">
+      </ul>
+      <ul class="navbar-nav">
+        <%= link_to 'Dash Board', root_path, class: "nav-link"  %>
+      </ul>
+    </div>
+  </nav>
   <h1><%= @department.department_name %></h1>
 
   <p class="mb-4">No. of past exams: <%= @department.exams.select { |exam| exam.start_time < DateTime.now && !exam.is_demo }.count %></p>

@@ -10,12 +10,12 @@ class ExamsController < ApplicationController
   end
 
   def demo_exam
-    @demo_exam = @exam.demo_exam
+    @demo_exam ||= @exam.demo_exam
   end
 
   def show
-    @department = @exam.subject.department
-    @questions = @exam.shuffled_questions
+    @department ||= @exam.subject.department
+    @questions ||= @exam.shuffled_questions
   rescue ActiveRecord::RecordNotFound
     redirect_to registrations_path, notice: 'Sorry record not found!'
   end

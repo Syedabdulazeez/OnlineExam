@@ -9,6 +9,5 @@ FactoryBot.define do
     answer3 { 'Option 3' }
     answer4 { 'Option 4' }
     correct_answer { 'Option 1' }
-    # Add any other attributes as needed
   end
 end

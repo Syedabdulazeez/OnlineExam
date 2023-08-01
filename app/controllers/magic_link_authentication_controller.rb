@@ -10,7 +10,7 @@ class MagicLinkAuthenticationController < ApplicationController
       UserMailer.magic_link_email(user).deliver_now
       flash[:notice] = 'Magic link has been sent to your email.'
     else
-      flash[:alert] = 'User with this email does not exist.'
+      flash[:notice] = 'User with this email does not exist.'
       redirect_to root_path
     end
   end

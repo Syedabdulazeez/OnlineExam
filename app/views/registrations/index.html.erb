@@ -1,13 +1,18 @@
 <div class="container">
   <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <a class="navbar-toggler h4 text-dark"  href="#">Registrations</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <%= link_to "Dash Board", root_path, class: "nav-link" %>
           </li>
-          <li>
-            <a class="navbar-brand" href="#">Registrations</a>
+          <li class="nav-item">
+            <%= link_to "Registrations", registrations_path, class: "nav-link text-dark h5" %>
           </li>
           <li class="nav-item">
             <%= link_to "Leader Board", leaderboard_index_path(@user), class: "nav-link" %>
@@ -41,7 +46,7 @@
   </div>
 
   <% if notice %>
-    <div class="notice text-success">
+    <div id="notice" class="notice text-success">
       <%= notice %>
     </div>
   <% end %>
@@ -78,4 +83,33 @@
       <% end %>
     </tbody>
   </table>
+  
+  <ul class="pagination justify-content-center">
+    <% if @exams.current_page > 1 %>
+      <li class="page-item">
+        <%= link_to '&laquo; Previous'.html_safe, { page: @exams.current_page - 1 }, class: 'page-link' %>
+      </li>
+    <% end %>
+
+    <% (1..@exams.total_pages).each do |page| %>
+      <% if page == @exams.current_page %>
+        <li class="page-item active">
+          <span class="page-link">
+            <%= page %>
+            <span class="visually-hidden">(current)</span>
+          </span>
+        </li>
+      <% else %>
+        <li class="page-item">
+          <%= link_to page, { page: page }, class: 'page-link' %>
+        </li>
+      <% end %>
+    <% end %>
+
+    <% if @exams.current_page < @exams.total_pages %>
+      <li class="page-item">
+        <%= link_to 'Next &raquo;'.html_safe, { page: @exams.current_page + 1 }, class: 'page-link' %>
+      </li>
+    <% end %>
+  </ul>
 </div>

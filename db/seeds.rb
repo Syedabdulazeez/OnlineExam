@@ -81,7 +81,7 @@ User.create!(
   username: 'admin',
   email: 'admin_user@example.com',
   password: '1234',
-  password_confirmation: '1234', 
+  password_confirmation: '1234',
   created_at: Time.current,
   updated_at: Time.current,
   college: 'Example College',

@@ -14,14 +14,14 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      redirect_to root_path notice: 'signup successful'
+      redirect_to root_path, notice: 'signup successful'
     else
-      render :new, alert: 'Incorrect username or password.'
+      render :new
     end
   end
 
   def show
-    @user = User.find(params[:id])
+    @user ||= User.find(params[:id])
   rescue ActiveRecord::RecordNotFound
     redirect_to root_path, notice: 'Sorry recard not found !'
   end

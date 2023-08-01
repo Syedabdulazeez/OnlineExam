@@ -1,31 +1,36 @@
 <div class="container">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <%= link_to "Dash Board", root_path, class: "nav-link" %>
-        </li>
-        <li class="nav-item">
-          <%= link_to "Registrations", registrations_path, class: "nav-link" %>
-        </li>
-        <li class="nav-item">
-          <a class="navbar-brand" href="#">Leader Board</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Profile
-          </a>
-          <div class="dropdown-menu" aria-labelledby="userDropdown">
-            <%= link_to "Profile", user_path(@current_user), class: "dropdown-item" %>
-            <%= link_to "Log Out", logout_path, class: "dropdown-item" %>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </nav>
+  <a class="navbar-toggler h4 text-dark" href="#">Leader Board</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <%= link_to "Dash Board", root_path, class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Registrations", registrations_path, class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Leader Board", leaderboard_index_path(@user), class: "nav-link h5 text-dark" %>
+      </li>
+    </ul>
+    <ul class="navbar-nav">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Profile
+        </a>
+        <div class="dropdown-menu" aria-labelledby="userDropdown">
+          <%= link_to "Profile", user_path(@current_user), class: "dropdown-item" %>
+          <a href="logout" class="dropdown-item">Log Out</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
 
+  
   <div class="row mt-4">
     <div class="col-md-6">
       <div class="card bg-light">
@@ -33,7 +38,7 @@
           <h2 class="card-title">Your Rank</h2>
           <div class="row">
             <div class="col">
-              <% if @user.college.present? %>
+              <% if @current_user.college.present? %>
                 <% if @college_rank %>
                   <p class="card-text">College Rank: <%= @college_rank + 1 %></p>
                 <% end %>
@@ -51,6 +56,7 @@
       </div>
     </div>
   </div>
+
   <div class="row mt-5">
     <div class="col-md-6">
       <h2>Your Exam-wise Performance</h2>
@@ -68,17 +74,17 @@
         <tbody>
           <% if notice %>
             <tr>
-              <div class="notice text-success">
+              <div id="notice" class="notice text-success">
                 <%= notice %>
               </div>
             </tr>
           <% end %>
-          <% @exam_averages.each do |exam_id, average_marks| %>
+          <% @performances_summary[:exam_averages].each do |exam_id, average_marks| %>
             <% exam = Exam.find_by(id: exam_id) %>
-            <% performance = @exam_performances.find_by(exam_id: exam_id, user_id: @current_user) %>
-            <% highest_marks = @highest_marks[exam_id] %>
-            <% user_performance = @exam_performances.find_by(exam_id: exam_id, user_id: @current_user.id) %>
-            <tr>
+            <% performance = @performances_summary[:exam_performances].find_by(exam_id: exam_id, user_id: @current_user) %>
+            <% highest_marks = @performances_summary[:highest_marks][exam_id] %>
+            <% user_performance = @performances_summary[:exam_performances].find_by(exam_id: exam_id, user_id: @current_user.id) %>
+             <tr>
               <td><%= exam ? exam.exam_name : 'Exam not found' %></td>
               <td><%= user_performance ? user_performance.marks_obtained : 'N/A' %></td>
               <td><%= average_marks %></td>
@@ -87,9 +93,9 @@
               <td>
                 <% if exam && user_performance %>
                   <%= column_chart [
+                  ['Your Mark', user_performance.marks_obtained],
                   ['Average Mark', average_marks],
-                  ['Highest Mark', highest_marks],
-                  ['Your Mark', user_performance.marks_obtained]
+                  ['Highest Mark', highest_marks]
                   ], library: { responsive: true } %>
                 <% end %>
               </td>
@@ -106,17 +112,14 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Performance ID</th>
             <th>Subject</th>
             <th>Average Score</th>
           </tr>
         </thead>
         <tbody>
-          <% @subject_performances.each do |performance_id, average_score| %>
+          <% @performances_summary[:subject_performance].each do |subject, average_score| %>
             <tr>
-              <td><%= performance_id %></td>
-              <% subject = Subject.find_by(id: performance_id) %>
-              <td><%= subject ? subject.subject_name : 'Subject not found' %></td>
+              <td><%=subject%></td>
               <td><%= average_score %></td>
             </tr>
           <% end %>
@@ -126,7 +129,7 @@
 
     <div class="col-md-6">
       <h2>Your Subject-wise Performance Chart</h2>
-      <%= pie_chart @subject_performance_hash %>
+      <%= pie_chart @performances_summary[:subject_performance] %>
     </div>
   </div>
 
@@ -136,17 +139,14 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Performance ID</th>
             <th>Department</th>
             <th>Average Score</th>
           </tr>
         </thead>
         <tbody>
-          <% @department_performances.each do |performance_id, average_score| %>
+          <% @performances_summary[:department_performance].each do |department, average_score| %>
             <tr>
-              <td><%= performance_id %></td>
-              <% department = Department.find_by(id: performance_id) %>
-              <td><%= department ? department.department_name : 'Department not found' %></td>
+              <td><%= department%></td>
               <td><%= average_score %></td>
             </tr>
           <% end %>
@@ -156,7 +156,7 @@
 
     <div class="col-md-6">
       <h2>Your Department-wise Performance Chart</h2>
-      <%= pie_chart @department_performance_hash %>
+      <%= pie_chart @performances_summary[:department_performance] %>
     </div>
   </div>
 </div>
