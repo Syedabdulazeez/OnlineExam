@@ -8,23 +8,27 @@ class SessionsController < ApplicationController
     if params[:token].present?
       perform_magic_link_login
     elsif logged_in?
-      redirect_to root_path, notice: 'login successful'
+      flash[:success] = 'login successful'
+      redirect_to root_path
     end
   end
 
   def create
     user = User.find_by(username: params[:username])
+
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to user&.admin? ? admin_root_path : root_path,
-                  notice: user&.admin? ? 'admin login success' : 'login success'
+      flash[:success] = user&.admin? ? 'admin login success' : 'login success'
+      redirect_to user&.admin? ? admin_root_path : root_path
     else
-      redirect_to login_path, notice: 'Incorrect username or password.'
+      flash[:danger] = 'Incorrect username or password.'
+      redirect_to login_path
     end
   end
 
   def destroy
     session.delete :user_id
+    flash[:success] = 'logout successful'
     redirect_to login_path
   end
 
@@ -33,7 +37,8 @@ class SessionsController < ApplicationController
     if user
       log_in_user(user)
     else
-      redirect_to login_path, notice: 'something went wrong'
+      flash[:danger] = 'something went wrong'
+      redirect_to login_path
     end
   end
 
@@ -43,9 +48,11 @@ class SessionsController < ApplicationController
 
     if user && user.updated_at >= 5.minutes.ago
       session[:user_id] = user.id
-      redirect_to root_path, notice: 'Magic link login successful!'
+      flash[:success] = 'Magic link login successful!'
+      redirect_to root_path
     else
-      redirect_to root_path, notice: 'Invalid or expired magic link!'
+      flash[:success] = 'Invalid or expired magic link!'
+      redirect_to login_path
     end
   end
 end

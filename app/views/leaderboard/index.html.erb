@@ -1,3 +1,4 @@
+<%= javascript_pack_tag 'flash_message'%>
 <div class="container">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-toggler h4 text-dark" href="#">Leader Board</a>
@@ -72,13 +73,9 @@
           </tr>
         </thead>
         <tbody>
-          <% if notice %>
-            <tr>
-              <div id="notice" class="notice text-success">
-                <%= notice %>
-              </div>
-            </tr>
-          <% end %>
+
+          <%= render 'shared/flash' %>
+
           <% @performances_summary[:exam_averages].each do |exam_id, average_marks| %>
             <% exam = Exam.find_by(id: exam_id) %>
             <% performance = @performances_summary[:exam_performances].find_by(exam_id: exam_id, user_id: @current_user) %>

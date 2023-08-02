@@ -4,7 +4,7 @@ require 'rails_helper'
 # rubocop:disable Metrics/BlockLength
 RSpec.describe Subject, type: :model do
   describe 'validations' do
-    let(:department) { FactoryBot.create(:department) } # Create a valid Department object
+    let(:department) { FactoryBot.create(:department) }
 
     it 'is valid with valid attributes' do
       subject = FactoryBot.build(:subject, department:)

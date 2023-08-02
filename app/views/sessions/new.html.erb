@@ -1,3 +1,4 @@
+<%= javascript_pack_tag 'flash_message'%>
 <%= stylesheet_link_tag('login_css') %>
 <section class="background-radial-gradient overflow-hidden">
   <div class="container px-4 py-5 px-md-5 text-center text-lg-start my-5">
@@ -18,11 +19,7 @@
         <div class="card bg-glass">
           <div class="card-body px-4 py-5 px-md-5">
             <h1 class="text-center">Login here:</h1>
-            <% if notice %>
-              <div id="notice" class="notice text-danger">
-                <%= notice %>
-              </div>
-            <% end %>
+            <%= render 'shared/flash' %>
             <%= form_with url: login_path, class: "login-form" do |f| %>
               <div class="form-group">
                 <%= f.label :username, class:'required' %>

@@ -17,7 +17,7 @@ class LeaderboardController < ApplicationController
     exam = Exam.find(params[:exam_id])
     pdf = ExamReportGenerator.generate_report(exam)
     UserMailer.send_report(current_user, exam, pdf).deliver_later
-    flash[:notice] = 'Performance report generated and sent successfully!'
+    flash[:success] = 'Performance report generated and sent successfully!'
     redirect_to leaderboard_path
   end
 end

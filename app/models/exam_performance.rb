@@ -7,20 +7,16 @@ class ExamPerformance < ApplicationRecord
   belongs_to :exam
 
   def generate_report
-    # Generate the performance report PDF using Prawn
     pdf = Prawn::Document.new
     generate_performance_report(pdf)
 
-    # Save the PDF temporarily on the server
     pdf_temp_file = Tempfile.new(['performance_report', '.pdf'], 'tmp')
     pdf_temp_file.binmode
     pdf_temp_file.write(pdf.render)
     pdf_temp_file.rewind
 
-    # Send the report via email using Action Mailer
     PerformanceReportMailer.send_report(self, pdf_temp_file).deliver_now
 
-    # Close and delete the temporary file
     pdf_temp_file.close
     pdf_temp_file.unlink
   end

@@ -5,13 +5,9 @@
     <%= link_to "Log Out", logout_path, class: "btn btn-primary" %>
   </nav>
 
-  <% if notice %>
-    <div id="notice" class="notice text-success">
-      <%= notice %>
-    </div>
-  <% end %>
+  <%= render 'shared/flash' %>
 
-  <div class="row mt-5">
+  <div class="row">
     <div class="col-md-6">
       <div class="card mb-4">
         <div class="card-header bg-primary text-white">

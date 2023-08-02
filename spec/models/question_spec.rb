@@ -4,7 +4,7 @@ require 'rails_helper'
 # rubocop:disable Metrics/BlockLength
 RSpec.describe Question, type: :model do
   describe 'validations' do
-    let(:exam) { FactoryBot.create(:exam) } # Create a valid Exam object
+    let(:exam) { FactoryBot.create(:exam) }
 
     it 'is valid with valid attributes' do
       question = FactoryBot.build(:question, exam:)

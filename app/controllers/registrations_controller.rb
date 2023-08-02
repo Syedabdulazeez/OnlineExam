@@ -27,7 +27,8 @@ class RegistrationsController < ApplicationController
     @registration.exam = @exam
     @registration.user = current_user
     if save_registration_and_send_emails
-      redirect_to root_path, notice: 'Successfully registered!'
+      flash[:success] = 'Successfully registered!'
+      redirect_to root_path
     else
       render :new
     end

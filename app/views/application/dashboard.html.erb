@@ -28,11 +28,7 @@
     </div>
   </nav>
 
-  <% if notice %>
-    <div id="notice" class="notice text-success">
-      <%= notice %>
-    </div>
-  <% end %>
+  <%= render 'shared/flash' %>
 
   <% @exams.each do |exam| %>
     <div class="exam card bg-light shadow mt-3">

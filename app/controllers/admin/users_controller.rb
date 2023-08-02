@@ -16,10 +16,11 @@ module Admin
 
     def create
       @user = User.new(user_params)
-      @user.admin = true # Set admin attribute to true
+      @user.admin = true
 
       if @user.save
-        redirect_to admin_users_path, notice: 'Admin user was successfully created.'
+        flash[:success] = 'Admin user was successfully created.'
+        redirect_to admin_users_path
       else
         render :new
       end
@@ -29,7 +30,8 @@ module Admin
 
     def update
       if @user.update(user_params)
-        redirect_to admin_users_path, notice: 'Admin was successfully updated.'
+        flash[:success] = 'Admin was successfully updated.'
+        redirect_to admin_users_path
       else
         render :edit
       end
@@ -37,7 +39,8 @@ module Admin
 
     def destroy
       @user.destroy
-      redirect_to admin_users_path, notice: 'Admin was successfully destroyed.'
+      flash[:danger] = 'Admin was successfully destroyed.'
+      redirect_to admin_users_path
     end
 
     private
@@ -45,7 +48,8 @@ module Admin
     def find_user
       @user = User.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      redirect_to admin_root_path, notice: 'Sorry record not found!'
+      flash[:danger] = 'Sorry record not found!'
+      redirect_to admin_root_path
     end
 
     def user_params
@@ -55,7 +59,8 @@ module Admin
     def authenticate_admin
       return if current_user&.admin?
 
-      redirect_to root_path, notice: 'You are not authorized to perform this action.'
+      flash[:danger] = 'You are not authorized to perform this action.'
+      redirect_to root_path
     end
   end
 end

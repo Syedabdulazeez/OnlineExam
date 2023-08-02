@@ -18,7 +18,8 @@ module Admin
     def create
       @subject = Subject.new(subject_params)
       if @subject.save
-        redirect_to admin_subjects_path, notice: 'Subject was successfully created.'
+        flash[:success] = 'Subject was successfully created.'
+        redirect_to admin_subjects_path
       else
         render :new
       end
@@ -28,7 +29,8 @@ module Admin
 
     def update
       if @subject.update(subject_params)
-        redirect_to admin_subjects_path, notice: 'Subject was successfully updated.'
+        flash[:success] = 'Subject was successfully updated.'
+        redirect_to admin_subjects_path
       else
         render :edit
       end
@@ -36,7 +38,8 @@ module Admin
 
     def destroy
       @subject.destroy
-      redirect_to admin_subjects_path, notice: 'Subject was successfully destroyed.'
+      flash[:danger] = 'Subject was successfully destroyed.'
+      redirect_to admin_subjects_path
     end
 
     private
@@ -44,7 +47,8 @@ module Admin
     def find_subject
       @subject = Subject.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      redirect_to admin_root_path, notice: 'Sorry record not found!'
+      flash[:danger] = 'Sorry record not found!'
+      redirect_to admin_root_path
     end
 
     def subject_params

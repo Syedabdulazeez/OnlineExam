@@ -20,7 +20,8 @@ module Admin
 
     def update
       if @exam.update(exam_params)
-        redirect_to admin_exams_path, notice: 'Exam was successfully updated.'
+        flash[:success] = 'Exam was successfully updated.'
+        redirect_to admin_exams_path
       else
         render :edit
       end
@@ -33,7 +34,8 @@ module Admin
     def create
       @exam = Exam.new(exam_params)
       if @exam.save
-        redirect_to admin_exams_path, notice: 'Exam was successfully created.'
+        flash[:success] = 'Exam was successfully created.'
+        redirect_to admin_exams_path
       else
         render :new
       end
@@ -41,7 +43,8 @@ module Admin
 
     def destroy
       @exam.destroy
-      redirect_to admin_exams_path, notice: 'Exam was successfully destroyed.'
+      flash[:danger] = 'Exam was successfully destroyed.'
+      redirect_to admin_exams_path
     end
 
     private
@@ -57,7 +60,8 @@ module Admin
     def find_exam
       @exam = Exam.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      redirect_to admin_root_path, notice: 'Sorry record not found!'
+      flash[:danger] = 'Sorry record not found!'
+      redirect_to admin_root_path
     end
 
     def load_subjects

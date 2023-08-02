@@ -106,7 +106,7 @@ RSpec.describe Exam, type: :model do
       end
     end
 
-    describe '#shuffled_questions' do
+    describe 'shuffled_questions' do
       it 'returns an array of shuffled questions' do
         exam = FactoryBot.create(:exam, subject:)
         question1 = FactoryBot.create(:question, exam:)

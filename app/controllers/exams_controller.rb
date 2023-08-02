@@ -17,7 +17,7 @@ class ExamsController < ApplicationController
     @department ||= @exam.subject.department
     @questions ||= @exam.shuffled_questions
   rescue ActiveRecord::RecordNotFound
-    redirect_to registrations_path, notice: 'Sorry record not found!'
+    redirect_to registrations_path, flash[:danger] = 'Sorry record not found!'
   end
 
   def submit_exam
@@ -35,7 +35,8 @@ class ExamsController < ApplicationController
   def find_exam
     @exam = Exam.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    redirect_to registrations_path, notice: 'Sorry record not found!'
+    flash[:danger] = 'Sorry record not found!'
+    redirect_to registrations_path
   end
 
   def handle_no_user_answers

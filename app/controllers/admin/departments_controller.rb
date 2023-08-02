@@ -17,7 +17,8 @@ module Admin
     def create
       @department = Department.new(department_params)
       if @department.save
-        redirect_to admin_departments_path, notice: 'Department created successfully.'
+        flash[:success] = 'Department created successfully.'
+        redirect_to admin_departments_path
       else
         render :new
       end
@@ -26,14 +27,16 @@ module Admin
     def destroy
       return unless @department.destroy
 
-      redirect_to admin_departments_path, notice: 'Department was successfully destroyed.'
+      flash[:danger] = 'Department was successfully destroyed.'
+      redirect_to admin_departments_path
     end
 
     def edit; end
 
     def update
       if @department.update(department_params)
-        redirect_to admin_departments_path, notice: 'Department was successfully updated.'
+        flash[:success] = 'Department was successfully updated.'
+        redirect_to admin_departments_path
       else
         render :edit
       end
@@ -48,7 +51,8 @@ module Admin
     def find_department
       @department = Department.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      redirect_to admin_root_path, notice: 'Sorry record not found!'
+      flash[:danger] = 'Sorry record not found!'
+      redirect_to admin_root_path
     end
   end
 end

@@ -8,7 +8,7 @@ class ExamPerformancesController < ApplicationController
 
   def generate_report
     @exam_performance.generate_report
-    flash[:notice] = 'Performance report generated and sent successfully.'
+    flash[:success] = 'Performance report generated and sent successfully.'
     redirect_to leaderboard_index_path(@exam_performance.user)
   end
 
@@ -17,6 +17,7 @@ class ExamPerformancesController < ApplicationController
   def find_exam_performance
     @exam_performance ||= ExamPerformance.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    redirect_to root_path, notice: 'Sorry record not found!'
+    flash[:danger] = 'Sorry record not found!'
+    redirect_to root_path
   end
 end

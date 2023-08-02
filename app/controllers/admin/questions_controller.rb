@@ -18,7 +18,8 @@ module Admin
     def create
       @question = Question.new(question_params)
       if @question.save
-        redirect_to admin_questions_path, notice: 'Question was successfully created.'
+        flash[:success] = 'Question was successfully created.'
+        redirect_to admin_questions_path
       else
         render :new
       end
@@ -28,7 +29,8 @@ module Admin
 
     def update
       if @question.update(question_params)
-        redirect_to admin_questions_path, notice: 'Question was successfully updated.'
+        flash[:success] = 'Question was successfully updated.'
+        redirect_to admin_questions_path
       else
         render :edit
       end
@@ -36,7 +38,8 @@ module Admin
 
     def destroy
       @question.destroy
-      redirect_to admin_questions_path, notice: 'Question was successfully destroyed.'
+      flash[:danger] = 'Question was successfully destroyed.'
+      redirect_to admin_questions_path
     end
 
     private
@@ -45,7 +48,8 @@ module Admin
     def find_question
       @question = Question.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      redirect_to admin_root_path, notice: 'Sorry record not found!'
+      flash[:danger] = 'Sorry record not found!'
+      redirect_to admin_root_path
     end
 
     def question_params

@@ -14,7 +14,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       session[:user_id] = @user.id
-      redirect_to root_path, notice: 'signup successful'
+      flash[:danger] = 'signup successful'
+      redirect_to root_path
     else
       render :new
     end
@@ -23,19 +24,22 @@ class UsersController < ApplicationController
   def show
     @user ||= User.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    redirect_to root_path, notice: 'Sorry recard not found !'
+    flash[:danger] = 'Sorry recard not found !'
+    redirect_to root_path
   end
 
   def edit
     @user = User.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    redirect_to root_path, notice: 'Sorry recard not found !'
+    flash[:danger] = 'Sorry recard not found !'
+    redirect_to root_path
   end
 
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
-      redirect_to root_path, notice: 'Profile updated successfully.'
+      flash[:success] = 'Profile updated successfully.'
+      redirect_to root_path
     else
       render :edit
     end

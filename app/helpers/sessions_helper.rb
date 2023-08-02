@@ -12,7 +12,7 @@ module SessionsHelper
 
   def log_in_user(user)
     session[:user_id] = user.id
-    redirect_to root_path, notice: 'signup successful'
+    redirect_to root_path, flash[:danger] = 'signup successful'
   end
 
   def omniauth_info

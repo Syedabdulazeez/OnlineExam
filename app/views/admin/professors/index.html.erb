@@ -1,14 +1,11 @@
+<%= javascript_pack_tag 'flash_message'%>
 <div class='container'>
   <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand float-left" href="#">Manage Professors</a>
     <%= link_to "Home", admin_root_path, class: "btn btn-outline-primary" %>
   </nav>
 
-  <% if notice %>
-    <div id="notice" class="notice text-info">
-      <%= notice %>
-    </div>
-  <% end %>
+  <%= render 'shared/flash' %>
 
   <div class="mb-3 mt-4">
     <%= link_to "New Professor", new_admin_professor_path, class: "btn btn-primary" %>

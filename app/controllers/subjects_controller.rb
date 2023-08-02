@@ -6,6 +6,7 @@ class SubjectsController < ApplicationController
     @subject ||= Subject.find(params[:id])
     @exams ||= @subject.exams.includes(:registrations)
   rescue ActiveRecord::RecordNotFound
-    redirect_to registrations_path, notice: 'Sorry recard not found !'
+    flash[:danger] = 'Sorry recard not found !'
+    redirect_to registrations_path
   end
 end

@@ -18,7 +18,8 @@ module Admin
 
     def update
       if @professor.update(professor_params)
-        redirect_to admin_professors_path, notice: 'Professor updated successfully.'
+        flash[:success] = 'Professor updated successfully.'
+        redirect_to admin_professors_path
       else
         render :edit
       end
@@ -27,7 +28,8 @@ module Admin
     def create
       @professor = Professor.new(professor_params)
       if @professor.save
-        redirect_to admin_professors_path, notice: 'Professor was successfully added.'
+        flash[:success] = 'Professor was successfully added.'
+        redirect_to admin_professors_path
       else
         render :new
       end
@@ -35,7 +37,8 @@ module Admin
 
     def destroy
       @professor.destroy
-      redirect_to admin_professors_path, notice: 'Professor deleted successfully.'
+      flash[:success] = 'Professor deleted successfully.'
+      redirect_to admin_professors_path
     end
 
     private
@@ -43,7 +46,8 @@ module Admin
     def find_professor
       @professor = Professor.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      redirect_to admin_root_path, notice: 'Sorry record not found!'
+      flash[:danger] = 'Sorry record not found!'
+      redirect_to admin_root_path
     end
 
     def professor_params

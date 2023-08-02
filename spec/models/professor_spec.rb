@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Professor, type: :model do
   describe 'validations' do
     it 'is valid with valid attributes' do
-      department = FactoryBot.create(:department) # Create a valid department for association
+      department = FactoryBot.create(:department)
       professor = FactoryBot.build(:professor, department:)
       expect(professor).to be_valid
     end
