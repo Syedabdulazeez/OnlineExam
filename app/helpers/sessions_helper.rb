@@ -12,7 +12,8 @@ module SessionsHelper
 
   def log_in_user(user)
     session[:user_id] = user.id
-    redirect_to root_path, flash[:danger] = 'signup successful'
+    flash[:success] = 'signup successful'
+    redirect_to root_path 
   end
 
   def omniauth_info

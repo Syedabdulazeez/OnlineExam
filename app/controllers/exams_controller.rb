@@ -40,7 +40,7 @@ class ExamsController < ApplicationController
   end
 
   def handle_no_user_answers
-    flash[:error] = 'Please select answers for all questions.'
+    flash[:danger] = 'Please select answers for all questions.'
     redirect_to conduct_exam_path(exam_id: @exam.id)
   end
 
