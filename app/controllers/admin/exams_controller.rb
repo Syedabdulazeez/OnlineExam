@@ -3,12 +3,17 @@
 module Admin
   # class Admin::Admin::DepartmentsController
   class ExamsController < ApplicationController
+    include RegistrationsHelper
     before_action :authenticate_admin
     before_action :find_exam, only: %i[show edit update destroy]
     before_action :load_subjects, only: %i[new create edit update]
 
     def index
-      @exams = Exam.page(params[:page]).per(12)
+      @search_term = params[:search]
+      @department_options = Department.all
+      @subject_options = subject_options(params[:department])
+      exams = filter_and_sort_exams(Exam.all, params)
+      @exams = exams.page(params[:page]).per(12)
     end
 
     def show; end
@@ -50,18 +55,13 @@ module Admin
     private
 
     def exam_params
-      start_time_str = params[:exam][:start_time]
-      start_time = start_time_str.present? ? DateTime.parse(start_time_str) : nil
-      adjusted_start_time = (start_time - 5.hours - 30.minutes if start_time)
-
-      params.require(:exam).permit(:exam_name, :duration, :subject_id, :is_demo).merge(start_time: adjusted_start_time)
+      params.require(:exam).permit(:exam_name, :duration, :subject_id, :is_demo, :start_time)
     end
 
     def find_exam
       @exam = Exam.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      flash[:danger] = 'Sorry record not found!'
-      redirect_to admin_root_path
+      render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
     end
 
     def load_subjects

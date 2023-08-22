@@ -1,5 +1,6 @@
 <div class='container'>
   <h1>Edit Exam</h1>
+  <div class="bg-light">
   <%= render 'form', url: admin_exam_path(@exam), method: 'patch', submit_button_text: 'Update Exam' %>
-  <p><%= link_to 'Back to Exams', admin_exams_path %></p>
+  </div>
 </div>

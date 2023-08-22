@@ -2,6 +2,8 @@
 
 # This is a class representing an model
 class Question < ApplicationRecord
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
   belongs_to :exam
 
   validates :exam_id, presence: { message: 'plese select exam' }

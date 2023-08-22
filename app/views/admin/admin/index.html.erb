@@ -1,11 +1,8 @@
-<%= javascript_pack_tag 'flash_message'%>
-<div class="container">
-  <nav class="navbar navbar-light bg-light">
+<div class="container mt-1">
+  <nav class="navbar navbar-light bg-light mb-5">
     <a class="navbar-brand float-left" href="#">Admin Dashboard</a>
-    <%= link_to "Log Out", logout_path, class: "btn btn-primary" %>
+    <%= link_to "Log Out", logout_path, class: "btn btn-outline-primary" %>
   </nav>
-
-  <%= render 'shared/flash' %>
 
   <div class="row">
     <div class="col-md-6">

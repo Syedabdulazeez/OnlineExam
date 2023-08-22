@@ -2,6 +2,9 @@
 
 # This is a class representing an model
 class Exam < ApplicationRecord
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
   belongs_to :subject
   has_many :registrations, dependent: :destroy
   has_many :users, through: :registrations
@@ -10,7 +13,7 @@ class Exam < ApplicationRecord
 
   validates :exam_name, presence: true, length: { minimum: 3, message: 'must contain at least 3 letters' }
   validates :subject_id, presence: { message: 'Please select subject' }
-  validate :start_time_must_be_future
+  validate :start_time_must_be_future, on: :create
   validates :start_time, presence: { message: 'Time cannot be blank' }
   validates :duration, presence: true, numericality: { greater_than: 0, message: 'must be greater than zero' }
 
@@ -41,8 +44,6 @@ class Exam < ApplicationRecord
     Exam.find_by(subject_id:, is_demo: true)
   end
 
-  include Elasticsearch::Model
-  include Elasticsearch::Model::Callbacks
   index_name "exams_#{Rails.env}"
 
   settings do

@@ -2,6 +2,7 @@
 
 # This is a class representing an  controller
 class UsersController < ApplicationController
+  before_action :set_user, only: %i[show edit update]
   def new
     if !logged_in?
       @user = User.new
@@ -22,21 +23,18 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user ||= User.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    flash[:danger] = 'Sorry recard not found !'
-    redirect_to root_path
+    return unless @user.id != session[:user_id]
+
+    redirect_to user_path(session[:user_id])
   end
 
   def edit
-    @user = User.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    flash[:danger] = 'Sorry recard not found !'
-    redirect_to root_path
+    return unless @user.id != session[:user_id]
+
+    redirect_to user_path(session[:user_id])
   end
 
   def update
-    @user = User.find(params[:id])
     if @user.update(user_params)
       flash[:success] = 'Profile updated successfully.'
       redirect_to root_path
@@ -49,6 +47,12 @@ class UsersController < ApplicationController
 
   def upcoming_exams
     Exam.where('start_time > ?', DateTime.now)
+  end
+
+  def set_user
+    @user = User.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
   end
 
   def user_params

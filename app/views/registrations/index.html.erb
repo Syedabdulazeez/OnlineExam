@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container ">
   <header>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-toggler h4 text-dark"  href="#">Registrations</a>
@@ -38,47 +38,47 @@
     <div class="mx-5 mr-5">
       <%= form_tag registrations_path, method: :get, class: "form-inline" do %>
         <%= text_field_tag :search, @search_term, class: "form-control mr-sm-2", placeholder: "Search exams..." %>
-        <%= select_tag :department, options_from_collection_for_select(@department_options, :department_name, :department_name, params[:department]), include_blank: "All Departments", class: "form-control" %>
-        <%= select_tag :subject, options_from_collection_for_select(@subject_options, :subject_name, :subject_name, params[:subject]), include_blank: "All Subjects", class: "form-control" %>
-        <%= submit_tag "Search", class: "btn btn-outline-primary my-2 my-sm-0 mr-5" %>
+        <%= select_tag :department, options_from_collection_for_select(@department_options, :department_name, :department_name, params[:department]), include_blank: "All Departments", class: "form-control m-1" %>
+        <%= select_tag :subject, options_from_collection_for_select(@subject_options, :subject_name, :subject_name, params[:subject]), include_blank: "All Subjects", class: "form-control m-1" %>
+        <%= submit_tag "Search", class: "btn btn-outline-primary m-1" %>
       <% end %>
     </div>
   </div>
-
-  <%= render 'shared/flash' %>
   
-  <table class="table table-hover">
-    <thead class="thead-light">
-      <tr>
-        <th><%= link_to "Exam Name", registrations_path(sort: "name", order: params[:sort] == "name" && params[:order] == "asc" ? "desc" : "asc", search: @search_term, department: params[:department], subject: params[:subject]) %></th>
-        <th><%= link_to "Start Time", registrations_path(sort: "start_time", order: params[:sort] == "start_time" && params[:order] == "asc" ? "desc" : "asc", search: @search_term, department: params[:department], subject: params[:subject]) %></th>
-        <th><%= link_to "Duration", registrations_path(sort: "duration", order: params[:sort] == "duration" && params[:order] == "asc" ? "desc" : "asc", search: @search_term, department: params[:department], subject: params[:subject]) %></th>
-        <th>Department</th>
-        <th>Subject</th>
-        <th>Registration</th>
-      </tr>
-    </thead>
-    <tbody class="table-hover">
-      <% @exams.each do |exam| %>
-        <% unless exam.is_demo %>
-          <tr>
-            <td><%= link_to exam.exam_name, exam_path(exam.id) %></td>
-            <td><%= (exam.start_time + 5.hours + 30.minutes).strftime('%d/%m/%Y %I:%M %p') %></td>
-            <td><%= exam.duration %></td>
-            <td><%= exam.subject&.department&.department_name %></td>
-            <td><%= exam.subject&.subject_name %></td>
-            <td>
-              <% if exam.start_time - 24.hours <= Time.now %>
-                <span class="text-danger">Registration ended</span>
-              <% else %>
-                <%= link_to "Register", new_registration_path(exam_id: exam.id), class: "btn btn-primary" %>
-              <% end %>
-            </td>
-          </tr>
+  <div class="table-responsive">
+    <table class="table table-hover ">
+      <thead class="thead-light">
+        <tr>
+          <th><%= link_to "Exam Name", registrations_path(sort: "name", order: params[:sort] == "name" && params[:order] == "asc" ? "desc" : "asc", search: @search_term, department: params[:department], subject: params[:subject]) %></th>
+          <th><%= link_to "Start Time", registrations_path(sort: "start_time", order: params[:sort] == "start_time" && params[:order] == "asc" ? "desc" : "asc", search: @search_term, department: params[:department], subject: params[:subject]) %></th>
+          <th><%= link_to "Duration", registrations_path(sort: "duration", order: params[:sort] == "duration" && params[:order] == "asc" ? "desc" : "asc", search: @search_term, department: params[:department], subject: params[:subject]) %></th>
+          <th>Department</th>
+          <th>Subject</th>
+          <th>Registration</th>
+        </tr>
+      </thead>
+      <tbody class="table-hover">
+        <% @exams.each do |exam| %>
+          <% unless exam.is_demo %>
+            <tr>
+              <td><%= link_to exam.exam_name, exam_path(exam.id) %></td>
+              <td><%= (exam.start_time).strftime('%d/%m/%Y %I:%M %p') %></td>
+              <td><%= exam.duration %></td>
+              <td><%= exam.subject&.department&.department_name %></td>
+              <td><%= exam.subject&.subject_name %></td>
+              <td>
+                <% if exam.start_time - 24.hours <= Time.now %>
+                  <span class="text-danger">Registration ended</span>
+                <% else %>
+                  <%= link_to "Register", new_registration_path(exam_id: exam.id), class: "btn btn-primary" %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
         <% end %>
-      <% end %>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  </div>
   
   <ul class="pagination justify-content-center">
     <% if @exams.current_page > 1 %>

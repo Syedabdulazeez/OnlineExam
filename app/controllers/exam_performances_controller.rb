@@ -17,7 +17,6 @@ class ExamPerformancesController < ApplicationController
   def find_exam_performance
     @exam_performance ||= ExamPerformance.find(params[:id])
   rescue ActiveRecord::RecordNotFound
-    flash[:danger] = 'Sorry record not found!'
-    redirect_to root_path
+    render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
   end
 end

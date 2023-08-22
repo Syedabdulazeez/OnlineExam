@@ -6,12 +6,13 @@
       <h5 class="card-title"><%= @exam.exam_name %></h5>
     </div>
     <div class="card-body">
-      <p class="card-text">Exam Date: <%= (@exam.start_time + 5.hours + 30.minutes).strftime('%m/%d/%Y') %></p>
+      <p class="card-text">Exam Date: <%= (@exam.start_time).strftime('%m/%d/%Y %H:%M %p') %></p>
       <p class="card-text">Total Questions: <%= count_questions(@exam) %></p>
       <p class="card-text">Exam Duration: <%= @exam.duration %></p>
     </div>
     <div class="card-footer">
-      <%= link_to 'Edit', edit_admin_exam_path(@exam), class: 'btn btn-secondary' %>
+      <%= link_to 'Edit', edit_admin_exam_path(@exam), class: 'btn btn-primary' %>
+      <%= link_to 'Cancel', admin_exams_path, class: 'btn btn-secondary' %>
       <%= link_to 'Delete', admin_exam_path(@exam), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
     </div>
   </div>

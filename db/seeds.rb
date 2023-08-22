@@ -39,7 +39,7 @@ Subject.all.each do |subject|
     Exam.create!(
       subject_id: subject.id,
       start_time: @start,
-      duration: 60, # Assuming each exam has a duration of 1 hours (in minutes)
+      duration: 120, # Assuming each exam has a duration of 2 hours (in minutes)
       created_at: Time.current,
       updated_at: Time.current,
       exam_name: "#{subject.subject_name} Exam #{i + 1}",
@@ -165,10 +165,4 @@ professors_data.each do |professor_data|
     created_at: Time.current,
     updated_at: Time.current
   )
-end
-
-Exam.__elasticsearch__.delete_index!
-
-Exam.all.each do |exam|
-  exam.__elasticsearch__.index_document
 end

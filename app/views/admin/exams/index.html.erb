@@ -1,16 +1,23 @@
-<%= javascript_pack_tag 'flash_message'%>
 <div class='container'>
   <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand float-left" href="#">Manage Exams</a>
     <%= link_to "Home", admin_root_path, class: "btn btn-outline-primary" %>
   </nav>
 
-  <%= render 'shared/flash' %>
-
-  <div class="text-center mt-3">
+  <div class="m-3">
     <%= link_to 'Add Exam', new_admin_exam_path, class: 'btn btn-primary' %>
   </div>
 
+<div class="row my-4">
+    <div class="mx-5 mr-5">
+      <%= form_tag admin_exams_path, method: :get, class: "form-inline" do %>
+        <%= text_field_tag :search, @search_term, class: "form-control mr-sm-2", placeholder: "Search exams..." %>
+        <%= select_tag :department, options_from_collection_for_select(@department_options, :department_name, :department_name, params[:department]), include_blank: "All Departments", class: "form-control m-1" %>
+        <%= select_tag :subject, options_from_collection_for_select(@subject_options, :subject_name, :subject_name, params[:subject]), include_blank: "All Subjects", class: "form-control m-1" %>
+        <%= submit_tag "Search", class: "btn btn-outline-primary m-1" %>
+      <% end %>
+    </div>
+  </div>
 
   <div class="row">
     <% @exams.each do |exam| %>
@@ -23,7 +30,8 @@
             <% else %>
               <span class="badge badge-secondary float-right">Actual</span>
             <% end %>
-            <p class="card-text">Exam Date: <%= (exam.start_time + 5.hours + 30.minutes).strftime('%m/%d/%Y') %></p>
+            <p class="card-text">Exam Date: <%= (exam.start_time).strftime('%m/%d/%Y') %></p>
+            <p class="card-text">Exam Time: <%= (exam.start_time).strftime('%H:%M %p') %></p>
             <p class="card-text">Exam Duration: <%= exam.duration %></p>
             <p class="card-text">Total Questions: <%= count_questions(exam) %></p>
           </div>

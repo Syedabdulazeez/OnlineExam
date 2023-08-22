@@ -1,5 +1,4 @@
 <div class='container'>
   <h1>Edit Professor</h1>
   <%= render 'form', professor: @professor, url: admin_professor_path(@professor), method: :patch, submit_button_text: 'Update Professor' %>
-  <p><%= link_to 'Back to professors', admin_professors_path %></p>
 </div>

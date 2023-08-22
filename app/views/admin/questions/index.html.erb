@@ -1,45 +1,52 @@
-<%= javascript_pack_tag 'flash_message'%>
 <div class='container'>
   <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand float-left" href="#">Manage Questions</a>
     <%= link_to "Home", admin_root_path, class: "btn btn-outline-primary" %>
   </nav>
-  
-  <%= render 'shared/flash' %>
 
-  <%= link_to 'Add New Question', new_admin_question_path, class: 'btn btn-primary' %>
+  <%= form_tag admin_questions_path, method: :get, class: "mb-3" do %>
+    <div class="input-group">
+      <%= text_field_tag :q, params[:q], class: "form-control", placeholder: "Search Questions..." %>
+      <div class="input-group-append">
+        <%= submit_tag "Search", class: "btn btn-primary" %>
+      </div>
+    </div>
+  <% end %>
 
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Exam</th>
-        <th>Question Text</th>
-        <th>Answer1</th>
-        <th>Answer2</th>
-        <th>Answer3</th>
-        <th>Answer4</th>
-        <th>Correct Answer</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @questions.each do |question| %>
+  <%= link_to 'Add New Question', new_admin_question_path, class: 'btn btn-primary mb-2' %>
+  <div class='table-responsive'>
+    <table class="table">
+      <thead>
         <tr>
-          <td><%= question.exam.exam_name %></td>
-          <td><%= question.question_text %></td>
-          <td><%= question.answer1 %></td>
-          <td><%= question.answer2 %></td>
-          <td><%= question.answer3 %></td>
-          <td><%= question.answer4 %></td>
-          <td><%= question.correct_answer %></td>
-          <td>
-            <%= link_to 'Edit', edit_admin_question_path(question), class: 'btn btn-secondary' %>
-            <%= link_to 'Delete', admin_question_path(question), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-          </td>
+          <th>Exam</th>
+          <th>Question Text</th>
+          <th>Answer1</th>
+          <th>Answer2</th>
+          <th>Answer3</th>
+          <th>Answer4</th>
+          <th>Correct Answer</th>
+          <th class='text-center'>Actions</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @questions.each do |question| %>
+          <tr>
+            <td><%= question.exam.exam_name %></td>
+            <td><%= question.question_text %></td>
+            <td><%= question.answer1 %></td>
+            <td><%= question.answer2 %></td>
+            <td><%= question.answer3 %></td>
+            <td><%= question.answer4 %></td>
+            <td class=' pl-5 '><%= question.correct_answer %></td>
+            <td class='d-flex'>
+              <%= link_to 'Edit', edit_admin_question_path(question), class: 'btn btn-secondary m-2' %>
+              <%= link_to 'Delete', admin_question_path(question), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger m-2' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
   
   <ul class="pagination justify-content-center">
     <% if @questions.current_page > 1 %>

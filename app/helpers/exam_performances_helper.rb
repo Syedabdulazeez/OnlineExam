@@ -15,7 +15,7 @@ module ExamPerformancesHelper
   def add_candidate_information(pdf)
     pdf.font_size 12
     pdf.text "Candidate Name: #{user.username}"
-    pdf.text "Exam Date: #{(exam.start_time + 5.hours + 30.minutes).strftime('%Y-%m-%d %I:%M %p')}"
+    pdf.text "Exam Date: #{(exam.start_time).strftime('%Y-%m-%d %I:%M %p')}"
     pdf.move_down 10
   end
 

@@ -1,4 +1,3 @@
-<%= javascript_pack_tag 'flash_message.js' %>
 <div class="container">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="#">Dashboard</a>
@@ -28,19 +27,18 @@
     </div>
   </nav>
 
-  <%= render 'shared/flash' %>
 
   <% @exams.each do |exam| %>
     <div class="exam card bg-light shadow mt-3">
       <div class="card-body">
         <strong class="card-title">Exam Name: <%= link_to exam.exam_name, exam_path(exam.id) %></strong>
-        <p class="card-text">Start Time: <%= (exam.start_time + 5.hours + 30.minutes).strftime('%d/%m/%Y %I:%M %p') %></p>
+        <p class="card-text">Start Time: <%= (exam.start_time).strftime('%d/%m/%Y %I:%M %p') %></p>
         <p class="card-text">Duration: <%= exam.duration %> minutes</p>
         <div class="row">
           <div class="col-md-6">
             <% registration = @current_user.registrations.find_by(exam_id: exam.id) %>
             <% if Time.now < exam.start_time %>
-              <span class="disabled-link">The exam will start at <%= (exam.start_time + 5.hours + 30.minutes).strftime('%I:%M %p') %>. Please wait.</span>
+              <span class="disabled-link">The exam will start at <%= (exam.start_time).strftime('%I:%M %p') %>. Please wait.</span>
             <% elsif Time.now > (exam.start_time + exam.duration.minutes) %>
               <span class="disabled-link">The exam has ended.</span>
             <% elsif registration %>

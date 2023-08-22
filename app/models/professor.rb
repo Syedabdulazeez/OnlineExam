@@ -8,4 +8,15 @@ class Professor < ApplicationRecord
   validates :department_id, presence: { message: 'Please select subject' }
   validates :name, presence: true, length: { minimum: 3, message: 'must contain at least 3 letters' }
   validates :summary, presence: true, length: { minimum: 5, message: 'must contain at least 5 letters' }
+  validate :profile_picture_image_format
+
+  private
+
+  def profile_picture_image_format
+    return unless profile_picture.attached?
+
+    return if profile_picture.content_type.in?(%w[image/jpeg image/png image/gif imge/tiff])
+
+    errors.add(:profile_picture, 'must be a JPEG, PNG,GIF, or TIFF image')
+  end
 end

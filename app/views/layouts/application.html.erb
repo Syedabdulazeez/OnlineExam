@@ -12,6 +12,8 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </head>
 <body>
+  <%= javascript_pack_tag 'flash_message'%>
+  <%= render 'shared/flash' %>
   <%= yield %>
 </body>
 </html>

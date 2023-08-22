@@ -10,6 +10,7 @@ class User < ApplicationRecord
   validates :username, presence: true, length: { minimum: 3 }, uniqueness: true
   validates :email, presence: true, uniqueness: true,
                     format: { with: /\A[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]+\z/, message: 'must be a valid email address' }
+  validates :college, allow_blank: true, format: { with: /\A[a-zA-Z ]+\z/, message: 'alphabets only' }
 
   def generate_magic_link_token
     self.magic_link_token = SecureRandom.urlsafe_base64

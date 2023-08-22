@@ -1,9 +1,7 @@
-<%= javascript_pack_tag 'flash_message'%>
 <div class="container">
   <div class="row">
     <div class="col-md-8 offset-md-2">
       <h1 class="text-center mb-4">Conduct Exam</h1>
-      <%= render 'shared/flash' %>
       <%= render 'exam_form', exam: @exam, questions: @questions %>
     </div>
   </div>

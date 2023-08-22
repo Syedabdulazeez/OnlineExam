@@ -8,7 +8,7 @@ module Admin
     before_action :load_exams, only: %i[new create edit update]
 
     def index
-      @questions = Question.page(params[:page]).per(15)
+      @questions = Question.search('your search query')
     end
 
     def new
@@ -48,8 +48,7 @@ module Admin
     def find_question
       @question = Question.find(params[:id])
     rescue ActiveRecord::RecordNotFound
-      flash[:danger] = 'Sorry record not found!'
-      redirect_to admin_root_path
+      render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
     end
 
     def question_params

@@ -1,5 +1,4 @@
 <div class='container'>
   <h1>Edit Question</h1>
   <%= render 'form', question: @question, url: admin_question_path(@question), method: :patch, submit_button_text: 'Update Question', exams: @exams %>
-  <p><%= link_to 'Back to Questions', admin_questions_path %></p>
 </div>

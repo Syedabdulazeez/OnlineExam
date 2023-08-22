@@ -20,7 +20,7 @@
         <div class="card mb-3">
           <div class="card-body">
             <h3 class="card-title mb-3"><%= exam.exam_name %></h3>
-            <p class="card-text"><strong>Exam Time:</strong> <%= (exam.start_time + 5.hours + 30.minutes).strftime('%d/%m/%Y %I:%M %p') %></p>
+            <p class="card-text"><strong>Exam Time:</strong> <%= (exam.start_time).strftime('%d/%m/%Y %I:%M %p') %></p>
             <% if @current_user && exam.registrations.exists?(user_id: current_user.id) %>
               <p class="card-text text-success">You are registered for this exam.</p>
             <% else %>

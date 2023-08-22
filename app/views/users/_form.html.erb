@@ -30,6 +30,11 @@
   <div class="form-group">
     <%= form.label :college %>
     <%= form.text_field :college, class: "form-control", placeholder: "Enter your college" %>
+    <% @user.errors.full_messages_for(:college).each do |message| %>
+      <span id="notice" class="text-danger">
+        <%= message %>
+      </span>
+    <% end %>
   </div>
   
   <div class="form-group">
@@ -39,5 +44,6 @@
   
   <div class="form-group">
     <%= form.submit class: "btn btn-primary" %>
+    <%= link_to "cancel",root_path, class: "btn btn-secondary " %>
   </div>
 <% end %>

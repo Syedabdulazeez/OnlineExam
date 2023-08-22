@@ -34,7 +34,11 @@
     <div class="form-group">
       <%= form.label :profile_picture, "Profile Picture" %>
       <%= form.file_field :profile_picture, class: "form-control" %>
+      <span class="error text-danger">
+          <%= form.object.errors[:profile_picture].first %>
+        </span>
     </div>
     <%= form.submit submit_button_text, class: "btn btn-primary" %>
+    <%= link_to 'Cancel', admin_professors_path, class: "btn btn-secondary"%>
   <% end %>
 </div>

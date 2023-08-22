@@ -18,7 +18,7 @@
       <div class="row">
         <div class="col-md-6">
           <h5 class="card-subtitle mb-2 text-muted">Start Time:</h5>
-          <p class="card-text"><%= (@exam.start_time + 5.hours + 30.minutes).strftime('%d/%m/%Y %I:%M %p') %></p>
+          <p class="card-text"><%= (@exam.start_time).strftime('%d/%m/%Y %I:%M %p') %></p>
         </div>
         <div class="col-md-6">
           <h5 class="card-subtitle mb-2 text-muted">Exam Duration:</h5>
@@ -39,13 +39,13 @@
   </div>
 
   <h2>Professors</h2>
-  <div class="professors-scroll scrolling-wrapper d-flex flex-row flex-nowrap overflow-auto">
+  <div class="professors-scroll scrolling-wrapper d-flex flex-row flex-wrap responsive">
     <% @department.professors.each do |professor| %>
-      <div class="card bg-light p-3 ml-3 mr-3 mt-5" style="width: 31.33%;">
+      <div class="card bg-light p-3 ml-3 mr-3 mt-5" style="width:30vh;">
         <% if professor.profile_picture.attached? %>
-            <%= image_tag professor.profile_picture, class: "profile-picture rounded-circle", style: "width: 50px; height: 50px;" %>
+            <%= image_tag professor.profile_picture, class: "profile-picture rounded-circle", style: "width: 75px; height: 75px;" %>
         <% else %>
-          <%= image_tag "profile_picture", class: "profile-picture rounded-circle", style: "width: 50px; height: 50px;" %>
+          <%= image_tag "default_img", class: "profile-picture rounded-circle", style: "width: 75px; height: 75px;" %>
         <% end %>
         <h3><%= professor.name %></h3>
         <p><%= professor.summary %></p>
