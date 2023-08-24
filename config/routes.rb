@@ -13,12 +13,12 @@ Rails.application.routes.draw do
   get 'auth/:provider/callback', to: 'sessions#omniauth'
   resources :leaderboard, only: %i[index]
   resources :exam_performances, only: [:show]
-  resources :registrations, only: %i[show index new]
+  resources :registrations, only: %i[index new]
   resources :subjects, only: [:show]
   resources :departments, only: [:show]
   resources :users, except: %i[index destroy]
 
-  resources :magic_link_authentication do
+  resources :magic_link_authentication, only: [:create] do
     member do
       post 'create', to: 'magic_link_authentication#create'
     end
