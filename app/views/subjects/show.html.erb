@@ -21,14 +21,14 @@
           <div class="card-body">
             <h3 class="card-title mb-3"><%= exam.exam_name %></h3>
             <p class="card-text"><strong>Exam Time:</strong> <%= (exam.start_time).strftime('%d/%m/%Y %I:%M %p') %></p>
-            <% if @current_user && exam.registrations.exists?(user_id: current_user.id) %>
+            <% if current_user && exam.registrations.exists?(user_id: current_user.id) %>
               <p class="card-text text-success">You are registered for this exam.</p>
             <% else %>
               <p class="card-text text-danger">You are not registered for this exam.</p>
               <% if exam.start_time - 24.hours <= Time.now %>
                 <p class="card-text text-danger">Registration has closed.</p>
               <% else %>
-                <%= button_to "Register", registrations_path(exam_id: exam.id), method: :post, class: "btn btn-primary" %>
+                <%= link_to "Register", registrations_path(exam_id: exam.id), class: "btn btn-primary" %>
               <% end %>
             <% end %>
           </div>

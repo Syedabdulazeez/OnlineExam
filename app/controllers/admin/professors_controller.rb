@@ -3,6 +3,8 @@
 module Admin
   # class Admin::Admin::professorsController
   class ProfessorsController < ApplicationController
+    include Admin::ProfessorsHelper
+
     before_action :authenticate_admin
     before_action :find_professor, only: %i[edit update destroy]
 
@@ -10,9 +12,7 @@ module Admin
       @professor = Professor.new
     end
 
-    def index
-      @professors = Professor.page(params[:page]).per(15)
-    end
+    def index; end
 
     def edit; end
 
@@ -45,8 +45,6 @@ module Admin
 
     def find_professor
       @professor = Professor.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
     end
 
     def professor_params

@@ -2,6 +2,9 @@
 
 # This is a class representing an model
 class Subject < ApplicationRecord
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
   has_many :exams, dependent: :destroy
   belongs_to :department
 

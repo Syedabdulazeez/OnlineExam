@@ -3,20 +3,26 @@
     <a class="navbar-brand float-left" href="#">Manage Questions</a>
     <%= link_to "Home", admin_root_path, class: "btn btn-outline-primary" %>
   </nav>
-
-  <%= form_tag admin_questions_path, method: :get, class: "mb-3" do %>
-    <div class="input-group">
-      <%= text_field_tag :q, params[:q], class: "form-control", placeholder: "Search Questions..." %>
-      <div class="input-group-append">
-        <%= submit_tag "Search", class: "btn btn-primary" %>
-      </div>
+<%= form_tag admin_questions_path, method: :get, class: "my-3" do %>
+  <div class="row align-items-between">
+    <div class="col-md-2 mb-2">
+      <%= link_to 'Add New Question', new_admin_question_path, class: 'btn btn-primary btn-block' %>
     </div>
-  <% end %>
+    <div class="col-md-4 mb-2">
+      <%= text_field_tag :q, params[:q], class: "form-control", placeholder: "Search Questions..." %>
+    </div>
+    <div class="col-md-4 mb-2">
+      <%= select_tag :exam_id, options_for_select(Exam.all.map { |e| [e.exam_name, e.id] }, params[:exam_id]), class: "form-control", prompt: "Select Exam" %>
+    </div>
+    <div class="col-md-2 mb-2">
+      <%= submit_tag "Search", class: "btn btn-primary btn-block" %>
+    </div>
+  </div>
+<% end %>
 
-  <%= link_to 'Add New Question', new_admin_question_path, class: 'btn btn-primary mb-2' %>
   <div class='table-responsive'>
     <table class="table">
-      <thead>
+      <thead class="bg-light">
         <tr>
           <th>Exam</th>
           <th>Question Text</th>

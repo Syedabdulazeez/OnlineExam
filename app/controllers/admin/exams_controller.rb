@@ -4,24 +4,18 @@ module Admin
   # class Admin::Admin::DepartmentsController
   class ExamsController < ApplicationController
     include RegistrationsHelper
+
     before_action :authenticate_admin
     before_action :find_exam, only: %i[show edit update destroy]
     before_action :load_subjects, only: %i[new create edit update]
 
     def index
-      @search_term = params[:search]
-      @department_options = Department.all
-      @subject_options = subject_options(params[:department])
-      exams = filter_and_sort_exams(Exam.all, params)
-      @exams = exams.page(params[:page]).per(12)
+      @exams = filter_and_sort_exams(Exam.all, params).page(params[:page]).per(12)
     end
 
     def show; end
 
-    def edit
-      @exam_type_options = ['Demo Exam', 'Actual Exam']
-      @selected_exam_type = @exam.is_demo? ? 'Demo Exam' : 'Actual Exam'
-    end
+    def edit; end
 
     def update
       if @exam.update(exam_params)
@@ -60,8 +54,6 @@ module Admin
 
     def find_exam
       @exam = Exam.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
     end
 
     def load_subjects

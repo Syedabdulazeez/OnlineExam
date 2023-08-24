@@ -2,6 +2,9 @@
 
 # This is a class representing an model
 class Professor < ApplicationRecord
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
   belongs_to :department
   has_one_attached :profile_picture
 

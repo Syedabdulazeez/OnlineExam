@@ -39,16 +39,16 @@
           <div class="row">
             <div class="col">
               <% if @current_user.college.present? %>
-                <% if @college_rank %>
-                  <p class="card-text">College Rank: <%= @college_rank + 1 %></p>
+                <% if ExamPerformance.college_rank(@current_user) %>
+                  <p class="card-text">College Rank: <%= ExamPerformance.college_rank(@current_user) + 1 %></p>
                 <% end %>
               <% else %>
                 <p class="card-text">Update your profile to get college-wise rank</p>
               <% end %>
             </div>
             <div class="col">
-              <% if @overall_rank %>
-                <p class="card-text">Overall Rank: <%= @overall_rank + 1 %></p>
+              <% if ExamPerformance.overall_rank(@current_user) %>
+                <p class="card-text">Overall Rank: <%= ExamPerformance.overall_rank(@current_user) + 1 %></p>
               <% end %>
             </div>
           </div>

@@ -37,9 +37,9 @@
   <div class="row my-4">
     <div class="mx-5 mr-5">
       <%= form_tag registrations_path, method: :get, class: "form-inline" do %>
-        <%= text_field_tag :search, @search_term, class: "form-control mr-sm-2", placeholder: "Search exams..." %>
-        <%= select_tag :department, options_from_collection_for_select(@department_options, :department_name, :department_name, params[:department]), include_blank: "All Departments", class: "form-control m-1" %>
-        <%= select_tag :subject, options_from_collection_for_select(@subject_options, :subject_name, :subject_name, params[:subject]), include_blank: "All Subjects", class: "form-control m-1" %>
+        <%= text_field_tag :search, params[:search], class: "form-control mr-sm-2", placeholder: "Search exams..." %>
+        <%= select_tag :department, options_from_collection_for_select(Department.all, :department_name, :department_name, params[:department]), include_blank: "All Departments", class: "form-control m-1" %>
+        <%= select_tag :subject, options_from_collection_for_select(subject_options(params[:department]), :subject_name, :subject_name, params[:subject]), include_blank: "All Subjects", class: "form-control m-1" %>
         <%= submit_tag "Search", class: "btn btn-outline-primary m-1" %>
       <% end %>
     </div>

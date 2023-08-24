@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-8 offset-md-2">
       <h1 class="text-center mb-4">Conduct Exam</h1>
-      <%= render 'exam_form', exam: @exam, questions: @questions %>
+      <%= render 'exam_form', exam: @exam, questions: @exam.shuffled_questions %>
     </div>
   </div>
 </div>

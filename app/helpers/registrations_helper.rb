@@ -71,6 +71,6 @@ module RegistrationsHelper
   end
 
   def handle_registration_errors
-    flash.now[:notice] = @registration.errors.full_messages.join(', ')
+    flash[:danger] = @registration.errors.full_messages.join(', ')
   end
 end

@@ -4,25 +4,21 @@
 class RegistrationsController < ApplicationController
   include RegistrationsHelper
 
+  before_action :set_exam, only: %i[create new]
+
   def index
     if logged_in?
-      @search_term = params[:search]
-      @department_options = Department.all
-      @subject_options = subject_options(params[:department])
-      exams = filter_and_sort_exams(Exam.all, params)
-      @exams = exams.page(params[:page]).per(20)
+      @exams = filter_and_sort_exams(Exam.all, params).page(params[:page]).per(20)
     else
       redirect_to root_path
     end
   end
 
   def new
-    @exam = Exam.find(params[:exam_id])
     @disable_links = Time.current >= @exam.start_time
   end
 
   def create
-    @exam = Exam.find(params[:exam_id])
     @registration = Registration.new(registration_params)
     @registration.exam = @exam
     @registration.user = current_user
@@ -30,11 +26,15 @@ class RegistrationsController < ApplicationController
       flash[:success] = 'Successfully registered!'
       redirect_to root_path
     else
-      render :new
+      redirect_to registrations_url
     end
   end
 
   private
+
+  def set_exam
+    @exam = Exam.find(params[:exam_id])
+  end
 
   def registration_params
     params.permit(:exam_id)

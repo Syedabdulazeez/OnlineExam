@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get '/magic', to: 'sessions#magic'
   get '/login/magic_link', to: 'sessions#magic_link_login', as: :magic_link_login
   get 'auth/:provider/callback', to: 'sessions#omniauth'
-  resources :leaderboard, only: %i[show index]
+  resources :leaderboard, only: %i[index]
   resources :exam_performances, only: [:show]
   resources :registrations, only: %i[show index new]
   resources :subjects, only: [:show]
@@ -47,5 +47,9 @@ Rails.application.routes.draw do
     resources :users, except: [:show]
     resources :professors, except: [:show]
   end
+
+  match '*path', to: lambda { |_env|
+    [404, {}, [File.read(Rails.public_path.join('404.html'))]]
+  }, via: :all
 end
 # rubocop:enable Metrics/BlockLength

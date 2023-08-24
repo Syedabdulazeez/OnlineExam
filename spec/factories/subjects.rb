@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  FactoryBot.define do
-    factory :subject do
-      department
-      sequence(:subject_name) { |_n| 'Subject' }
-    end
+  factory :subject do
+    association :department
+    sequence(:subject_name) { |n| "Subject #{n}" }
   end
 end

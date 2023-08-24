@@ -51,7 +51,7 @@ class SessionsController < ApplicationController
       flash[:success] = 'Magic link login successful!'
       redirect_to root_path
     else
-      flash[:success] = 'Invalid or expired magic link!'
+      flash[:danger] = 'Invalid or expired magic link!'
       redirect_to login_path
     end
   end

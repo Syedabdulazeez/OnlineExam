@@ -4,10 +4,8 @@
 class DepartmentsController < ApplicationController
   def show
     @department ||= Department.find_by(id: params[:id])
-    if @department.nil? || @department.subjects.empty?
-      render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
-    else
-      @subjects ||= @department.subjects
-    end
+    return unless @department.nil? || @department.subjects.empty?
+
+    render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
   end
 end

@@ -3,11 +3,13 @@
 module Admin
   # class Admin::Admin::DepartmentsController
   class DepartmentsController < Admin::AdminController
+    include Admin::DepartmentsHelper
+
     before_action :authenticate_admin
     before_action :find_department, only: %i[edit update destroy]
 
     def index
-      @departments = Department.page(params[:page]).per(12)
+      @departments = filtered_departments
     end
 
     def new
@@ -50,8 +52,6 @@ module Admin
 
     def find_department
       @department = Department.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
     end
   end
 end

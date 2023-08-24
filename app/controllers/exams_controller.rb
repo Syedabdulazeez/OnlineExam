@@ -6,19 +6,11 @@ class ExamsController < ApplicationController
 
   def conduct
     current_user.mark_exam_in_progress(@exam)
-    @questions = @exam.shuffled_questions
   end
 
-  def demo_exam
-    @demo_exam ||= @exam.demo_exam
-  end
+  def demo_exam; end
 
-  def show
-    @department ||= @exam.subject.department
-    @questions ||= @exam.shuffled_questions
-  rescue ActiveRecord::RecordNotFound
-    render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
-  end
+  def show; end
 
   def submit_exam
     user_answers = params[:user_answers]
@@ -34,8 +26,6 @@ class ExamsController < ApplicationController
 
   def find_exam
     @exam = Exam.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
   end
 
   def handle_no_user_answers

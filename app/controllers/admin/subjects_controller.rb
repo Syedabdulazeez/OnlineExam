@@ -3,12 +3,14 @@
 module Admin
   # class Admin::Admin::DepartmentsController
   class SubjectsController < ApplicationController
+    include Admin::SubjectsHelper
+
     before_action :authenticate_admin
     before_action :find_subject, only: %i[edit update destroy]
     before_action :load_departments, only: %i[new create edit update]
 
     def index
-      @subjects = Subject.page(params[:page]).per(12)
+      @subjects = filtered_subjects
     end
 
     def new
@@ -46,9 +48,6 @@ module Admin
 
     def find_subject
       @subject = Subject.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      flash[:danger] = 'Sorry record not found!'
-      redirect_to admin_root_path
     end
 
     def subject_params

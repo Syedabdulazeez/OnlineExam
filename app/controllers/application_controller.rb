@@ -2,8 +2,16 @@
 
 # This is a representing an controller
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :null_session
   include ApplicationHelper
+  protect_from_forgery with: :null_session
+
+  helper_method :current_user
+
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found_method
+
+  def not_found_method
+    render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
+  end
 
   def authenticate_admin
     return if current_user&.admin?
@@ -26,7 +34,6 @@ class ApplicationController < ActionController::Base
     elsif current_user.admin
       redirect_to admin_root_path
     else
-      @user ||= current_user
       @exams = upcoming_exams(current_user, 15)
     end
   end

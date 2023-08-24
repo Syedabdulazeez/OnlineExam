@@ -2,6 +2,9 @@
 
 # This is a class representing an model
 class Department < ApplicationRecord
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
   has_many :subjects, dependent: :destroy
   has_many :exams, through: :subjects
   has_many :professors, dependent: :destroy

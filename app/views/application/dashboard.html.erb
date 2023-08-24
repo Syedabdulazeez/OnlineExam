@@ -10,7 +10,7 @@
           <%= link_to "Registrations", registrations_path, class: "nav-link" %>
         </li>
         <li class="nav-item">
-          <%= link_to "Leader Board", leaderboard_index_path(@user), class: "nav-link" %>
+          <%= link_to "Leader Board", leaderboard_index_path(current_user), class: "nav-link" %>
         </li>
       </ul>
       <ul class="navbar-nav">
@@ -19,7 +19,7 @@
             Profile
           </a>
           <div class="dropdown-menu" aria-labelledby="userDropdown">
-            <%= link_to "Profile", user_path(@user), class: "dropdown-item" %>
+            <%= link_to "Profile", user_path(current_user), class: "dropdown-item" %>
             <a href="logout" class="dropdown-item">Log Out</a>
           </div>
         </li>
@@ -27,46 +27,56 @@
     </div>
   </nav>
 
-
-  <% @exams.each do |exam| %>
-    <div class="exam card bg-light shadow mt-3">
-      <div class="card-body">
-        <strong class="card-title">Exam Name: <%= link_to exam.exam_name, exam_path(exam.id) %></strong>
-        <p class="card-text">Start Time: <%= (exam.start_time).strftime('%d/%m/%Y %I:%M %p') %></p>
-        <p class="card-text">Duration: <%= exam.duration %> minutes</p>
-        <div class="row">
-          <div class="col-md-6">
-            <% registration = @current_user.registrations.find_by(exam_id: exam.id) %>
-            <% if Time.now < exam.start_time %>
-              <span class="disabled-link">The exam will start at <%= (exam.start_time).strftime('%I:%M %p') %>. Please wait.</span>
-            <% elsif Time.now > (exam.start_time + exam.duration.minutes) %>
-              <span class="disabled-link">The exam has ended.</span>
-            <% elsif registration %>
-              <% if @current_user.exam_in_progress?(exam) || registration.started? %>
-                <% if registration.completed? %>
-                  <span class="disabled-link">You have already submitted this exam.</span>
+   <% if @exams.empty? %>
+    <div class="container mt-5">
+    <div class="position-relative d-flex align-items-center justify-content-center h-100">
+      <div class="alert alert-info p-4 rounded shadow text-center">
+        <h1 class="mb-4">No Upcoming Or Ongoing Exams</h1>
+        <p class="lead">You don't have any upcoming or ongoing exams. Please go to the <%= link_to "Registrations", registrations_path %> page for more exploration.</p>
+      </div>
+    </div>
+  </div>
+  <% else %>
+    <% @exams.each do |exam| %>
+      <div class="exam card bg-light shadow mt-3">
+        <div class="card-body">
+          <strong class="card-title">Exam Name: <%= link_to exam.exam_name, exam_path(exam.id) %></strong>
+          <p class="card-text">Start Time: <%= (exam.start_time).strftime('%d/%m/%Y %I:%M %p') %></p>
+          <p class="card-text">Duration: <%= exam.duration %> minutes</p>
+          <div class="row">
+            <div class="col-md-6">
+              <% registration = @current_user.registrations.find_by(exam_id: exam.id) %>
+              <% if Time.now < exam.start_time %>
+                <span class="disabled-link">The exam will start at <%= (exam.start_time).strftime('%I:%M %p') %>. Please wait.</span>
+              <% elsif Time.now > (exam.start_time + exam.duration.minutes) %>
+                <span class="disabled-link">The exam has ended.</span>
+              <% elsif registration %>
+                <% if @current_user.exam_in_progress?(exam) || registration.started? %>
+                  <% if registration.completed? %>
+                    <span class="disabled-link">You have already submitted this exam.</span>
+                  <% else %>
+                    <%= link_to 'Resume Exam', conduct_exam_path(exam.id), class: 'btn btn-primary' %>
+                  <% end %>
+                <% elsif !registration.completed? %>
+                  <%= link_to 'Start Exam', conduct_exam_path(exam.id), class: 'btn btn-primary' %>
                 <% else %>
-                  <%= link_to 'Resume Exam', conduct_exam_path(exam.id), class: 'btn btn-primary' %>
+                  <span class="disabled-link">You have already submitted this exam.</span>
                 <% end %>
               <% elsif !registration.completed? %>
                 <%= link_to 'Start Exam', conduct_exam_path(exam.id), class: 'btn btn-primary' %>
-              <% else %>
-                <span class="disabled-link">You have already submitted this exam.</span>
               <% end %>
-            <% elsif !registration.completed? %>
-              <%= link_to 'Start Exam', conduct_exam_path(exam.id), class: 'btn btn-primary' %>
-            <% end %>
 
-            <% if exam.subject.exams.exists?(is_demo: true) && exam.start_time - 30.minutes > Time.now %>
-              <%= link_to 'Demo Exam', demo_exam_exam_path(exam.subject.exams.find_by(is_demo: true)), class: 'btn btn-primary' %>
-            <% elsif exam.subject.exams.exists?(is_demo: true) %>
-              <span class="disabled-link">Demo Exam not available Now</span>
-            <% else %>
-              <span class="disabled-link">This subject doesn't have a demo for now</span>
-            <% end %>
+              <% if exam.subject.exams.exists?(is_demo: true) && exam.start_time - 30.minutes > Time.now %>
+                <%= link_to 'Demo Exam', demo_exam_exam_path(exam.subject.exams.find_by(is_demo: true)), class: 'btn btn-primary' %>
+              <% elsif exam.subject.exams.exists?(is_demo: true) %>
+                <span class="disabled-link">Demo Exam not available Now</span>
+              <% else %>
+                <span class="disabled-link">This subject doesn't have a demo for now</span>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    <% end %>
   <% end %>
 </div>

@@ -59,7 +59,7 @@ class ExamPerformance < ApplicationRecord
       subject_performance: get_subject_performances(user)
     }
   end
-
+  
   def self.get_exam_ids_attended(user)
     where(user:).pluck(:exam_id)
   end

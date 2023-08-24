@@ -47,8 +47,6 @@ module Admin
 
     def find_user
       @user = User.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
     end
 
     def user_params

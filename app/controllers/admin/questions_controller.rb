@@ -3,12 +3,13 @@
 module Admin
   # class Admin::Admin::QutionsController
   class QuestionsController < ApplicationController
+    include Admin::QuestionsHelper
     before_action :authenticate_admin
     before_action :find_question, only: %i[edit update destroy]
     before_action :load_exams, only: %i[new create edit update]
 
     def index
-      @questions = Question.search('your search query')
+      @questions = filtered_questions
     end
 
     def new
@@ -44,11 +45,10 @@ module Admin
 
     private
 
-    # Find the question by ID
+    def search; end
+
     def find_question
       @question = Question.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
-      render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
     end
 
     def question_params
