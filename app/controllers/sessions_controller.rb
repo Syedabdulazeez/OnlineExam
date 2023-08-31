@@ -13,6 +13,7 @@ class SessionsController < ApplicationController
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
   def create
     user = User.find_by(username: params[:username])
 
@@ -25,6 +26,7 @@ class SessionsController < ApplicationController
       redirect_to login_path
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def destroy
     session.delete :user_id
@@ -42,6 +44,7 @@ class SessionsController < ApplicationController
     end
   end
 
+  # rubocop:disable Metrics/AbcSize
   def magic_link_login
     token = params[:token]
     user = User.find_by(magic_link_token: token)
@@ -55,4 +58,5 @@ class SessionsController < ApplicationController
       redirect_to login_path
     end
   end
+  # rubocop:enable Metrics/AbcSize
 end
