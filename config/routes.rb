@@ -48,8 +48,8 @@ Rails.application.routes.draw do
     resources :professors, except: [:show]
   end
 
-  match '*path', to: lambda { |_env|
-    [404, {}, [File.read(Rails.public_path.join('404.html'))]]
-  }, via: :all
+  match '*unmatched', to: 'application#not_found_method', via: :all, constraints: lambda { |req|
+    !req.path.match(%r{\A/rails/active_storage/})
+  }
 end
 # rubocop:enable Metrics/BlockLength
