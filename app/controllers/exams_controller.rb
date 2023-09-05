@@ -14,11 +14,7 @@ class ExamsController < ApplicationController
 
   def submit_exam
     user_answers = params[:user_answers]
-    if user_answers.present?
-      redirect_to_exam_performance(user_answers)
-    else
-      handle_no_user_answers
-    end
+    redirect_to_exam_performance(user_answers)
     current_user.clear_exam_in_progress(@exam)
   end
 

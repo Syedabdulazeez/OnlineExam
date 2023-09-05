@@ -2,8 +2,26 @@
   <div class="row">
     <div class="col-md-8 offset-md-2">
       <h1 class="text-center mb-4">Conduct Exam</h1>
+      <p id="timer">Time Left: <span id="countdown"></span></p>
       <%= render 'exam_form', exam: @exam, questions: @exam.shuffled_questions %>
     </div>
   </div>
 </div>
 
+<script>
+  function updateTimer() {
+    const endTime = new Date("<%= @exam.end_time.to_s %>");
+    const now = new Date();
+    const timeLeft = endTime - now;
+
+    if (timeLeft <= 0) {
+      document.getElementById("exam-form").submit();
+    } else {
+      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+      document.getElementById("countdown").innerHTML = minutes + "m " + seconds + "s ";
+    }
+  }
+  setInterval(updateTimer, 1000);
+  updateTimer();
+</script>

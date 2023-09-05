@@ -111,46 +111,75 @@
     </div>
   </div>
 
-  <div class="row mt-5 overflow-auto">
-    <div class="col-md-6">
-      <h2>Your Exam-wise Performance</h2>
-      <table class="table table-striped">
-        <thead>
+<div class="row mt-5 overflow-auto">
+  <div class="col-md-6">
+    <h2>Your Exam-wise Performance</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Exam</th>
+          <th>Your Marks</th>
+          <th>Average Marks</th>
+          <th>Highest Marks</th>
+          <th>Generate Report</th>
+          <th>Chart</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @exam_averages.each do |exam_id, average_marks| %>
+          <% exam = Exam.find_by(id: exam_id) %>
+          <% performance = @performances_summary[:exam_performances].find_by(exam_id: exam_id, user_id: @current_user) %>
+          <% highest_marks = @performances_summary[:highest_marks][exam_id] %>
+          <% user_performance = @performances_summary[:exam_performances].find_by(exam_id: exam_id, user_id: @current_user.id) %>
           <tr>
-            <th>Exam</th>
-            <th>Your Marks</th>
-            <th>Average Marks</th>
-            <th>Highest Marks</th>
-            <th>Generate Report</th>
-            <th>Chart</th>
-          </tr>
-        </thead>
-        <tbody>
-
-          <% @performances_summary[:exam_averages].each do |exam_id, average_marks| %>
-            <% exam = Exam.find_by(id: exam_id) %>
-            <% performance = @performances_summary[:exam_performances].find_by(exam_id: exam_id, user_id: @current_user) %>
-            <% highest_marks = @performances_summary[:highest_marks][exam_id] %>
-            <% user_performance = @performances_summary[:exam_performances].find_by(exam_id: exam_id, user_id: @current_user.id) %>
-             <tr>
-              <td><%= exam ? exam.exam_name : 'Exam not found' %></td>
-              <td><%= user_performance ? user_performance.marks_obtained : 'N/A' %></td>
-              <td><%= average_marks %></td>
-              <td><%= highest_marks %></td>
-              <td><%= link_to "Generate Performance Report", generate_report_path(performance.id), class: "" if performance %></td>
-              <td>
-                <% if exam && user_performance %>
-                  <%= column_chart [
+            <td><%= exam ? exam.exam_name : 'Exam not found' %></td>
+            <td><%= user_performance ? user_performance.marks_obtained : 'N/A' %></td>
+            <td><%= average_marks %></td>
+            <td><%= highest_marks %></td>
+            <td><%= link_to "Generate Performance Report", generate_report_path(performance.id), class: "" if performance %></td>
+            <td>
+              <% if exam && user_performance %>
+                <%= column_chart [
                   ['Your Mark', user_performance.marks_obtained],
                   ['Average Mark', average_marks],
                   ['Highest Mark', highest_marks]
-                  ], library: { responsive: true } %>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
+                ], library: { responsive: true } %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
     </div>
   </div>
+
+ <ul class="pagination justify-content-center">
+    <% if  @exam_averages.current_page > 1 %>
+      <li class="page-item">
+        <%= link_to '&laquo; Previous'.html_safe, { page:  @exam_averages.current_page - 1 }, class: 'page-link' %>
+      </li>
+    <% end %>
+
+    <% (1.. @exam_averages.total_pages).each do |page| %>
+      <% if page ==  @exam_averages.current_page %>
+        <li class="page-item active">
+          <span class="page-link">
+            <%= page %>
+            <span class="visually-hidden">(current)</span>
+          </span>
+        </li>
+      <% else %>
+        <li class="page-item">
+          <%= link_to page, { page: page }, class: 'page-link' %>
+        </li>
+      <% end %>
+    <% end %>
+
+    <% if  @exam_averages.current_page <  @exam_averages.total_pages %>
+      <li class="page-item">
+        <%= link_to 'Next &raquo;'.html_safe, { page:  @exam_averages.current_page + 1 }, class: 'page-link' %>
+      </li>
+    <% end %>
+  </ul>
+
 </div>

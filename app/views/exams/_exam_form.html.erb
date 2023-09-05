@@ -1,4 +1,4 @@
-<%= form_tag(submit_exam_exam_path(exam), method: :post, class: "exam-form") do %>
+<%= form_tag(submit_exam_exam_path(exam), method: :post, class: "exam-form", id:"exam-form") do %>
   <% questions.shuffle.each_with_index do |question, index| %>
     <div class="card mt-4">
       <div class="card-body">

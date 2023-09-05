@@ -4,7 +4,8 @@
 class LeaderboardController < ApplicationController
   def index
     @performances_summary = ExamPerformance.performances_summary(current_user)
-    @keys_paginated = Kaminari.paginate_array(@performances_summary.keys).page(params[:page]).per(10)
+    exam_averages_array = @performances_summary[:exam_averages].to_a
+    @exam_averages = Kaminari.paginate_array(exam_averages_array).page(params[:page]).per(5)
   end
 
   def generate_report

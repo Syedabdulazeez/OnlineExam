@@ -23,6 +23,10 @@ class Exam < ApplicationRecord
     errors.add(:start_time, 'must be in the future')
   end
 
+  def end_time
+    start_time + duration.minutes
+  end
+
   def shuffled_questions
     questions.to_a.shuffle
   end
@@ -30,9 +34,15 @@ class Exam < ApplicationRecord
   def calculate_score(user_answers)
     total_questions = questions.count
     score = 0
-    questions.each_with_index do |question, index|
-      score += 1 if user_answers[index.to_s].to_i == question.correct_answer
+    unless user_answers.nil?
+      questions.each_with_index do |question, index|
+        user_answer = user_answers[index.to_s].to_i
+        correct_answer = question.correct_answer
+
+        score += 1 if user_answer == correct_answer
+      end
     end
+
     (score.to_f / total_questions) * 100
   end
 
