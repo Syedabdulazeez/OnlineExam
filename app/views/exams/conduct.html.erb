@@ -1,27 +1,22 @@
+<div id="exam-data" end_time = "<%= @exam.end_time.strftime('%Y-%m-%dT%H:%M:%S.%L%z') %>"></div>
 <div class="container">
-  <div class="row">
-    <div class="col-md-8 offset-md-2">
-      <h1 class="text-center mb-4">Conduct Exam</h1>
-      <p id="timer">Time Left: <span id="countdown"></span></p>
-      <%= render 'exam_form', exam: @exam, questions: @exam.shuffled_questions %>
+  <nav class="navbar navbar-expand navbar-light bg-light sticky-top">
+    <a class="navbar-brand" href="#"><%= @exam.exam_name %></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <span class="navbar-text">
+            <h4><strong id="countdown"></strong></h4>
+          </span>
+        </li>
+      </ul>
     </div>
-  </div>
+  </nav>
+  <%= render 'exam_form', exam: @exam, questions: @exam.shuffled_questions %>
 </div>
+<%= javascript_pack_tag 'timer'%>
 
-<script>
-  function updateTimer() {
-    const endTime = new Date("<%= @exam.end_time.to_s %>");
-    const now = new Date();
-    const timeLeft = endTime - now;
 
-    if (timeLeft <= 0) {
-      document.getElementById("exam-form").submit();
-    } else {
-      const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
-      document.getElementById("countdown").innerHTML = minutes + "m " + seconds + "s ";
-    }
-  }
-  setInterval(updateTimer, 1000);
-  updateTimer();
-</script>
