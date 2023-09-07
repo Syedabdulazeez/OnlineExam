@@ -3,6 +3,7 @@
 # This is a class representing an controller
 class ExamsController < ApplicationController
   before_action :find_exam, only: %i[conduct demo_exam show submit_exam]
+  before_action :require_user
 
   def conduct
     current_user.mark_exam_in_progress(@exam)

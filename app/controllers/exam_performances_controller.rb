@@ -3,6 +3,7 @@
 # This is a class representing an controller
 class ExamPerformancesController < ApplicationController
   before_action :find_exam_performance, only: %i[show generate_report]
+  before_action :require_user
 
   def show; end
 

@@ -13,6 +13,13 @@ class ApplicationController < ActionController::Base
     render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
   end
 
+  def require_user
+    return unless current_user.nil? || current_user.admin?
+
+    flash[:danger] = 'You are not authorized to access this page.'
+    redirect_to root_path
+  end
+
   def authenticate_admin
     return if current_user&.admin?
 

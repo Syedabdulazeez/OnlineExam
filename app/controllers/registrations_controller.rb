@@ -5,6 +5,7 @@ class RegistrationsController < ApplicationController
   include RegistrationsHelper
 
   before_action :set_exam, only: %i[create new]
+  before_action :require_user
 
   def index
     if logged_in?
