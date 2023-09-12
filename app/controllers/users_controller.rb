@@ -3,7 +3,7 @@
 # This is a class representing an  controller
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update]
-  before_action :require_user
+  before_action :require_user, only: %i[show edit update]
 
   def new
     if !logged_in?
