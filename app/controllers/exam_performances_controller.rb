@@ -2,7 +2,7 @@
 
 # This is a class representing an controller
 class ExamPerformancesController < ApplicationController
-  before_action :find_exam_performance, only: %i[show generate_report]
+  before_action :exam_performance, only: %i[show generate_report]
   before_action :require_user
 
   def show; end
@@ -15,7 +15,7 @@ class ExamPerformancesController < ApplicationController
 
   private
 
-  def find_exam_performance
-    @find_exam_performance ||= ExamPerformance.find(params[:id])
+  def exam_performance
+    @exam_performance ||= ExamPerformance.find(params[:id])
   end
 end
