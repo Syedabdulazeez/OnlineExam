@@ -3,9 +3,9 @@
 
   <div class="card mt-4">
     <div class="card-body">
-      <h2 class="card-title">User: <%= @find_exam_performance.user.username %></h2>
-      <h2 class="card-title">Subject: <%= @find_exam_performance.exam.subject.subject_name %></h2>
-      <h2 class="card-title">Your score: <%= @find_exam_performance.marks_obtained %></h2>
+      <h2 class="card-title">User: <%= @exam_performance.user.username %></h2>
+      <h2 class="card-title">Subject: <%= @exam_performance.exam.subject.subject_name %></h2>
+      <h2 class="card-title">Your score: <%= @exam_performance.marks_obtained %></h2>
       <div class="text-center mt-4">
         <%= link_to "Home", root_path, class: "btn btn-outline-primary" %>
       </div>

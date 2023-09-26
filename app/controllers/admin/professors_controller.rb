@@ -37,11 +37,15 @@ module Admin
 
     def destroy
       @professor.destroy
-      flash[:success] = 'Professor deleted successfully.'
+      flash[:danger] = 'Professor deleted successfully.'
       redirect_to admin_professors_path
     end
 
     private
+
+    def find_professor
+      @professor = Professor.find(params[:id])
+    end
 
     def professor_params
       params.require(:professor).permit(:name, :department_id, :summary, :linkedin_link, :profile_picture)
