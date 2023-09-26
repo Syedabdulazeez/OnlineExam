@@ -3,14 +3,13 @@
 module Admin
   # class Admin::Admin::DepartmentsController
   class SubjectsController < ApplicationController
-    include Admin::SubjectsHelper
-
     before_action :authenticate_admin
     before_action :find_subject, only: %i[edit update destroy]
     before_action :load_departments, only: %i[new create edit update]
 
     def index
-      @subjects = filtered_subjects
+      params[:per_page] ||= 15
+      @subjects = Subject.filtered_subjects(params[:q], params[:exam_id], params[:page], params[:per_page])
     end
 
     def new

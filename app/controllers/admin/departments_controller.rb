@@ -3,13 +3,11 @@
 module Admin
   # class Admin::Admin::DepartmentsController
   class DepartmentsController < Admin::AdminController
-    include Admin::DepartmentsHelper
-
     before_action :authenticate_admin
     before_action :find_department, only: %i[edit update destroy]
 
     def index
-      @departments = filtered_departments
+      @departments = Department.filtered_departments(params)
     end
 
     def new

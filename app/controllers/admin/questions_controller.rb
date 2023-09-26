@@ -3,13 +3,12 @@
 module Admin
   # class Admin::Admin::QutionsController
   class QuestionsController < ApplicationController
-    include Admin::QuestionsHelper
     before_action :authenticate_admin
     before_action :find_question, only: %i[edit update destroy]
     before_action :load_exams, only: %i[new create edit update]
 
     def index
-      @questions = filtered_questions
+      @questions = Question.filtered_questions(params)
     end
 
     def new

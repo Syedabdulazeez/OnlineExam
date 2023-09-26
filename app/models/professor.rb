@@ -13,6 +13,22 @@ class Professor < ApplicationRecord
   validates :summary, presence: true, length: { minimum: 5, message: 'must contain at least 5 letters' }
   validate :profile_picture_image_format
 
+  scope :filtered_professors, lambda { |params|
+    if params[:q].present?
+      search_professors(params[:q])
+    else
+      all_professors
+    end.page(params[:page]).per(params[:per_page])
+  }
+
+  scope :search_professors, lambda { |query|
+    search(query).records
+  }
+
+  scope :all_professors, lambda {
+    all
+  }
+
   private
 
   def profile_picture_image_format
