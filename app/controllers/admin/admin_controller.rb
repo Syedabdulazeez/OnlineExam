@@ -5,6 +5,10 @@ module Admin
   class AdminController < ApplicationController
     before_action :require_admin
 
+    def index; end
+
+    private
+
     def require_admin
       return if current_user&.admin?
 

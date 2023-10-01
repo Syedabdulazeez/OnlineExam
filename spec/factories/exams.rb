@@ -14,5 +14,9 @@ FactoryBot.define do
     trait :with_past_start_time do
       start_time { 1.hour.ago }
     end
+
+    trait :demo do
+      is_demo { true }
+    end
   end
 end

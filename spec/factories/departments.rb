@@ -2,6 +2,6 @@
 
 FactoryBot.define do
   factory :department do
-    department_name { 'Sample Department' }
+    department_name { Faker::Company.unique.name }
   end
 end

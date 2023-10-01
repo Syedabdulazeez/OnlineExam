@@ -21,6 +21,7 @@ module Login
     config.active_record.default_timezone = :local
     config.load_defaults 6.1
     config.elasticsearch = YAML.load_file(Rails.root.join('config', 'elasticsearch.yml'))[Rails.env].symbolize_keys
+    config.autoload_paths << "#{Rails.root}/lib"
 
     # Configuration for the application, engines, and railties goes here.
     #

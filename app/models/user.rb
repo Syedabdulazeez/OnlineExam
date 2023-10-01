@@ -28,11 +28,11 @@ class User < ApplicationRecord
 
   def mark_exam_in_progress(exam)
     registration = registrations.find_by(exam_id: exam.id)
-    registration.update(in_progress: true)
+    registration&.update(in_progress: true)
   end
 
   def clear_exam_in_progress(exam)
-    registrations.find_by(exam_id: exam.id).update(in_progress: false)
+    registrations.find_by(exam_id: exam.id)&.update(in_progress: false)
   end
 
   def exam_started?(exam, user)

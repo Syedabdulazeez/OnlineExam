@@ -16,6 +16,6 @@ class ExamPerformancesController < ApplicationController
   private
 
   def exam_performance
-    @exam_performance ||= ExamPerformance.find(params[:id])
+    @exam_performance = ExamPerformance.find(params[:id])
   end
 end

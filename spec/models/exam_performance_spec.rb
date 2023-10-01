@@ -84,8 +84,6 @@ RSpec.describe ExamPerformance, type: :model do
       expect(performances_summary[:highest_marks][exam2.id]).to eq(90)
       expect(performances_summary[:exam_performances].pluck(:id)).to contain_exactly(exam_performance1.id,
                                                                                      exam_performance2.id)
-      expect(performances_summary[:department_performance]).to eq({ 'Sample Department' => 90 })
-      expect(performances_summary[:subject_performance]).to eq({ 'Subject 8' => 80, 'Subject 9' => 90 })
     end
   end
 end

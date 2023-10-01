@@ -5,9 +5,6 @@ class DepartmentsController < ApplicationController
   before_action :require_user
 
   def show
-    @department ||= Department.find_by(id: params[:id])
-    return unless @department.nil? || @department.subjects.empty?
-
-    render file: Rails.public_path.join('404.html'), status: :not_found, layout: false
+    @department = Department.find(params[:id])
   end
 end
