@@ -1,4 +1,12 @@
-# Functional Requirements
+# Application Versions
+* Rails -> 6.1.7.3
+* Ruby  -> 3.1.2
+* Node  -> 16.20.1
+* Yarn  -> 1.22.19
+* NPM   -> 8.19.4
+* Elastic Search -> 7.2.1
+
+# The Functionality Implemented
 
 ## Users
 
